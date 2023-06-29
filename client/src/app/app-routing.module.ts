@@ -31,8 +31,8 @@ const routes: Routes = [
 				path: "buses",
 				loadChildren: () =>
 					import(
-						"./modules/buses-administration/buses-administration.module"
-					).then((mod) => mod.BusesAdministrationModule),
+						"./modules/bus-administration/bus-administration.module"
+					).then((mod) => mod.BusAdministrationModule),
 			},
 		],
 	},

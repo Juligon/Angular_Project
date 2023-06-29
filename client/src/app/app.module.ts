@@ -8,10 +8,10 @@ import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { SharedModule } from "./shared/shared.module";
 import { AdminLayoutModule } from "./shared/admin-layout/admin-layout.module";
 import { HttpClientModule } from "@angular/common/http";
-import { AdminTopbarComponent } from './admin-layout/components/admin-topbar/admin-topbar.component';
+
 
 @NgModule({
-	declarations: [AppComponent, AdminTopbarComponent],
+	declarations: [AppComponent],
 	imports: [
 		BrowserModule,
 		AppRoutingModule,
