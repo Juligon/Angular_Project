@@ -2,10 +2,7 @@ package curso.angular.compania_viajes.rest;
 
 import curso.angular.compania_viajes.model.ModeloDTO;
 import curso.angular.compania_viajes.service.ModeloService;
-import io.swagger.v3.oas.annotations.responses.ApiResponse;
-import jakarta.validation.Valid;
 import java.util.List;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
