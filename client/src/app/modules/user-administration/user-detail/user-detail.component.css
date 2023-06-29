@@ -1,0 +1,23 @@
+.user-container {
+  display: flex;
+  flex-direction: column;
+  margin: 10px;
+}
+
+.user-input {
+  width: 50%;
+  align-self: center;
+}
+
+.title {
+  display: flex;
+  gap: 20px;
+}
+
+.go-back-button {
+  bottom: 7px;
+}
+
+.hint {
+  font-size: 8px;
+}
