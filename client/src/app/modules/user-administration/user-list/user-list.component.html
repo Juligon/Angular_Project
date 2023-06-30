@@ -1,3 +1,6 @@
+<button mat-icon-button (click)="createUser()">
+  <mat-icon>add</mat-icon>
+</button>
 <mat-card *ngFor="let user of userList" style="margin: 10px">
 	<mat-card-header>
 		<mat-card-title>{{ user.showName() }}</mat-card-title>
@@ -5,5 +8,6 @@
 	</mat-card-header>
 	<mat-card-actions align="end">
 		<button mat-button (click)="selectUser(user)">EDITAR</button>
+		<button mat-button (click)="deleteUser()">BORRAR</button>
 	</mat-card-actions>
 </mat-card>

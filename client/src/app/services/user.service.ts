@@ -16,7 +16,7 @@ import { environment } from "../../environments/environment";
 	providedIn: "root",
 })
 export class UserService {
-	resourceUrl = environment.backendUrl + "users";
+	resourceUrl = environment.backendUrl + "personas";
 
 	constructor(private http: HttpClient) {}
 
