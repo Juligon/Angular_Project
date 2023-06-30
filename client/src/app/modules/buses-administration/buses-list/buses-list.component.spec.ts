@@ -1,16 +1,16 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { BusListComponent } from './bus-list.component';
+import { BusesListComponent } from './buses-list.component';
 
-describe('BusListComponent', () => {
-  let component: BusListComponent;
-  let fixture: ComponentFixture<BusListComponent>;
+describe('BusesListComponent', () => {
+  let component: BusesListComponent;
+  let fixture: ComponentFixture<BusesListComponent>;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [BusListComponent]
+      declarations: [BusesListComponent]
     });
-    fixture = TestBed.createComponent(BusListComponent);
+    fixture = TestBed.createComponent(BusesListComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

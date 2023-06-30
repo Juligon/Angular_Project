@@ -1,8 +1,8 @@
 import { NgModule } from "@angular/core";
 import { CommonModule } from "@angular/common";
 import { RouterModule, Routes } from "@angular/router";
-import { UserListComponent } from "./modules/user-administration/user-list/user-list.component";
-import { UserDetailComponent } from "./modules/user-administration/user-detail/user-detail.component";
+import { UsersListComponent } from "./modules/users-administration/users-list/users-list.component";
+import { UsersDetailComponent } from "./modules/users-administration/users-detail/users-detail.component";
 import { AdminLayoutComponent } from "./shared/admin-layout/admin-layout/admin-layout.component";
 
 const routes: Routes = [
@@ -12,8 +12,8 @@ const routes: Routes = [
 	{
 		path: "user",
 		loadChildren: () =>
-			import("./modules/user-administration/user-administration.module").then(
-				(mod) => mod.UserAdministrationModule
+			import("./modules/users-administration/users-administration.module").then(
+				(mod) => mod.UsersAdministrationModule
 			),
 	},
 	{
@@ -24,15 +24,15 @@ const routes: Routes = [
 				path: "user",
 				loadChildren: () =>
 					import(
-						"./modules/user-administration/user-administration.module"
-					).then((mod) => mod.UserAdministrationModule),
+						"./modules/users-administration/users-administration.module"
+					).then((mod) => mod.UsersAdministrationModule),
 			},
 			{
 				path: "buses",
 				loadChildren: () =>
 					import(
-						"./modules/bus-administration/bus-administration.module"
-					).then((mod) => mod.BusAdministrationModule),
+						"./modules/buses-administration/buses-administration.module"
+					).then((mod) => mod.BusesAdministrationModule),
 			},
 		],
 	},

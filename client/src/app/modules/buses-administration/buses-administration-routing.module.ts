@@ -1,14 +1,14 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import {BusListComponent} from "./bus-list/bus-list.component";
+import {BusesListComponent} from "./buses-list/buses-list.component";
 
 const routes: Routes = [
   {path: '', redirectTo: 'list', pathMatch: "full"},
-  {path: 'list', component: BusListComponent}
+  {path: 'list', component: BusesListComponent}
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class BusAdministrationRoutingModule { }
+export class BusesAdministrationRoutingModule { }

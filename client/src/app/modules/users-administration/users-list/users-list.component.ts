@@ -5,12 +5,12 @@ import { Router } from "@angular/router";
 import { MatSnackBar } from "@angular/material/snack-bar";
 
 @Component({
-	selector: "app-user-list",
-	templateUrl: "./user-list.component.html",
-	styleUrls: ["./user-list.component.css"],
+	selector: "app-users-list",
+	templateUrl: "./users-list.component.html",
+	styleUrls: ["./users-list.component.css"],
 })
-export class UserListComponent implements OnInit {
-	userList: User[] = [];
+export class UsersListComponent implements OnInit {
+	usersList: User[] = [];
 	selectedUser: User | null = null;
 
 	// inyecta un servicio dentro del componente
@@ -30,7 +30,7 @@ export class UserListComponent implements OnInit {
 		this.userService.findAll().subscribe(
 			(response) => {
 				if (response.body)
-					this.userList = response.body.map(
+					this.usersList = response.body.map(
 						(json) => new User(json.id, json.name, json.lastName, json.age)
 					);
 			},

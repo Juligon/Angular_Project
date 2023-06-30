@@ -1,13 +1,13 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-import { TripAdministrationRoutingModule } from './trip-administration-routing.module';
-import { TripListComponent } from './trip-list/trip-list.component';
+import { TripsAdministrationRoutingModule } from './trips-administration-routing.module';
+import { TripsListComponent } from './trips-list/trips-list.component';
 import { MatTableModule } from '@angular/material/table';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
-import { TripDetailComponent } from './trip-detail/trip-detail.component';
+import { TripsDetailComponent } from './trips-detail/trips-detail.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
@@ -17,11 +17,11 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatSelectModule } from '@angular/material/select';
 
 @NgModule({
-  declarations: [TripListComponent, TripDetailComponent],
+  declarations: [TripsListComponent, TripsDetailComponent],
   imports: [
     CommonModule,
     ReactiveFormsModule,
-    TripAdministrationRoutingModule,
+    TripsAdministrationRoutingModule,
     MatTableModule,
     MatCardModule,
     MatButtonModule,
@@ -34,4 +34,4 @@ import { MatSelectModule } from '@angular/material/select';
     MatSelectModule,
   ],
 })
-export class TripAdministrationModule {}
+export class TripsAdministrationModule {}

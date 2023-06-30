@@ -12,11 +12,11 @@ import {
 import { MatSnackBar } from "@angular/material/snack-bar";
 
 @Component({
-	selector: "app-user-detail",
-	templateUrl: "./user-detail.component.html",
-	styleUrls: ["./user-detail.component.css"],
+	selector: "app-users-detail",
+	templateUrl: "./users-detail.component.html",
+	styleUrls: ["./users-detail.component.css"],
 })
-export class UserDetailComponent implements OnInit {
+export class UsersDetailComponent implements OnInit {
 	selectedUser: User | null = null;
 
 	//validaciones

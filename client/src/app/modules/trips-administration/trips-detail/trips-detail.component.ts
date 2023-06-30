@@ -12,11 +12,11 @@ import { Trip } from '../../../models/trip';
 import { Router } from '@angular/router';
 
 @Component({
-  selector: 'app-trip-detail',
-  templateUrl: './trip-detail.component.html',
-  styleUrls: ['./trip-detail.component.css'],
+  selector: 'app-trips-detail',
+  templateUrl: './trips-detail.component.html',
+  styleUrls: ['./trips-detail.component.css'],
 })
-export class TripDetailComponent implements OnInit {
+export class TripsDetailComponent implements OnInit {
   tripForm = this.formBuilder.group({
     origen: ['', Validators.required],
     destino: ['', Validators.required],
@@ -26,7 +26,7 @@ export class TripDetailComponent implements OnInit {
     pasajeros: [[], Validators.required],
   });
 
-  busList: Bus[] = [];
+  busesList: Bus[] = [];
   usersList: User[] = [];
 
   selectedTrip: Trip | null = null;
@@ -45,7 +45,7 @@ export class TripDetailComponent implements OnInit {
     this.busService.findAll().subscribe(
       (res) => {
         //@ts-ignore
-        this.busList = res.body.map((json) => {
+        this.busesList = res.body.map((json) => {
           const bus = new Bus(
             json.id,
             json.patente,

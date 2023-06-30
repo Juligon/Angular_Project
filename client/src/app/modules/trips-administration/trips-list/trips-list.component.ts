@@ -5,11 +5,11 @@ import { ModelService } from '../../../services/model.service';
 import { BusService } from '../../../services/bus.service';
 
 @Component({
-  selector: 'app-trip.ts-list',
-  templateUrl: './trip-list.component.html',
-  styleUrls: ['./trip-list.component.css'],
+  selector: 'app-trips.ts-list',
+  templateUrl: './trips-list.component.html',
+  styleUrls: ['./trips-list.component.css'],
 })
-export class TripListComponent implements OnInit {
+export class TripsListComponent implements OnInit {
   displayedColumns = [
     'id',
     'origen',
