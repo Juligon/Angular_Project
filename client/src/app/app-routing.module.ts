@@ -1,31 +1,24 @@
 import { NgModule } from "@angular/core";
 import { CommonModule } from "@angular/common";
 import { RouterModule, Routes } from "@angular/router";
-import { UsersListComponent } from "./modules/users-administration/users-list/users-list.component";
-import { UsersDetailComponent } from "./modules/users-administration/users-detail/users-detail.component";
+import { PersonsListComponent } from "./modules/persons-administration/persons-list/persons-list.component";
+import { PersonDetailComponent } from "./modules/persons-administration/person-detail/person-detail.component";
 import { AdminLayoutComponent } from "./shared/admin-layout/admin-layout/admin-layout.component";
 
 const routes: Routes = [
-	{ path: "", redirectTo: "layout", pathMatch: "full" },
-	// { path: 'list', component: UserListComponent },
-	// { path: 'detail', component: UserDetailComponent },
-	{
-		path: "user",
-		loadChildren: () =>
-			import("./modules/users-administration/users-administration.module").then(
-				(mod) => mod.UsersAdministrationModule
-			),
-	},
+	{ path: "", redirectTo: "persons", pathMatch: "full" },
+	// { path: 'list', component: PersonsListComponent },
+	// { path: 'detail', component: PersonDetailComponent },
 	{
 		path: "",
 		component: AdminLayoutComponent,
 		children: [
 			{
-				path: "user",
+				path: "persons",
 				loadChildren: () =>
 					import(
-						"./modules/users-administration/users-administration.module"
-					).then((mod) => mod.UsersAdministrationModule),
+						"./modules/persons-administration/persons-administration.module"
+					).then((mod) => mod.PersonsAdministrationModule),
 			},
 			{
 				path: "buses",
@@ -33,6 +26,13 @@ const routes: Routes = [
 					import(
 						"./modules/buses-administration/buses-administration.module"
 					).then((mod) => mod.BusesAdministrationModule),
+			},
+			{
+				path: "trips",
+				loadChildren: () =>
+					import(
+						"./modules/trips-administration/trips-administration.module"
+					).then((mod) => mod.TripsAdministrationModule),
 			},
 		],
 	},

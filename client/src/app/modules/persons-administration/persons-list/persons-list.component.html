@@ -1,0 +1,14 @@
+<button mat-icon-button (click)="createPerson()">
+  <mat-icon>add</mat-icon>
+</button>
+
+<mat-card *ngFor="let person of personsList" style="margin: 10px">
+	<mat-card-header>
+		<mat-card-title>{{ person.showName() }}</mat-card-title>
+		<mat-card-subtitle>Edad: {{ person.edad }}</mat-card-subtitle>
+	</mat-card-header>
+	<mat-card-actions align="end">
+		<button mat-button (click)="selectPerson(person)">EDITAR</button>
+		<button mat-button (click)="deletePerson(person)">BORRAR</button>
+	</mat-card-actions>
+</mat-card>

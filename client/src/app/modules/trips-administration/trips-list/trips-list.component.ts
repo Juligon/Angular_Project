@@ -30,8 +30,7 @@ export class TripsListComponent implements OnInit {
 
   ngOnInit() {
     this.tripService.findAll().subscribe((res) => {
-      //@ts-ignore
-      this.dataSource = res.body.map((res) => {
+      this.dataSource = res.body?.map((res) => {
         const trip = new Trip(
           res.id,
           res.lugarDestino,

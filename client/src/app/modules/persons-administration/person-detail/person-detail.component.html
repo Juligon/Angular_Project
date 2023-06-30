@@ -1,5 +1,5 @@
-<form [formGroup]="userForm" (ngSubmit)="saveChanges()">
-	<mat-card class="user-container" style="padding: 20px">
+<form [formGroup]="personForm" (ngSubmit)="saveChanges()">
+	<mat-card class="person-container" style="padding: 20px">
 		<div class="title">
 			<button
 				type="button"
@@ -13,73 +13,73 @@
 			<h2>Editar usuario</h2>
 		</div>
 
-		<mat-form-field class="user-input">
+		<mat-form-field class="person-input">
 			<mat-label>Nombre:</mat-label>
 			<!--  <input type="text" [(ngModel)]="selectedUser.nombre">-->
 			<input matInput type="text" formControlName="name" />
 			<div
 				*ngIf="
-					userForm.controls['name'].invalid &&
-					(userForm.controls['name'].dirty || userForm.controls['name'].touched)
+					personForm.controls['name'].invalid &&
+					(personForm.controls['name'].dirty || personForm.controls['name'].touched)
 				"
 			>
 				<mat-hint
 					class="hint"
-					*ngIf="userForm.controls['name'].errors?.['required']"
+					*ngIf="personForm.controls['name'].errors?.['required']"
 				>
 					Por favor complete el campo requerido
 				</mat-hint>
 			</div>
 		</mat-form-field>
 
-		<mat-form-field class="user-input">
+		<mat-form-field class="person-input">
 			<mat-label>Apellido:</mat-label>
 			<input matInput type="text" formControlName="lastName" />
 
 			<div
 				*ngIf="
-					userForm.controls['lastName'].invalid &&
-					(userForm.controls['lastName'].dirty ||
-						userForm.controls['lastName'].touched)
+					personForm.controls['lastName'].invalid &&
+					(personForm.controls['lastName'].dirty ||
+						personForm.controls['lastName'].touched)
 				"
 			>
 				<mat-hint
 					class="hint"
-					*ngIf="userForm.controls['lastName'].errors?.['required']"
+					*ngIf="personForm.controls['lastName'].errors?.['required']"
 				>
 					Por favor complete el campo requerido
 				</mat-hint>
 			</div>
 		</mat-form-field>
 
-		<mat-form-field class="user-input">
+		<mat-form-field class="person-input">
 			<mat-label>Edad:</mat-label>
 			<input matInput type="number" formControlName="age" />
 
 			<div
 				*ngIf="
-					userForm.controls['age'].invalid &&
-					(userForm.controls['age'].dirty || userForm.controls['age'].touched)
+					personForm.controls['age'].invalid &&
+					(personForm.controls['age'].dirty || personForm.controls['age'].touched)
 				"
 			>
 				<mat-hint
 					class="hint"
-					*ngIf="userForm.controls['age'].errors?.['required']"
+					*ngIf="personForm.controls['age'].errors?.['required']"
 				>
 					Por favor complete el campo requerido
 				</mat-hint>
 
-				<mat-hint class="hint" *ngIf="userForm.controls['age'].errors?.['min']">
+				<mat-hint class="hint" *ngIf="personForm.controls['age'].errors?.['min']">
 					La edad debe ser mayor o igual a 0 años
 				</mat-hint>
 
-				<mat-hint class="hint" *ngIf="userForm.controls['age'].errors?.['max']">
+				<mat-hint class="hint" *ngIf="personForm.controls['age'].errors?.['max']">
 					La edad debe ser menor o igual a 101 años
 				</mat-hint>
 			</div>
 		</mat-form-field>
 
-		<button type="submit" mat-button [disabled]="userForm.invalid">
+		<button type="submit" mat-button [disabled]="personForm.invalid">
 			GUARDAR
 		</button>
 	</mat-card>

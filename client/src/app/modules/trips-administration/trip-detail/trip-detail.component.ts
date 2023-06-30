@@ -3,20 +3,20 @@ import { FormBuilder, Validators } from '@angular/forms';
 import { BusService } from '../../../services/bus.service';
 import { Bus } from '../../../models/bus';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { User } from '../../../models/user';
+import { Person } from '../../../models/person';
 import { ModelService } from '../../../services/model.service';
 import { Model } from '../../../models/model';
-import { UserDTO, UserService } from '../../../services/user.service';
+import { PersonDTO, PersonService } from '../../../services/person.service';
 import { TripDTO, TripService } from '../../../services/trip.service';
 import { Trip } from '../../../models/trip';
 import { Router } from '@angular/router';
 
 @Component({
-  selector: 'app-trips-detail',
-  templateUrl: './trips-detail.component.html',
-  styleUrls: ['./trips-detail.component.css'],
+  selector: 'app-trip-detail',
+  templateUrl: './trip-detail.component.html',
+  styleUrls: ['./trip-detail.component.css'],
 })
-export class TripsDetailComponent implements OnInit {
+export class TripDetailComponent implements OnInit {
   tripForm = this.formBuilder.group({
     origen: ['', Validators.required],
     destino: ['', Validators.required],
@@ -27,7 +27,7 @@ export class TripsDetailComponent implements OnInit {
   });
 
   busesList: Bus[] = [];
-  usersList: User[] = [];
+  personsList: Person[] = [];
 
   selectedTrip: Trip | null = null;
 
@@ -35,7 +35,7 @@ export class TripsDetailComponent implements OnInit {
     private formBuilder: FormBuilder,
     private busService: BusService,
     private modelService: ModelService,
-    private userService: UserService,
+    private personService: PersonService,
     private tripService: TripService,
     private router: Router,
     private matSnackBar: MatSnackBar
@@ -45,7 +45,7 @@ export class TripsDetailComponent implements OnInit {
     this.busService.findAll().subscribe(
       (res) => {
         //@ts-ignore
-        this.busesList = res.body.map((json) => {
+        this.busesList = res.body?.map((json) => {
           const bus = new Bus(
             json.id,
             json.patente,
@@ -62,9 +62,10 @@ export class TripsDetailComponent implements OnInit {
       }
     );
 
-    this.userService.findAll().subscribe((res) => {
-      this.usersList = res.body.map(
-        (json) => new User(json.id, json.age, json.name, json.lastName)
+    this.personService.findAll().subscribe((res) => {
+      //@ts-ignore
+      this.personsList = res.body?.map(
+        (json) => new Person(json.id, json.nombre, json.apellido, json.edad)
       );
     });
   }
@@ -76,6 +77,7 @@ export class TripsDetailComponent implements OnInit {
   }
 
   saveChanges() {
+    //@ts-ignore
     const pasajeros: number[] = this.tripForm.get('pasajeros').value;
 
     const body: TripDTO = {

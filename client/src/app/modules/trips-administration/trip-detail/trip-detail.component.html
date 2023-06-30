@@ -134,8 +134,8 @@
           <mat-label>Pasajeros:</mat-label>
 
           <mat-select formControlName="pasajeros" multiple>
-            <mat-option *ngFor="let user of usersList" [value]="user.id">
-              {{ user.name }} {{ user.lastName }}
+            <mat-option *ngFor="let person of personsList" [value]="person.id">
+              {{ person.nombre }} {{ person.apellido }}
             </mat-option>
           </mat-select>
 

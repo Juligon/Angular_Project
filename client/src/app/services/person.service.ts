@@ -1,5 +1,5 @@
-import { Injectable } from "@angular/core";
-import { User } from "../models/user";
+import { Injectable, EventEmitter } from "@angular/core";
+import { Person } from "../models/person";
 import {
 	Observable,
 	of,
@@ -15,7 +15,7 @@ import { environment } from "../../environments/environment";
 @Injectable({
 	providedIn: "root",
 })
-export class UserService {
+export class PersonService {
 	resourceUrl = environment.backendUrl + "personas";
 
 	constructor(private http: HttpClient) {}
@@ -25,9 +25,9 @@ export class UserService {
 		// 	catchError((error) => {
 		// 		return throwError(error);
 		// 	}),
-		// 	map((users) => {
-		// 		users.forEach((user) => (user.name = "Sr/Sra " + user.name));
-		// 		return users;
+		// 	map((persons) => {
+		// 		users.forEach((person) => (person.nombre = "Sr/Sra " + person.name));
+		// 		return persons;
 		// 	})
 		// );
 		return this.http.get<any[]>(this.resourceUrl, { observe: "response" }).pipe(
@@ -40,8 +40,8 @@ export class UserService {
 
 	findOne(id: number): Observable<HttpResponse<any>> {
 		// return of(list).pipe(
-		// 	mergeMap((user) => user),
-		// 	first((user) => user.id === id)
+		// 	mergeMap((person) => person),
+		// 	first((person) => person.id === id)
 		// );
 		return this.http
 			.get<any>(this.resourceUrl + "/" + id, { observe: "response" })
@@ -49,45 +49,45 @@ export class UserService {
 				catchError((err) => {
 					console.log("Ocurrió un error: ");
 					console.log(err);
-					return throwError(() => "Usuario inexistente!");
+					return throwError(() => "Persona inexistente!");
 				})
 			);
 	}
 
-	createUser(user: UserDTO): Observable<any> {
-		return this.http.post<any>(this.resourceUrl, user).pipe(
+	createPerson(persona: PersonDTO): Observable<any> {
+		return this.http.post<any>(this.resourceUrl, persona).pipe(
 			catchError((err) => {
 				console.log("Ocurrió un error: ");
 				console.log(err);
-				return throwError(() => "No se pudo crear usuario");
+				return throwError(() => "No se pudo crear");
 			})
 		);
 	}
 
-	updateUser(user: UserDTO): Observable<any> {
-		return this.http.put<any>(this.resourceUrl + "/" + user.id, user).pipe(
+	updatePerson(persona: PersonDTO): Observable<any> {
+		return this.http.put<any>(this.resourceUrl + "/" + persona.id, persona).pipe(
 			catchError((err) => {
 				console.log("Ocurrió un error: ");
 				console.log(err);
-				return throwError(() => "Usuario inexistente!");
+				return throwError(() => "Persona inexistente!");
 			})
 		);
 	}
 
-	deleteUser(id: number): Observable<HttpResponse<any>> {
+	deletePerson(id: number): Observable<HttpResponse<any>> {
 		return this.http
 			.delete<any>(this.resourceUrl + "/" + id, { observe: "response" })
 			.pipe(
 				catchError((err) => {
 					console.log("Ocurrió un error: ");
 					console.log(err);
-					return throwError(() => "Usuario inexistente!");
+					return throwError(() => "Persona inexistente!");
 				})
 			);
 	}
 }
 
-export interface UserDTO {
+export interface PersonDTO {
 	id: number;
 	name: string;
 	lastName: string;

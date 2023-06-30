@@ -1,9 +1,9 @@
 import { NgModule } from "@angular/core";
 import { CommonModule } from "@angular/common";
-import { UsersDetailComponent } from "./users-detail/users-detail.component";
+import { PersonDetailComponent } from "./person-detail/person-detail.component";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
-import { UsersListComponent } from "./users-list/users-list.component";
-import { UsersAdministrationRoutingModule } from "./users-administration-routing.module";
+import { PersonsListComponent } from "./persons-list/persons-list.component";
+import { PersonsAdministrationRoutingModule } from "./persons-administration-routing.module";
 import { MatButtonModule } from "@angular/material/button";
 import { MatDatepickerModule } from "@angular/material/datepicker";
 import { MatFormFieldModule } from "@angular/material/form-field";
@@ -13,12 +13,12 @@ import { MatIconModule } from "@angular/material/icon";
 import { MatSnackBarModule } from "@angular/material/snack-bar";
 
 @NgModule({
-	declarations: [UsersDetailComponent, UsersListComponent],
+	declarations: [PersonDetailComponent, PersonsListComponent],
 	imports: [
 		CommonModule,
 		FormsModule,
 		ReactiveFormsModule,
-		UsersAdministrationRoutingModule,
+		PersonsAdministrationRoutingModule,
 		MatButtonModule,
 		MatCardModule,
 		MatDatepickerModule,
@@ -27,6 +27,6 @@ import { MatSnackBarModule } from "@angular/material/snack-bar";
 		MatInputModule,
 		MatSnackBarModule,
 	],
-	exports: [UsersDetailComponent, UsersListComponent],
+	exports: [PersonDetailComponent, PersonsListComponent],
 })
-export class UsersAdministrationModule {}
+export class PersonsAdministrationModule {}
