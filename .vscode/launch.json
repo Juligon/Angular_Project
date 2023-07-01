@@ -3,11 +3,18 @@
   "version": "0.2.0",
   "configurations": [
     {
+      "type": "java",
+      "name": "CompaniaViajesApplication",
+      "request": "launch",
+      "mainClass": "curso.angular.compania_viajes.CompaniaViajesApplication",
+      "projectName": "compania-viajes"
+    },
+    {
       "name": "ng serve",
       "type": "chrome",
       "request": "launch",
       "preLaunchTask": "npm: start",
-      "url": "http://localhost:4200/"
+      "url": "http://localhost:8080/"
     },
     {
       "name": "ng test",
