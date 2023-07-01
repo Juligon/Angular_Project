@@ -6,7 +6,7 @@ export class Trip {
   lugarDestino: string;
   fechaLlegada: Date;
   fechaSalida: Date;
-  usuarioId: number[] | undefined;
+  personaId: number[] | undefined;
   idColectivo: number;
   colectivo: Bus | undefined;
 

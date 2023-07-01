@@ -110,7 +110,7 @@
           <mat-select formControlName="colectivo">
             <mat-option disabled> -- </mat-option>
             <mat-option *ngFor="let bus of busesList" [value]="bus.id">
-              {{ bus.patente }} - {{ bus.asientos }} -
+              {{ bus.patente }} - {{ bus.cantidadAsientos }} -
               {{ bus.modelo }}
             </mat-option>
           </mat-select>
@@ -161,7 +161,7 @@
         mat-button
         [disabled]="tripForm.invalid"
       >
-        Guardar
+        GUARDAR
       </button>
     </form>
   </mat-card-content>

@@ -17,7 +17,7 @@ export class BusService {
     return this.http.get<any[]>(this.resourceUrl, { observe: 'response' }).pipe(
       catchError((error) => {
         console.log(error.message);
-        return throwError(() => 'Ocurrio un error');
+        return throwError(() => 'Ocurrió un error');
       })
     );
   }

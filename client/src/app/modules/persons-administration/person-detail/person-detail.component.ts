@@ -70,7 +70,7 @@ export class PersonDetailComponent implements OnInit {
 			(error) => {
 				console.log(error);
 				this.matSnackBar.open(error, "Cerrar");
-				this.router.navigate(["user", "list"]);
+				this.router.navigate(["person", "list"]);
 			}
 		);
 	}
@@ -116,6 +116,6 @@ export class PersonDetailComponent implements OnInit {
 
 	goBack() {
 		//this._location.back();
-		this.router.navigate(["layout", "list"]);
+		this.router.navigate(["person", "list"]);
 	}
 }

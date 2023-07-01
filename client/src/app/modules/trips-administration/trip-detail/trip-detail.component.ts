@@ -17,6 +17,7 @@ import { Router } from '@angular/router';
   styleUrls: ['./trip-detail.component.css'],
 })
 export class TripDetailComponent implements OnInit {
+
   tripForm = this.formBuilder.group({
     origen: ['', Validators.required],
     destino: ['', Validators.required],
@@ -28,7 +29,6 @@ export class TripDetailComponent implements OnInit {
 
   busesList: Bus[] = [];
   personsList: Person[] = [];
-
   selectedTrip: Trip | null = null;
 
   constructor(
@@ -44,17 +44,17 @@ export class TripDetailComponent implements OnInit {
   ngOnInit() {
     this.busService.findAll().subscribe(
       (res) => {
-        //@ts-ignore
-        this.busesList = res.body?.map((json) => {
-          const bus = new Bus(
-            json.id,
-            json.patente,
-            json.cantidadAsientos,
-            json.modeloId
-          );
-          this.findModelBus(bus);
-          return bus;
-        });
+        if (res.body)
+          this.busesList = res.body.map((json) => {
+            const bus = new Bus(
+              json.id,
+              json.patente,
+              json.cantidadAsientos,
+              json.modeloId
+            );
+            this.findModelBus(bus);
+            return bus;
+          });
       },
       (error) => {
         console.log(error);
@@ -63,10 +63,10 @@ export class TripDetailComponent implements OnInit {
     );
 
     this.personService.findAll().subscribe((res) => {
-      //@ts-ignore
-      this.personsList = res.body?.map(
-        (json) => new Person(json.id, json.nombre, json.apellido, json.edad)
-      );
+      if (res.body)
+        this.personsList = res.body.map(
+          (json) => new Person(json.id, json.name, json.lastName, json.age)
+        );
     });
   }
 
@@ -78,15 +78,20 @@ export class TripDetailComponent implements OnInit {
 
   saveChanges() {
     //@ts-ignore
-    const pasajeros: number[] = this.tripForm.get('pasajeros').value;
+    const pasajeros: number[] = this.tripForm.get('pasajeros')?.value;
 
     const body: TripDTO = {
-      lugarSalida: this.tripForm.get('origen').value,
-      lugarDestino: this.tripForm.get('destino').value,
-      fechaLlegada: this.tripForm.get('fechaLlegada').value,
-      fechaSalida: this.tripForm.get('fechaSalida').value,
+      //@ts-ignore
+      lugarSalida: this.tripForm.get('origen')?.value,
+      //@ts-ignore
+      lugarDestino: this.tripForm.get('destino')?.value,
+      //@ts-ignore
+      fechaLlegada: this.tripForm.get('fechaLlegada')?.value,
+      //@ts-ignore
+      fechaSalida: this.tripForm.get('fechaSalida')?.value,
       personaId: pasajeros,
-      idColectivo: this.tripForm.get('colectivo').value,
+      //@ts-ignore
+      idColectivo: this.tripForm.get('colectivo')?.value,
     };
 
     if (this.selectedTrip && this.selectedTrip.id) {
@@ -97,10 +102,7 @@ export class TripDetailComponent implements OnInit {
 
       this.tripService.updateTrip(body).subscribe(
         (res) => {
-          this.matSnackBar.open(
-            'Se guardaron los cambios',
-            'Cerrar'
-          );
+          this.matSnackBar.open('Se guardaron los cambios', 'Cerrar');
           this.router.navigate(['trips', 'list']);
         },
         (error) => {

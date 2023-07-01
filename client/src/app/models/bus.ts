@@ -3,19 +3,19 @@ import { Model } from './model';
 export class Bus {
   id: number;
   patente: string;
-  asientos: number;
+  cantidadAsientos: number;
   modeloId: number;
   modelo: Model | undefined;
 
   constructor(
     id: number,
     patente: string,
-    asientos: number,
+    cantidadAsientos: number,
     modeloId: number
   ) {
     this.id = id;
     this.patente = patente;
-    this.asientos = asientos;
+    this.cantidadAsientos = cantidadAsientos;
     this.modeloId = modeloId;
   }
 }

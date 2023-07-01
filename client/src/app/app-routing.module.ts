@@ -6,7 +6,7 @@ import { PersonDetailComponent } from "./modules/persons-administration/person-d
 import { AdminLayoutComponent } from "./shared/admin-layout/admin-layout/admin-layout.component";
 
 const routes: Routes = [
-	{ path: "", redirectTo: "persons", pathMatch: "full" },
+	{ path: "", redirectTo: "person", pathMatch: "full" },
 	// { path: 'list', component: PersonsListComponent },
 	// { path: 'detail', component: PersonDetailComponent },
 	{
@@ -14,7 +14,7 @@ const routes: Routes = [
 		component: AdminLayoutComponent,
 		children: [
 			{
-				path: "persons",
+				path: "person",
 				loadChildren: () =>
 					import(
 						"./modules/persons-administration/persons-administration.module"

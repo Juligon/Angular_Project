@@ -28,10 +28,10 @@ export class PersonsListComponent implements OnInit {
 
 	loadPerson() {
 		this.personService.findAll().subscribe(
-			(response) => {
-				if (response.body)
-					this.personsList = response.body.map(
-						(json) => new Person(json.id, json.nombre, json.apellido, json.edad)
+			(res) => {
+				if (res.body)
+					this.personsList = res.body.map(
+						(json) => new Person(json.id, json.name, json.lastName, json.age)
 					);
 			},
 			(error) => {
