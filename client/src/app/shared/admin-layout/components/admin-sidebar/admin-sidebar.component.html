@@ -1,18 +1,24 @@
 <mat-nav-list>
   <mat-list-item (click)="navigate('/person/list')">
-    <mat-icon mat-list-icon>group</mat-icon>
-    <h4 mat-line *ngIf="isExpanded">Personas</h4>
+    <div class="list-item">
+      <mat-icon mat-list-icon>group</mat-icon>
+      <span mat-line *ngIf="isExpanded" class="span">Personas</span>
+    </div>
   </mat-list-item>
   <mat-list-item>
     <a routerLink="/buses/list" class="link">
-      <mat-icon mat-list-icon>directions_bus</mat-icon>
-      <h4 mat-line *ngIf="isExpanded">Colectivos</h4>
+      <div class="list-item">
+        <mat-icon mat-list-icon>directions_bus</mat-icon>
+        <span mat-line *ngIf="isExpanded" class="span">Colectivos</span>
+      </div>
     </a>
   </mat-list-item>
   <mat-list-item>
     <a routerLink="/trips/list" class="link">
-      <mat-icon mat-list-icon>fork_right</mat-icon>
-      <h4 mat-line *ngIf="isExpanded">Viajes</h4>
+      <div class="list-item">
+        <mat-icon mat-list-icon>fork_right</mat-icon>
+        <span mat-line *ngIf="isExpanded" class="span">Viajes</span>
+      </div>
     </a>
   </mat-list-item>
 </mat-nav-list>
