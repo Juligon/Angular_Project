@@ -51,7 +51,7 @@ export class PersonsListComponent implements OnInit {
 	deletePerson(persona: Person) {
 		this.personService.deletePerson(persona.id).subscribe(
 			(res) => {
-				this.matSnackBar.open("Persona eliminada correctamente", "Cerrar");
+				this.matSnackBar.open("Eliminado correctamente", "Cerrar");
 				this.loadPerson();
 			},
 			(error) => {

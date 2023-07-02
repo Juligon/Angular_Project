@@ -49,7 +49,7 @@ export class PersonService {
 				catchError((err) => {
 					console.log("Ocurrió un error: ");
 					console.log(err);
-					return throwError(() => "Persona inexistente!");
+					return throwError(() => "Usuario inexistente!");
 				})
 			);
 	}
@@ -69,7 +69,7 @@ export class PersonService {
 			catchError((err) => {
 				console.log("Ocurrió un error: ");
 				console.log(err);
-				return throwError(() => "Persona inexistente!");
+				return throwError(() => "PUsuario inexistente!");
 			})
 		);
 	}
@@ -81,7 +81,7 @@ export class PersonService {
 				catchError((err) => {
 					console.log("Ocurrió un error: ");
 					console.log(err);
-					return throwError(() => "Persona inexistente!");
+					return throwError(() => "Usuario inexistente!");
 				})
 			);
 	}

@@ -6,7 +6,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { Person } from '../../../models/person';
 import { ModelService } from '../../../services/model.service';
 import { Model } from '../../../models/model';
-import { PersonDTO, PersonService } from '../../../services/person.service';
+import { PersonService } from '../../../services/person.service';
 import { TripDTO, TripService } from '../../../services/trip.service';
 import { Trip } from '../../../models/trip';
 import { Router } from '@angular/router';
