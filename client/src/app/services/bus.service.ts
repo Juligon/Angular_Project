@@ -30,4 +30,45 @@ export class BusService {
       })
     );
   }
+
+  createBus(bus: BusDTO): Observable<any> {
+    return this.http.post<any>(this.resourceUrl, bus).pipe(
+      catchError((err) => {
+        console.log('Ocurrió un error: ');
+        console.log(err);
+        return throwError(() => 'No se pudo crear');
+      })
+    );
+  }
+
+  updateBus(bus: BusDTO): Observable<any> {
+    return this.http
+      .put<any>(this.resourceUrl + '/' + bus.id, bus)
+      .pipe(
+        catchError((err) => {
+          console.log('Ocurrió un error: ');
+          console.log(err);
+          return throwError(() => 'Colectivo inexistente!');
+        })
+      );
+  }
+
+  deleteBus(id: number): Observable<HttpResponse<any>> {
+    return this.http
+      .delete<any>(this.resourceUrl + '/' + id, { observe: 'response' })
+      .pipe(
+        catchError((err) => {
+          console.log('Ocurrió un error: ');
+          console.log(err);
+          return throwError(() => 'Colectivo inexistente!');
+        })
+      );
+  }
+}
+
+export interface BusDTO {
+  id: number;
+  patente: string;
+  cantidadAsientos: string;
+  modeloId: number;
 }

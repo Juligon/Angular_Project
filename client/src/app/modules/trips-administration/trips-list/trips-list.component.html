@@ -1,17 +1,9 @@
-<!-- <div class="demo-button-container">
-  <button mat-raised-button (click)="addData()" class="demo-button">
-    Add data
+<div class="list-container">
+  <button style="margin-bottom: 10px;" mat-icon-button (click)="createTrip()">
+    <mat-icon>add</mat-icon>
   </button>
-  <button
-      mat-raised-button
-      [disabled]="!dataSource.length"
-      (click)="removeData()"
-      class="demo-button">
-    Remove data
-  </button>
-</div> -->
-<mat-card style="margin: 10px">
-  <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+
+  <table mat-table *ngFor="let trip of tripsList" [dataSource]="dataSource" class="mat-elevation-z8">
     <ng-container matColumnDef="id">
       <th mat-header-cell *matHeaderCellDef>ID</th>
       <td mat-cell *matCellDef="let element">{{ element.id }}</td>
@@ -42,13 +34,18 @@
         {{ element.colectivo?.patente }}
       </td>
     </ng-container>
-    <ng-container matColumnDef="acciones">
-      <th mat-header-cell *matHeaderCellDef>Acciones</th>
+    <ng-container matColumnDef="editar">
+      <th mat-header-cell *matHeaderCellDef>Editar</th>
       <td mat-cell *matCellDef="let element">
-        <button mat-icon-button>
+        <button mat-icon-button (click)="selectTrip(trip)">
           <mat-icon>edit</mat-icon>
         </button>
-        <button mat-icon-button>
+      </td>
+    </ng-container>
+    <ng-container matColumnDef="borrar">
+      <th mat-header-cell *matHeaderCellDef>Borrar</th>
+      <td mat-cell *matCellDef="let element">
+        <button mat-icon-button (click)="deleteTrip(trip)">
           <mat-icon>delete</mat-icon>
         </button>
       </td>
@@ -56,4 +53,4 @@
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
     <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
   </table>
-</mat-card>
+</div>

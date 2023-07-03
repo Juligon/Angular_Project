@@ -1,0 +1,17 @@
+.trip-container {
+	margin: 10px;
+}
+
+.title {
+  display: flex;
+  gap: 20px;
+}
+
+.go-back-button {
+  bottom: 7px;
+}
+
+.hint {
+  font-size: 8px;
+  color: #E73F33;
+}

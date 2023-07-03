@@ -17,7 +17,6 @@ import { Router } from '@angular/router';
   styleUrls: ['./trip-detail.component.css'],
 })
 export class TripDetailComponent implements OnInit {
-
   tripForm = this.formBuilder.group({
     origen: ['', Validators.required],
     destino: ['', Validators.required],
@@ -72,6 +71,7 @@ export class TripDetailComponent implements OnInit {
 
   findModelBus(colectivo: Bus) {
     this.modelService.findOne(colectivo.modeloId).subscribe((res) => {
+      if (res) 
       colectivo.modelo = new Model(res.id, res.nombre, res.marca);
     });
   }
@@ -122,5 +122,10 @@ export class TripDetailComponent implements OnInit {
         }
       );
     }
+  }
+
+  goBack() {
+    //this._location.back();
+    this.router.navigate(['trips', 'list']);
   }
 }

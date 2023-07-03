@@ -1,11 +1,10 @@
 .person-container {
   display: flex;
-  flex-direction: column;
   margin: 10px;
 }
 
 .person-input {
-  width: 50%;
+  width: 100%;
   align-self: center;
 }
 
@@ -20,4 +19,5 @@
 
 .hint {
   font-size: 8px;
+  color: #E73F33;
 }
