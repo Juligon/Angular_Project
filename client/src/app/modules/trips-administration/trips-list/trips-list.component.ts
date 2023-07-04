@@ -24,7 +24,6 @@ export class TripsListComponent implements OnInit {
   ];
 
   tripsList: Trip[] = [];
-  selectedTrip: Trip | null = null
 
   constructor(
     private tripService: TripService,
@@ -63,7 +62,6 @@ export class TripsListComponent implements OnInit {
   }
 
 	selectTrip(trip: Trip) {
-    this.selectedTrip = trip;
 		this.router.navigate(["trips", "detail", trip.id]);
 	}
 

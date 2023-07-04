@@ -9,7 +9,7 @@ import { Model } from '../../../models/model';
 import { PersonService } from '../../../services/person.service';
 import { TripDTO, TripService } from '../../../services/trip.service';
 import { Trip } from '../../../models/trip';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-trip-detail',
@@ -37,6 +37,7 @@ export class TripDetailComponent implements OnInit {
     private personService: PersonService,
     private tripService: TripService,
     private router: Router,
+    private route: ActivatedRoute,
     private matSnackBar: MatSnackBar
   ) {}
 
@@ -67,6 +68,14 @@ export class TripDetailComponent implements OnInit {
           (json) => new Person(json.id, json.name, json.lastName, json.age)
         );
     });
+
+    this.route.paramMap.subscribe((params) => {
+      const id = params.get('id');
+      console.log('El id que estoy editando es: ' + id);
+      if (id) {
+        this.findTrip(Number(id));
+      }
+    });
   }
 
   findModelBus(colectivo: Bus) {
@@ -74,6 +83,30 @@ export class TripDetailComponent implements OnInit {
       if (res) 
       colectivo.modelo = new Model(res.id, res.nombre, res.marca);
     });
+  }
+
+  findTrip(id: number) {
+    this.tripService.findOne(id).subscribe(
+      (res) => {
+        if (res.body) {
+          this.selectedTrip = res.body;
+
+          this.tripForm.patchValue({
+            origen: res.body.lugarSalida,
+            destino: res.body.lugarDestino,
+            fechaSalida: new Date(res.body.fechaSalida),
+            fechaLlegada: new Date(res.body.fechaLlegada),
+            colectivo: res.body.idColectivo,
+            pasajeros: res.body.personaId
+          });
+        }
+      },
+      (error) => {
+        console.log(error);
+        this.matSnackBar.open(error, 'Cerrar');
+        this.router.navigate(['person', 'list']);
+      }
+    );
   }
 
   saveChanges() {
