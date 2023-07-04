@@ -104,7 +104,7 @@ export class TripDetailComponent implements OnInit {
       (error) => {
         console.log(error);
         this.matSnackBar.open(error, 'Cerrar');
-        this.router.navigate(['person', 'list']);
+        this.router.navigate(['trips', 'list']);
       }
     );
   }

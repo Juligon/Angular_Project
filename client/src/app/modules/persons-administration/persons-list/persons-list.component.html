@@ -3,7 +3,7 @@
     <mat-icon>add</mat-icon>
   </button>
 
-  <mat-card *ngFor="let person of personsList" style="margin: 10px">
+  <mat-card *ngFor="let person of personsList" style="min-width: 305px; margin: 10px">
     <mat-card-header>
       <mat-card-title>{{ person.showName() }}</mat-card-title>
       <mat-card-subtitle>Edad: {{ person.edad }}</mat-card-subtitle>
