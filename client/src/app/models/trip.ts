@@ -6,9 +6,9 @@ export class Trip {
   lugarDestino: string;
   fechaLlegada: Date;
   fechaSalida: Date;
-  personaId: number[] | undefined;
+  personaId?: number[];
   idColectivo: number;
-  colectivo: Bus | undefined;
+  colectivo?: Bus;
 
   constructor(
     id: number,

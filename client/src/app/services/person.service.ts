@@ -1,14 +1,6 @@
-import { Injectable, EventEmitter } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { Person } from '../models/person';
-import {
-  Observable,
-  of,
-  catchError,
-  throwError,
-  map,
-  mergeMap,
-  first,
-} from 'rxjs';
+import { Observable, catchError, throwError } from 'rxjs';
 import { HttpClient, HttpResponse } from '@angular/common/http';
 import { environment } from '../../environments/environment';
 
