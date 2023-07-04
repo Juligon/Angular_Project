@@ -3,7 +3,7 @@
     <mat-icon>add</mat-icon>
   </button>
 
-  <table mat-table *ngFor="let trip of tripsList" [dataSource]="dataSource" class="mat-elevation-z8">
+  <table mat-table [dataSource]="tripsList" class="mat-elevation-z8">
     <ng-container matColumnDef="id">
       <th mat-header-cell *matHeaderCellDef>ID</th>
       <td mat-cell *matCellDef="let element">{{ element.id }}</td>
@@ -16,16 +16,16 @@
       <th mat-header-cell *matHeaderCellDef>Destino</th>
       <td mat-cell *matCellDef="let element">{{ element.lugarDestino }}</td>
     </ng-container>
-    <ng-container matColumnDef="fechaSalida">
-      <th mat-header-cell *matHeaderCellDef>Fecha Salida</th>
-      <td mat-cell *matCellDef="let element">
-        {{ element.fechaSalida | date : "dd/MM/YYYY - hh:mm" }}
-      </td>
-    </ng-container>
     <ng-container matColumnDef="fechaLlegada">
-      <th mat-header-cell *matHeaderCellDef>Fecha Llegada</th>
+      <th mat-header-cell *matHeaderCellDef>Ida</th>
       <td mat-cell *matCellDef="let element">
         {{ element.fechaLlegada | date : "dd/MM/YYYY - hh:mm" }}
+      </td>
+    </ng-container>
+    <ng-container matColumnDef="fechaSalida">
+      <th mat-header-cell *matHeaderCellDef>Vuelta</th>
+      <td mat-cell *matCellDef="let element">
+        {{ element.fechaSalida | date : "dd/MM/YYYY - hh:mm" }}
       </td>
     </ng-container>
     <ng-container matColumnDef="colectivo">
@@ -37,7 +37,7 @@
     <ng-container matColumnDef="editar">
       <th mat-header-cell *matHeaderCellDef>Editar</th>
       <td mat-cell *matCellDef="let element">
-        <button mat-icon-button (click)="selectTrip(trip)">
+        <button mat-icon-button (click)="selectTrip(element)">
           <mat-icon>edit</mat-icon>
         </button>
       </td>
@@ -45,7 +45,7 @@
     <ng-container matColumnDef="borrar">
       <th mat-header-cell *matHeaderCellDef>Borrar</th>
       <td mat-cell *matCellDef="let element">
-        <button mat-icon-button (click)="deleteTrip(trip)">
+        <button mat-icon-button (click)="deleteTrip(element)">
           <mat-icon>delete</mat-icon>
         </button>
       </td>

@@ -7,7 +7,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 
 @Component({
-  selector: 'app-trips.ts-list',
+  selector: 'app-trips-list',
   templateUrl: './trips-list.component.html',
   styleUrls: ['./trips-list.component.css'],
 })
@@ -22,9 +22,6 @@ export class TripsListComponent implements OnInit {
     'editar',
     'borrar'
   ];
-  dataSource = [
-    new Trip(1, 'Viedma', 'Patagones', '2023-06-29', '2023-06-29', 1),
-  ];
 
   tripsList: Trip[] = [];
   selectedTrip: Trip | null = null
@@ -37,9 +34,13 @@ export class TripsListComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+    this.loadTrips();
+  }
+
+  loadTrips() {
     this.tripService.findAll().subscribe((res) => {
-      if (res.body)
-        this.dataSource = res.body.map((res) => {
+      if (res.body) {
+        this.tripsList = res.body.map((res) => {
           const trip = new Trip(
             res.id,
             res.lugarSalida,
@@ -51,34 +52,43 @@ export class TripsListComponent implements OnInit {
           this.loadBus(trip);
           return trip;
         });
+      }
     });
-  }
+  }  
 
   loadBus(trip: Trip) {
     this.busService.findOne(trip.idColectivo).subscribe((res) => {
       trip.colectivo = res;
     });
-  } 
-  
+  }
+
 	selectTrip(trip: Trip) {
+    this.selectedTrip = trip;
 		this.router.navigate(["trips", "detail", trip.id]);
 	}
 
 	createTrip() {
 		this.router.navigate(["trips", "create"]);
-    
+
 	}
 
-	deleteTrip(trip: Trip) {
-		this.tripService.deleteTrip(trip.id).subscribe(
-			(res) => {
-				this.matSnackBar.open("Eliminado correctamente", "Cerrar");
-				this.loadBus(trip);
-			},
-			(error) => {
-				console.log(error);
-				this.matSnackBar.open(error, "Cerrar");
-			}
-		);
+  deleteTrip(trip: Trip) {
+    this.tripService.deleteTrip(trip.id).subscribe(
+      (res) => {
+        this.matSnackBar.open("Eliminado correctamente", "Cerrar");
+        this.tripsList= this.tripsList.filter((element) => element.id !== trip.id);
+        this.loadTrips();
+      },
+      (error) => {
+        console.log(error);
+        this.matSnackBar.open(error, "Cerrar");
+      }
+    );
   }
 }
+
+
+
+
+
+

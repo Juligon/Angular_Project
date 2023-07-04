@@ -41,7 +41,7 @@ export class TripDetailComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.busService.findAll().subscribe(
+     this.busService.findAll().subscribe(
       (res) => {
         if (res.body)
           this.busesList = res.body.map((json) => {
