@@ -16,7 +16,6 @@ export class BusesListComponent implements OnInit {
     'id',
     'patente',
     'cantidadAsientos',
-    'modeloId',
     'modelo',
     'editar',
     'borrar',
@@ -60,6 +59,7 @@ export class BusesListComponent implements OnInit {
   }
 
   findModelBus(colectivo: Bus) {
+    if (colectivo.modeloId)
     this.modelService.findOne(colectivo.modeloId).subscribe((res) => {
       if (res) 
       colectivo.modelo = new Model(res.id, res.nombre, res.marca);

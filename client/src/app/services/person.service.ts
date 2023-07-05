@@ -13,34 +13,22 @@ export class PersonService {
   constructor(private http: HttpClient) {}
 
   findAll(): Observable<HttpResponse<any[]>> {
-    // return of(list).pipe(
-    // 	catchError((error) => {
-    // 		return throwError(error);
-    // 	}),
-    // 	map((persons) => {
-    // 		users.forEach((person) => (person.nombre = "Sr/Sra " + person.name));
-    // 		return persons;
-    // 	})
-    // );
-    return this.http.get<any[]>(this.resourceUrl, { observe: 'response' }).pipe(
+    return this.http
+    .get<any[]>(this.resourceUrl, { observe: 'response' })
+    .pipe(
       catchError((err) => {
-        console.log('Ocurrió un error');
-        return throwError(() => err);
+        console.log(err.message);
+        return throwError(() => 'Ocurrió un error');
       })
     );
   }
 
   findOne(id: number): Observable<HttpResponse<any>> {
-    // return of(list).pipe(
-    // 	mergeMap((person) => person),
-    // 	first((person) => person.id === id)
-    // );
     return this.http
       .get<any>(this.resourceUrl + '/' + id, { observe: 'response' })
       .pipe(
         catchError((err) => {
-          console.log('Ocurrió un error: ');
-          console.log(err);
+          console.log(err.message);
           return throwError(() => 'Usuario inexistente!');
         })
       );

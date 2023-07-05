@@ -4,7 +4,6 @@ import { HttpClient, HttpResponse } from '@angular/common/http';
 import { catchError, Observable, throwError } from 'rxjs';
 import { Trip } from '../models/trip';
 
-
 @Injectable({
   providedIn: 'root',
 })
@@ -27,8 +26,7 @@ export class TripService {
       .get<any>(this.resourceUrl + '/' + id, { observe: 'response' })
       .pipe(
         catchError((err) => {
-          console.log('Ocurrió un error: ');
-          console.log(err);
+          console.log(err.message);
           return throwError(() => 'Viaje inexistente!');
         })
       );

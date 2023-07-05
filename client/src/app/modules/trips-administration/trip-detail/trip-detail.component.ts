@@ -17,7 +17,6 @@ import { ActivatedRoute, Router } from '@angular/router';
   styleUrls: ['./trip-detail.component.css'],
 })
 export class TripDetailComponent implements OnInit {
-  
   tripForm = this.formBuilder.group({
     origen: ['', Validators.required],
     destino: ['', Validators.required],
@@ -43,7 +42,7 @@ export class TripDetailComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-     this.busService.findAll().subscribe(
+    this.busService.findAll().subscribe(
       (res) => {
         if (res.body)
           this.busesList = res.body.map((json) => {
@@ -80,10 +79,10 @@ export class TripDetailComponent implements OnInit {
   }
 
   findModelBus(colectivo: Bus) {
-    this.modelService.findOne(colectivo.modeloId).subscribe((res) => {
-      if (res) 
-      colectivo.modelo = new Model(res.id, res.nombre, res.marca);
-    });
+    if (colectivo.modeloId)
+      this.modelService.findOne(colectivo.modeloId).subscribe((res) => {
+        if (res) colectivo.modelo = new Model(res.id, res.nombre, res.marca);
+      });
   }
 
   findTrip(id: number) {
@@ -98,7 +97,7 @@ export class TripDetailComponent implements OnInit {
             fechaSalida: new Date(res.body.fechaSalida),
             fechaLlegada: new Date(res.body.fechaLlegada),
             colectivo: res.body.idColectivo,
-            pasajeros: res.body.personaId
+            pasajeros: res.body.personaId,
           });
         }
       },
@@ -156,6 +155,11 @@ export class TripDetailComponent implements OnInit {
         }
       );
     }
+  }
+
+  compareObjects(o1: any, o2: any) {
+    if (o1 && o2 && o1.id == o2.id) return true;
+    else return false;
   }
 
   goBack() {

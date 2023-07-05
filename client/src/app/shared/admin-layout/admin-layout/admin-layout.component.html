@@ -6,12 +6,12 @@
 		class="example-sidenav"
 		mode="side"
 		disableClose="true"
-		[@openClose]="isExpanded ? 'open' : 'closed'"
+		style="width: {{isExpanded ? 200 : 70}}px"
 	>
 		<app-admin-sidebar [isExpanded]="isExpanded"></app-admin-sidebar>
 	</mat-drawer>
 
-	<div class="example-sidenav-content">
+	<div  class="example-sidenav-content">
 		<div>
 			<h1 style="padding: 10px">Bienvenido</h1>
 		</div>

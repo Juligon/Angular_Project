@@ -15,9 +15,9 @@
   <mat-card-content class="bus-content">
     <form [formGroup]="busForm" (ngSubmit)="saveChanges()">
       <div style="display: flex; gap: 15px; margin-bottom: 15px">
-        <mat-form-field>
+        <mat-form-field style="width: 33%">
           <mat-label>Patente: </mat-label>
-          <input matInput type="text" formControlName="patente" />
+          <input matInput type="text" formControlName="patente"/>
 
           <div
             *ngIf="
@@ -35,9 +35,9 @@
           </div>
         </mat-form-field>
 
-        <mat-form-field>
+        <mat-form-field style="width: 33%">
           <mat-label>Cantidad de asientos: </mat-label>
-          <input matInput type="text" formControlName="cantidadAsientos" />
+          <input matInput type="text" formControlName="cantidadAsientos"/>
 
           <div
             *ngIf="
@@ -55,7 +55,7 @@
           </div>
         </mat-form-field>
 
-        <mat-form-field>
+        <mat-form-field style="width: 33%">
           <mat-label>Id Modelo: </mat-label>
           <input matInput type="text" formControlName="modeloId" />
 
@@ -69,31 +69,6 @@
             <mat-hint
               class="hint"
               *ngIf="busForm.controls['modeloId'].errors?.['required']"
-            >
-              Complete el campo
-            </mat-hint>
-          </div>
-        </mat-form-field>
-
-        <mat-form-field>
-          <mat-label>Modelo: </mat-label>
-          <mat-select formControlName="modelo">
-            <mat-option disabled> -- </mat-option>
-            <mat-option *ngFor="let model of modelsList" [value]="model.id">
-              {{ model.nombre }} - {{ model.marca }}
-            </mat-option>
-          </mat-select>
-
-          <div
-            *ngIf="
-              busForm.controls['modelo'].invalid &&
-              (busForm.controls['modelo'].dirty ||
-                busForm.controls['modelo'].touched)
-            "
-          >
-            <mat-hint
-              class="hint"
-              *ngIf="busForm.controls['modelo'].errors?.['required']"
             >
               Complete el campo
             </mat-hint>

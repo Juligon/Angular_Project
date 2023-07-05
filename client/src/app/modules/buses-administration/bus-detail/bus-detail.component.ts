@@ -13,12 +13,10 @@ import { ActivatedRoute, Router } from '@angular/router';
   styleUrls: ['./bus-detail.component.css'],
 })
 export class BusDetailComponent implements OnInit {
-
   busForm = this.formBuilder.group({
     patente: ['', Validators.required],
     cantidadAsientos: [0, Validators.required],
     modeloId: [0, Validators.required],
-    modelo: ['', Validators.required]
   });
 
   modelsList: Model[] = [];
@@ -38,11 +36,7 @@ export class BusDetailComponent implements OnInit {
       (res) => {
         if (res.body)
           this.modelsList = res.body.map((json) => {
-            const model = new Model(
-              json.id,
-              json.nombre,
-              json.marca
-            );
+            const model = new Model(json.id, json.nombre, json.marca);
             return model;
           });
       },
@@ -50,37 +44,41 @@ export class BusDetailComponent implements OnInit {
         console.log(error);
         this.matSnackBar.open(error, 'cerrar');
       }
-    )
+    );
 
     this.route.paramMap.subscribe((params) => {
       const id = params.get('id');
-      console.log('El id que estoy editando es: ' + id);
       if (id) {
-        //@ts-ignore
         this.findBus(Number(id));
       }
     });
   }
 
   findModelBus(colectivo: Bus) {
-    this.modelService.findOne(colectivo.modeloId).subscribe((res) => {
-      if (res) 
-      colectivo.modelo = new Model(res.id, res.nombre, res.marca);
-    });
+    if (colectivo.modeloId)
+      this.modelService.findOne(colectivo.modeloId).subscribe((res) => {
+        if (res) 
+        colectivo.modelo = new Model(res.id, res.nombre, res.marca);
+      });
   }
 
   findBus(id: number) {
     this.busService.findOne(id).subscribe(
       (res) => {
         if (res) {
-          this.selectedBus = res;
+          this.selectedBus = new Bus(
+            res.id,
+            res.patente,
+            res.cantidadAsientos,
+            //@ts-ignore
+            res.modeloId
+          );
+          this.findModelBus(this.selectedBus);
 
           this.busForm.patchValue({
-            patente: res.patente,
-            cantidadAsientos: res.cantidadAsientos,
-            modeloId: res.modeloId,
-            //@ts-ignore
-            modelo: res.modelo
+            patente: this.selectedBus.patente,
+            cantidadAsientos: this.selectedBus.cantidadAsientos,
+            modeloId: this.selectedBus.modeloId,
           });
         }
       },
@@ -93,7 +91,6 @@ export class BusDetailComponent implements OnInit {
   }
 
   saveChanges() {
-
     const body: BusDTO = {
       //@ts-ignore
       patente: this.busForm.get('patente')?.value,
@@ -101,8 +98,6 @@ export class BusDetailComponent implements OnInit {
       cantidadAsientos: this.busForm.get('cantidadAsientos')?.value,
       //@ts-ignore
       modeloId: this.busForm.get('modeloId')?.value,
-      //@ts-ignore
-      modelo: this.busForm.get('modelo')?.value,
     };
 
     if (this.selectedBus && this.selectedBus.id) {
@@ -140,4 +135,3 @@ export class BusDetailComponent implements OnInit {
     this.router.navigate(['buses', 'list']);
   }
 }
-

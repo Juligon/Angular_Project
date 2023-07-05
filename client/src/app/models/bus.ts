@@ -4,7 +4,7 @@ export class Bus {
   id: number;
   patente: string;
   cantidadAsientos: number;
-  modeloId: number;
+  modeloId?: number;
   modelo?: Model;
 
   constructor(

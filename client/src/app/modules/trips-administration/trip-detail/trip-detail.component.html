@@ -145,7 +145,7 @@
         <mat-form-field>
           <mat-label>Pasajeros: </mat-label>
 
-          <mat-select formControlName="pasajeros" multiple>
+          <mat-select formControlName="pasajeros" multiple [compareWith]="compareObjects">
             <mat-option *ngFor="let person of personsList" [value]="person.id">
               {{ person.nombre }} {{ person.apellido }}
             </mat-option>

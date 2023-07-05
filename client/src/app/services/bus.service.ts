@@ -22,10 +22,12 @@ export class BusService {
   }
 
   findOne(id: number): Observable<Bus> {
-    return this.http.get<Bus>(this.resourceUrl + '/' + id).pipe(
+    return this.http
+    .get<Bus>(this.resourceUrl + '/' + id)
+    .pipe(
       catchError((err) => {
         console.log(err.message);
-        return throwError(() => 'Ocurrió un error');
+        return throwError(() => 'Colectivo inexistente!');
       })
     );
   }
@@ -40,16 +42,14 @@ export class BusService {
     );
   }
 
-  updateBus(bus: BusDTO): Observable<any> {
-    return this.http
-      .put<any>(this.resourceUrl + '/' + bus.id, bus)
-      .pipe(
-        catchError((err) => {
-          console.log('Ocurrió un error: ');
-          console.log(err);
-          return throwError(() => 'Colectivo inexistente!');
-        })
-      );
+  updateBus(bus: BusDTO) {
+    return this.http.put<any>(this.resourceUrl + '/' + bus.id, bus).pipe(
+      catchError((err) => {
+        console.log('Ocurrió un error: ');
+        console.log(err);
+        return throwError(() => 'Colectivo inexistente!');
+      })
+    );
   }
 
   deleteBus(id: number): Observable<HttpResponse<any>> {
@@ -66,7 +66,7 @@ export class BusService {
 }
 
 export interface BusDTO {
-  id: number;
+  id?: number;
   patente: string;
   cantidadAsientos: string;
   modeloId: number;
