@@ -119,7 +119,6 @@
 
         <mat-form-field>
           <mat-label>Colectivo: </mat-label>
-
           <mat-select formControlName="colectivo">
             <mat-option disabled> -- </mat-option>
             <mat-option *ngFor="let bus of busesList" [value]="bus.id">

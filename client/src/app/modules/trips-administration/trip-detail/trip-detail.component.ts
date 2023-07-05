@@ -17,6 +17,7 @@ import { ActivatedRoute, Router } from '@angular/router';
   styleUrls: ['./trip-detail.component.css'],
 })
 export class TripDetailComponent implements OnInit {
+  
   tripForm = this.formBuilder.group({
     origen: ['', Validators.required],
     destino: ['', Validators.required],

@@ -34,12 +34,30 @@ export class BusDetailComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+    this.modelService.findAll().subscribe(
+      (res) => {
+        if (res.body)
+          this.modelsList = res.body.map((json) => {
+            const model = new Model(
+              json.id,
+              json.nombre,
+              json.marca
+            );
+            return model;
+          });
+      },
+      (error) => {
+        console.log(error);
+        this.matSnackBar.open(error, 'cerrar');
+      }
+    )
+
     this.route.paramMap.subscribe((params) => {
       const id = params.get('id');
       console.log('El id que estoy editando es: ' + id);
       if (id) {
         //@ts-ignore
-        this.findModelBus(id);
+        this.findBus(Number(id));
       }
     });
   }

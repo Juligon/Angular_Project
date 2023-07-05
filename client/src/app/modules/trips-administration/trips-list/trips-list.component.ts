@@ -74,7 +74,7 @@ export class TripsListComponent implements OnInit {
     this.tripService.deleteTrip(trip.id).subscribe(
       (res) => {
         this.matSnackBar.open("Eliminado correctamente", "Cerrar");
-        this.tripsList= this.tripsList.filter((element) => element.id !== trip.id);
+        this.tripsList = this.tripsList.filter((element) => element.id !== trip.id);
         this.loadTrips();
       },
       (error) => {

@@ -3,6 +3,8 @@ import { Bus } from 'src/app/models/bus';
 import { BusService } from 'src/app/services/bus.service';
 import { Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { ModelService } from 'src/app/services/model.service';
+import { Model } from 'src/app/models/model';
 
 @Component({
   selector: 'app-buses-list',
@@ -15,6 +17,7 @@ export class BusesListComponent implements OnInit {
     'patente',
     'cantidadAsientos',
     'modeloId',
+    'modelo',
     'editar',
     'borrar',
   ];
@@ -25,27 +28,16 @@ export class BusesListComponent implements OnInit {
 
   constructor(
     private busService: BusService,
+    private modelService: ModelService,
     private matSnackBar: MatSnackBar,
     private router: Router
   ) {}
 
   ngOnInit() {
-    this.busService.findAll().subscribe((res) => {
-      if (res.body)
-        this.dataSource = res.body.map((res) => {
-          const bus = new Bus(
-            res.id,
-            res.patente,
-            res.cantidadAsientos,
-            res.modeloId
-          );
-          this.loadBus();
-          return bus;
-        });
-    });
+    this.loadBuses();
   }
 
-  loadBus() {
+  loadBuses() {
     this.busService.findAll().subscribe(
       (res) => {
         if (res.body)
@@ -56,6 +48,7 @@ export class BusesListComponent implements OnInit {
               json.cantidadAsientos,
               json.modeloId
             );
+            this.findModelBus(bus);
             return bus;
           });
       },
@@ -64,6 +57,13 @@ export class BusesListComponent implements OnInit {
         this.matSnackBar.open(error, 'cerrar');
       }
     );
+  }
+
+  findModelBus(colectivo: Bus) {
+    this.modelService.findOne(colectivo.modeloId).subscribe((res) => {
+      if (res) 
+      colectivo.modelo = new Model(res.id, res.nombre, res.marca);
+    });
   }
 
   selectBus(bus: Bus) {
@@ -78,7 +78,8 @@ export class BusesListComponent implements OnInit {
     this.busService.deleteBus(bus.id).subscribe(
       (res) => {
         this.matSnackBar.open('Eliminado correctamente', 'Cerrar');
-        this.loadBus();
+        this.busesList = this.busesList.filter((element) => element.id !== bus.id);
+        this.loadBuses();
       },
       (error) => {
         console.log(error);
