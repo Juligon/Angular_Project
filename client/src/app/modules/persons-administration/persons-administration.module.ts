@@ -11,6 +11,7 @@ import { MatInputModule } from "@angular/material/input";
 import { MatCardModule } from "@angular/material/card";
 import { MatIconModule } from "@angular/material/icon";
 import { MatSnackBarModule } from "@angular/material/snack-bar";
+import {MatProgressBarModule} from '@angular/material/progress-bar';
 
 @NgModule({
 	declarations: [PersonDetailComponent, PersonsListComponent],
@@ -26,6 +27,7 @@ import { MatSnackBarModule } from "@angular/material/snack-bar";
 		MatIconModule,
 		MatInputModule,
 		MatSnackBarModule,
+		MatProgressBarModule
 	],
 	exports: [PersonDetailComponent, PersonsListComponent],
 })

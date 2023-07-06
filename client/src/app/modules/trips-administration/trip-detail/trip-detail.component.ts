@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, Validators } from '@angular/forms';
 import { BusService } from '../../../services/bus.service';
 import { Bus } from '../../../models/bus';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -10,6 +10,7 @@ import { PersonService } from '../../../services/person.service';
 import { TripDTO, TripService } from '../../../services/trip.service';
 import { Trip } from '../../../models/trip';
 import { ActivatedRoute, Router } from '@angular/router';
+import {ThemePalette} from '@angular/material/core';
 
 @Component({
   selector: 'app-trip-detail',
@@ -166,4 +167,6 @@ export class TripDetailComponent implements OnInit {
     //this._location.back();
     this.router.navigate(['trips', 'list']);
   }
+
+  colorControl = new FormControl('primary' as ThemePalette);
 }

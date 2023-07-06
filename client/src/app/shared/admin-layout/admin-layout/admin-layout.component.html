@@ -1,22 +1,21 @@
 <app-admin-topbar (expandedButton)="onExpandedPress($event)"></app-admin-topbar>
 
 <mat-drawer-container class="example-container" autosize>
-	<mat-drawer
-		opened
-		class="example-sidenav"
-		mode="side"
-		disableClose="true"
-		style="width: {{isExpanded ? 200 : 70}}px"
-	>
-		<app-admin-sidebar [isExpanded]="isExpanded"></app-admin-sidebar>
-	</mat-drawer>
+  <mat-drawer
+    opened
+    class="example-sidenav"
+    mode="side"
+    disableClose="true"
+    style="width: {{ isExpanded ? 200 : 70 }}px"
+  >
+    <app-admin-sidebar [isExpanded]="isExpanded"></app-admin-sidebar>
+  </mat-drawer>
 
-	<div  class="example-sidenav-content">
-		<div>
-			<h1 style="padding: 10px">Bienvenido</h1>
-		</div>
+  <div class="example-sidenav-content">
+    <div>
+      <h1 style="padding: 10px">Bienvenido</h1>
+    </div>
 
-		<router-outlet></router-outlet>
-	</div>
+    <router-outlet></router-outlet>
+  </div>
 </mat-drawer-container>
-

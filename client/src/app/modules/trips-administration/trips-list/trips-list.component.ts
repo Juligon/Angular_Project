@@ -19,8 +19,7 @@ export class TripsListComponent implements OnInit {
     'fechaLlegada',
     'fechaSalida',
     'colectivo',
-    'editar',
-    'borrar'
+    'acciones'
   ];
 
   tripsList: Trip[] = [];
@@ -29,7 +28,7 @@ export class TripsListComponent implements OnInit {
     private tripService: TripService,
     private busService: BusService,
     private matSnackBar: MatSnackBar,
-		private router: Router
+		private router: Router,
   ) {}
 
   ngOnInit() {

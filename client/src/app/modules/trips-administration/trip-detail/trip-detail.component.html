@@ -26,7 +26,7 @@
                 tripForm.controls['origen'].touched)
             "
           >
-            <mat-hint
+            <mat-hint 
               class="hint"
               *ngIf="tripForm.controls['origen'].errors?.['required']"
             >
@@ -55,7 +55,7 @@
           </div>
         </mat-form-field>
 
-        <mat-form-field>
+        <mat-form-field color="primary">
           <mat-label>Ida: </mat-label>
 
           <input
@@ -68,7 +68,7 @@
             matIconSuffix
             [for]="pickerSalida"
           ></mat-datepicker-toggle>
-          <mat-datepicker #pickerSalida></mat-datepicker>
+          <mat-datepicker #pickerSalida color="primary"></mat-datepicker>
 
           <div
             *ngIf="
@@ -86,7 +86,7 @@
           </div>
         </mat-form-field>
 
-        <mat-form-field>
+        <mat-form-field color="primary">
           <mat-label>Vuelta: </mat-label>
 
           <input
@@ -99,7 +99,7 @@
             matIconSuffix
             [for]="pickerLlegada"
           ></mat-datepicker-toggle>
-          <mat-datepicker #pickerLlegada></mat-datepicker>
+          <mat-datepicker #pickerLlegada color="primary"></mat-datepicker>
 
           <div
             *ngIf="
@@ -117,9 +117,9 @@
           </div>
         </mat-form-field>
 
-        <mat-form-field>
+        <mat-form-field [color]="colorControl.value!">
           <mat-label>Colectivo: </mat-label>
-          <mat-select formControlName="colectivo">
+          <mat-select formControlName="colectivo" [formControl]="colorControl">
             <mat-option disabled> -- </mat-option>
             <mat-option *ngFor="let bus of busesList" [value]="bus.id">
               {{ bus.patente }} - {{ bus.cantidadAsientos }} - {{ bus?.modelo?.marca }}
@@ -142,10 +142,10 @@
           </div>
         </mat-form-field>
 
-        <mat-form-field>
+        <mat-form-field [color]="colorControl.value!">
           <mat-label>Pasajeros: </mat-label>
 
-          <mat-select formControlName="pasajeros" multiple [compareWith]="compareObjects">
+          <mat-select formControlName="pasajeros" multiple [compareWith]="compareObjects" [formControl]="colorControl">
             <mat-option *ngFor="let person of personsList" [value]="person.id">
               {{ person.nombre }} {{ person.apellido }}
             </mat-option>

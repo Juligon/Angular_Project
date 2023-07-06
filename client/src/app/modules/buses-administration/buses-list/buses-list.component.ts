@@ -6,6 +6,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { ModelService } from 'src/app/services/model.service';
 import { Model } from 'src/app/models/model';
 
+
 @Component({
   selector: 'app-buses-list',
   templateUrl: './buses-list.component.html',
@@ -17,8 +18,7 @@ export class BusesListComponent implements OnInit {
     'patente',
     'cantidadAsientos',
     'modelo',
-    'editar',
-    'borrar',
+    'acciones'
   ];
   dataSource = [new Bus(1, 'ACB123', 50, 23)];
 
@@ -87,4 +87,5 @@ export class BusesListComponent implements OnInit {
       }
     );
   }
+
 }
