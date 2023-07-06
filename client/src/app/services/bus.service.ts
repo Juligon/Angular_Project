@@ -59,10 +59,11 @@ export class BusService {
         catchError((err) => {
           console.log('Ocurrió un error: ');
           console.log(err);
-          return throwError(() => 'Colectivo inexistente!');
+          return throwError(() => 'Verifique que el colectivo no esté asignado');
         })
       );
   }
+
 }
 
 export interface BusDTO {

@@ -45,6 +45,7 @@ export class TripsListComponent implements OnInit {
             res.lugarDestino,
             res.fechaLlegada,
             res.fechaSalida,
+            res.personaId,
             res.idColectivo
           );
           this.loadBus(trip);
