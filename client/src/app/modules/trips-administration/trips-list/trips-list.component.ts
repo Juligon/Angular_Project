@@ -89,7 +89,7 @@ export class TripsListComponent implements OnInit {
 
   openPassengersDialog(trip: Trip) {
     const dialogRef = this.dialog.open(PassengersDialogComponent, {
-      width: '250px',
+      width: '300px',
       height: 'fit-content',
       data: {
         passengers: trip.personaId
