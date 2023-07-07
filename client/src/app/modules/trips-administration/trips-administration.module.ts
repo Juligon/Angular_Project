@@ -14,9 +14,12 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatSelectModule } from '@angular/material/select';
+import { PassengersDialogComponent } from './passengers-dialog/passengers-dialog.component';
+import { MatDialogModule } from '@angular/material/dialog';
+
 
 @NgModule({
-  declarations: [TripsListComponent, TripDetailComponent],
+  declarations: [TripsListComponent, TripDetailComponent, PassengersDialogComponent],
   imports: [
     CommonModule,
     ReactiveFormsModule,
@@ -31,6 +34,7 @@ import { MatSelectModule } from '@angular/material/select';
     MatSnackBarModule,
     MatInputModule,
     MatSelectModule,
+    MatDialogModule
   ],
 })
 export class TripsAdministrationModule {}

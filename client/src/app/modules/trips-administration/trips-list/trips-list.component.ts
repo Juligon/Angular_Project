@@ -5,6 +5,8 @@ import { ModelService } from '../../../services/model.service';
 import { BusService } from '../../../services/bus.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
+import { MatDialog } from '@angular/material/dialog';
+import { PassengersDialogComponent } from '../passengers-dialog/passengers-dialog.component';
 
 @Component({
   selector: 'app-trips-list',
@@ -19,6 +21,7 @@ export class TripsListComponent implements OnInit {
     'fechaLlegada',
     'fechaSalida',
     'colectivo',
+    'pasajeros',
     'acciones'
   ];
 
@@ -28,7 +31,8 @@ export class TripsListComponent implements OnInit {
     private tripService: TripService,
     private busService: BusService,
     private matSnackBar: MatSnackBar,
-		private router: Router,
+    private router: Router,
+    private dialog: MatDialog
   ) {}
 
   ngOnInit() {
@@ -53,7 +57,7 @@ export class TripsListComponent implements OnInit {
         });
       }
     });
-  }  
+  }
 
   loadBus(trip: Trip) {
     this.busService.findOne(trip.idColectivo).subscribe((res) => {
@@ -61,29 +65,43 @@ export class TripsListComponent implements OnInit {
     });
   }
 
-	selectTrip(trip: Trip) {
-		this.router.navigate(["trips", "detail", trip.id]);
-	}
+  selectTrip(trip: Trip) {
+    this.router.navigate(['trips', 'detail', trip.id]);
+  }
 
-	createTrip() {
-		this.router.navigate(["trips", "create"]);
-
-	}
+  createTrip() {
+    this.router.navigate(['trips', 'create']);
+  }
 
   deleteTrip(trip: Trip) {
     this.tripService.deleteTrip(trip.id).subscribe(
       (res) => {
-        this.matSnackBar.open("Eliminado correctamente", "Cerrar");
+        this.matSnackBar.open('Eliminado correctamente', 'Cerrar');
         this.tripsList = this.tripsList.filter((element) => element.id !== trip.id);
         this.loadTrips();
       },
       (error) => {
         console.log(error);
-        this.matSnackBar.open(error, "Cerrar");
+        this.matSnackBar.open(error, 'Cerrar');
       }
     );
   }
+
+  openPassengersDialog(trip: Trip) {
+    const dialogRef = this.dialog.open(PassengersDialogComponent, {
+      width: '250px',
+      height: 'fit-content',
+      data: {
+        passengers: trip.personaId
+      }
+    });
+  
+    dialogRef.afterClosed().subscribe(result => {
+    
+    });
+  }
 }
+
 
 
 

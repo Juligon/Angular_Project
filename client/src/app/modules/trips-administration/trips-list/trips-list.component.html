@@ -34,13 +34,14 @@
         {{ element.colectivo?.patente }}
       </td>
     </ng-container>
-    <!-- <ng-container matColumnDef="pasajeros">
+    <ng-container matColumnDef="pasajeros">
+      <th mat-header-cell *matHeaderCellDef>Pasajeros</th>
       <td mat-cell *matCellDef="let element">
-        <button mat-button   color="primary"
-        (click)="openDialogWithTemplateRef(myDialog)">Ver pasajeros</button>
+        <button mat-icon-button (click)="openPassengersDialog(element)">
+          <mat-icon>group</mat-icon>
+        </button>
       </td>
-    </ng-container> -->
-
+    </ng-container>
     <ng-container matColumnDef="acciones">
       <th mat-header-cell *matHeaderCellDef>Acciones</th>
       <td mat-cell *matCellDef="let element">

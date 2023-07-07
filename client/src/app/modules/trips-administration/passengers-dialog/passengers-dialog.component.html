@@ -1,0 +1,9 @@
+<h4 mat-dialog-title>Pasajeros</h4>
+<mat-dialog-content>
+  <ul>
+    <li *ngFor="let passenger of data.passengers">{{ passenger }}</li>
+  </ul>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-button (click)="closeDialog()">Cerrar</button>
+</mat-dialog-actions>
