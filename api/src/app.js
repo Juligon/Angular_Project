@@ -17,5 +17,3 @@ server.use(morgan('dev'));
 server.use('/', routes);
 
 module.exports = server;
-
-

@@ -20,16 +20,16 @@ module.exports = (sequelize) => {
 			},
 			departure: {
 				allowNull: false,
-				type: DataTypes.DATE,
+				type: DataTypes.STRING,
 			},
 			regress: {
 				allowNull: false,
-				type: DataTypes.DATE,
+				type: DataTypes.STRING,
 			},
-			usersID: {
-				type: DataTypes.ARRAY(DataTypes.INTEGER)
+			userId: {
+				type: DataTypes.ARRAY(DataTypes.INTEGER),
 			},
-			busID: {
+			busId: {
 				type: DataTypes.INTEGER,
 			},
 		},

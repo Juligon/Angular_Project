@@ -16,7 +16,7 @@ module.exports = (sequelize) => {
 			},
 			seats: {
 				allowNull: false,
-				type: DataTypes.STRING,
+				type: DataTypes.INTEGER,
 			},
 			model: {
 				allowNull: false,

@@ -1,8 +1,8 @@
 const { DataTypes } = require("sequelize");
 
 module.exports = (sequelize) => {
-	const Busmodel = sequelize.define(
-		"Busmodel",
+	const Model = sequelize.define(
+		"Model",
 		{
 			id: {
 				allowNull: false,
@@ -22,5 +22,5 @@ module.exports = (sequelize) => {
 		{ timestamps: false }
 	);
 
-	return Busmodel;
+	return Model;
 };
