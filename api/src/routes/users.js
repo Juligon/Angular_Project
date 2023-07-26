@@ -25,8 +25,8 @@ router.get("/", async (req, res) => {
 
 router.post("/", async (req, res) => {
 	try {
-		const { name, lastname, age } = req.body;
-		console.log("Received data:", { name, lastname, age });
+		const { name, lastName, age } = req.body;
+		console.log("Received data:", { name, lastName, age });
 
 		const user = await User.findOne({
 			where: { name: { [Op.iLike]: `%${name}%` } } //Op.iLike no distingue en mayúsculas y minúsculas
@@ -35,7 +35,7 @@ router.post("/", async (req, res) => {
 		if (!user) {
 			const newUser = await User.create({
 				name: name,
-				lastname: lastname,
+				lastName: lastName,
 				age: age,
 			});
 			res.status(201).json(newUser);
@@ -62,14 +62,14 @@ router.delete("/", async (req, res) => {
 });
 
 router.put("/", async (req, res) => {
-	const { id, name, lastname, age } = req.body;
+	const { id, name, lastName, age } = req.body;
 
 	try {
 		const user = await User.findByPk(id);
 
 		await user.update({
 			name,
-			lastname,
+			lastName,
 			age,
 		});
 
