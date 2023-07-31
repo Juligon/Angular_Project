@@ -1,4 +1,4 @@
-<mat-card class="person-container" style="min-width: 320px; padding: 20px">
+<mat-card class="user-container" style="min-width: 320px; padding: 20px">
   <div class="title">
     <button
       type="button"
@@ -13,76 +13,76 @@
   </div>
 
   <mat-card-content>
-    <form [formGroup]="personForm" (ngSubmit)="saveChanges()">
+    <form [formGroup]="userForm" (ngSubmit)="saveChanges()">
       <div style="display: flex; flex-direction: column; margin-bottom: 15px">
-        <mat-form-field class="person-input">
+        <mat-form-field class="user-input">
           <mat-label>Nombre:</mat-label>
           <!--  <input type="text" [(ngModel)]="selectedUser.nombre">-->
           <input matInput type="text" formControlName="name" />
           <div
             *ngIf="
-              personForm.controls['name'].invalid &&
-              (personForm.controls['name'].dirty ||
-                personForm.controls['name'].touched)
+              userForm.controls['name'].invalid &&
+              (userForm.controls['name'].dirty ||
+                userForm.controls['name'].touched)
             "
           >
             <mat-hint
               class="hint"
-              *ngIf="personForm.controls['name'].errors?.['required']"
+              *ngIf="userForm.controls['name'].errors?.['required']"
             >
               Por favor complete el campo requerido
             </mat-hint>
           </div>
         </mat-form-field>
 
-        <mat-form-field class="person-input">
+        <mat-form-field class="user-input">
           <mat-label>Apellido:</mat-label>
-          <input matInput type="text" formControlName="lastName" />
+          <input matInput type="text" formControlName="lastname" />
 
           <div
             *ngIf="
-              personForm.controls['lastName'].invalid &&
-              (personForm.controls['lastName'].dirty ||
-                personForm.controls['lastName'].touched)
+              userForm.controls['lastname'].invalid &&
+              (userForm.controls['lastname'].dirty ||
+                userForm.controls['lastname'].touched)
             "
           >
             <mat-hint
               class="hint"
-              *ngIf="personForm.controls['lastName'].errors?.['required']"
+              *ngIf="userForm.controls['lastname'].errors?.['required']"
             >
               Por favor complete el campo requerido
             </mat-hint>
           </div>
         </mat-form-field>
 
-        <mat-form-field class="person-input">
+        <mat-form-field class="user-input">
           <mat-label>Edad:</mat-label>
           <input matInput type="number" formControlName="age" />
 
           <div
             *ngIf="
-              personForm.controls['age'].invalid &&
-              (personForm.controls['age'].dirty ||
-                personForm.controls['age'].touched)
+              userForm.controls['age'].invalid &&
+              (userForm.controls['age'].dirty ||
+                userForm.controls['age'].touched)
             "
           >
             <mat-hint
               class="hint"
-              *ngIf="personForm.controls['age'].errors?.['required']"
+              *ngIf="userForm.controls['age'].errors?.['required']"
             >
               Por favor complete el campo requerido
             </mat-hint>
 
             <mat-hint
               class="hint"
-              *ngIf="personForm.controls['age'].errors?.['min']"
+              *ngIf="userForm.controls['age'].errors?.['min']"
             >
               La edad debe ser mayor o igual a 0 años
             </mat-hint>
 
             <mat-hint
               class="hint"
-              *ngIf="personForm.controls['age'].errors?.['max']"
+              *ngIf="userForm.controls['age'].errors?.['max']"
             >
               La edad debe ser menor o igual a 101 años
             </mat-hint>
@@ -94,7 +94,7 @@
         type="submit"
         style="float: right"
         mat-button
-        [disabled]="personForm.invalid"
+        [disabled]="userForm.invalid"
       >
         GUARDAR
       </button>
