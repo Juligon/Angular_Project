@@ -16,13 +16,13 @@ import { PassengersDialogComponent } from '../passengers-dialog/passengers-dialo
 export class TripsListComponent implements OnInit {
   displayedColumns = [
     'id',
-    'origen',
-    'destino',
-    'fechaLlegada',
-    'fechaSalida',
-    'colectivo',
-    'pasajeros',
-    'acciones'
+    'origin',
+    'destination',
+    'departure',
+    'regress',
+    'bus',
+    'users',
+    'actions'
   ];
 
   tripsList: Trip[] = [];
@@ -45,12 +45,12 @@ export class TripsListComponent implements OnInit {
         this.tripsList = res.body.map((res) => {
           const trip = new Trip(
             res.id,
-            res.lugarSalida,
-            res.lugarDestino,
-            res.fechaLlegada,
-            res.fechaSalida,
-            res.personaId,
-            res.idColectivo
+            res.origin,
+            res.destination,
+            res.departure,
+            res.regress,
+            res.userId,
+            res.busId
           );
           this.loadBus(trip);
           return trip;
@@ -60,8 +60,9 @@ export class TripsListComponent implements OnInit {
   }
 
   loadBus(trip: Trip) {
-    this.busService.findOne(trip.idColectivo).subscribe((res) => {
-      trip.colectivo = res;
+    //@ts-ignore
+    this.busService.findOne(trip.busId).subscribe((res) => {
+      trip.bus = res;
     });
   }
 
@@ -92,7 +93,7 @@ export class TripsListComponent implements OnInit {
       width: '300px',
       height: 'fit-content',
       data: {
-        passengers: trip.personaId
+        passengers: trip.userId
       }
     });
   

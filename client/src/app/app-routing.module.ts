@@ -1,24 +1,24 @@
 import { NgModule } from "@angular/core";
 import { CommonModule } from "@angular/common";
 import { RouterModule, Routes } from "@angular/router";
-import { PersonsListComponent } from "./modules/persons-administration/persons-list/persons-list.component";
-import { PersonDetailComponent } from "./modules/persons-administration/person-detail/person-detail.component";
+import { UsersListComponent } from "./modules/users-administration/users-list/users-list.component";
+import { UserDetailComponent } from "./modules/users-administration/user-detail/user-detail.component";
 import { AdminLayoutComponent } from "./shared/admin-layout/admin-layout/admin-layout.component";
 
 const routes: Routes = [
-	{ path: "", redirectTo: "person", pathMatch: "full" },
-	// { path: 'list', component: PersonsListComponent },
-	// { path: 'detail', component: PersonDetailComponent },
+	{ path: "", redirectTo: "users", pathMatch: "full" },
+	// { path: 'list', component: UsersListComponent },
+	// { path: 'detail', component: UserDetailComponent },
 	{
 		path: "",
 		component: AdminLayoutComponent,
 		children: [
 			{
-				path: "person",
+				path: "users",
 				loadChildren: () =>
 					import(
-						"./modules/persons-administration/persons-administration.module"
-					).then((mod) => mod.PersonsAdministrationModule),
+						"./modules/users-administration/users-administration.module"
+					).then((mod) => mod.UsersAdministrationModule),
 			},
 			{
 				path: "buses",

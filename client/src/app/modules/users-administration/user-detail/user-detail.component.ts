@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { Person } from 'src/app/models/person';
+import { User } from 'src/app/models/user';
 import { ActivatedRoute, Router } from '@angular/router';
-import { PersonService, PersonDTO } from 'src/app/services/person.service';
+import { UserService, UserDTO } from 'src/app/services/user.service';
 import { Location } from '@angular/common';
 import {
   FormBuilder,
@@ -12,26 +12,26 @@ import {
 import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
-  selector: 'app-person-detail',
-  templateUrl: './person-detail.component.html',
-  styleUrls: ['./person-detail.component.css'],
+  selector: 'app-user-detail',
+  templateUrl: './user-detail.component.html',
+  styleUrls: ['./user-detail.component.css'],
 })
-export class PersonDetailComponent implements OnInit {
-  selectedPerson: Person | null = null;
+export class UserDetailComponent implements OnInit {
+  selectedUser: User | null = null;
 
   //validaciones
   // nameControl = new FormControl('', [Validators.required]);
-  // lastNameControl = new FormControl('', [Validators.required]);
+  // lastnameControl = new FormControl('', [Validators.required]);
   // ageControl = new FormControl('', [Validators.required]);
 
-  personForm: FormGroup = this.fb.group({
+  userForm: FormGroup = this.fb.group({
     name: ['', Validators.required],
-    lastName: ['', Validators.required],
+    lastname: ['', Validators.required],
     age: [0, [Validators.required, Validators.min(0), Validators.max(101)]],
   });
 
   constructor(
-    private personService: PersonService,
+    private userService: UserService,
     private fb: FormBuilder,
     private route: ActivatedRoute,
     private _location: Location,
@@ -44,54 +44,54 @@ export class PersonDetailComponent implements OnInit {
       const id = params.get('id');
       console.log('El id que estoy editando es: ' + id);
       if (id) {
-        this.findPerson(Number(id));
+        this.findUser(Number(id));
       }
     });
   }
 
-  findPerson(id: number) {
-    this.personService.findOne(id).subscribe(
+  findUser(id: number) {
+    this.userService.findOne(id).subscribe(
       (res) => {
         if (res.body) {
-          this.selectedPerson = new Person(
+          this.selectedUser = new User(
             res.body.id,
             res.body.name,
-            res.body.lastName,
+            res.body.lastname,
             res.body.age
           );
 
-          this.personForm.patchValue({
-            name: this.selectedPerson.nombre,
-            lastName: this.selectedPerson.apellido,
-            age: this.selectedPerson.edad,
+          this.userForm.patchValue({
+            name: this.selectedUser.name,
+            lastname: this.selectedUser.lastname,
+            age: this.selectedUser.age,
           });
         }
       },
       (error) => {
         console.log(error);
         this.matSnackBar.open(error, 'Cerrar');
-        this.router.navigate(['person', 'list']);
+        this.router.navigate(['users', 'list']);
       }
     );
   }
 
   saveChanges() {
-    const body: PersonDTO = {
+    const body: UserDTO = {
       // @ts-ignore
       id: null,
-      name: this.personForm.get('name')?.value,
-      lastName: this.personForm.get('lastName')?.value,
-      age: this.personForm.get('age')?.value,
+      name: this.userForm.get('name')?.value,
+      lastname: this.userForm.get('lastname')?.value,
+      age: this.userForm.get('age')?.value,
     };
 
-    if (this.selectedPerson && this.selectedPerson.id) {
+    if (this.selectedUser && this.selectedUser.id) {
       // LLamar al metodo actualizar
-      body.id = this.selectedPerson.id;
+      body.id = this.selectedUser.id;
 
-      this.personService.updatePerson(body).subscribe(
+      this.userService.updateUser(body).subscribe(
         (res) => {
           this.matSnackBar.open('Se guardaron los cambios', 'Cerrar');
-          this.router.navigate(['person', 'list']);
+          this.router.navigate(['users', 'list']);
         },
         (error) => {
           console.log(error);
@@ -100,10 +100,10 @@ export class PersonDetailComponent implements OnInit {
       );
     } else {
       // Llamar al metodo crear
-      this.personService.createPerson(body).subscribe(
+      this.userService.createUser(body).subscribe(
         (res) => {
           this.matSnackBar.open('Creado correctamente', 'Cerrar');
-          this.router.navigate(['person', 'list']);
+          this.router.navigate(['users', 'list']);
         },
         (error) => {
           console.log(error);
@@ -116,6 +116,6 @@ export class PersonDetailComponent implements OnInit {
 
   goBack() {
     //this._location.back();
-    this.router.navigate(['person', 'list']);
+    this.router.navigate(['users', 'list']);
   }
 }
