@@ -1,3 +1,3 @@
 export const environment = {
-  backendUrl: "https://tripsadmin.up.railway.app/"
+  backendUrl: "https://k8s-lia.unrn.edu.ar/api/api/"
 };

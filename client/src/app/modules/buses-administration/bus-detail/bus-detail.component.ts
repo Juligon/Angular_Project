@@ -14,9 +14,9 @@ import { ActivatedRoute, Router } from '@angular/router';
 })
 export class BusDetailComponent implements OnInit {
   busForm = this.formBuilder.group({
-    plate: ['', Validators.required],
-    seats: [0, Validators.required],
-    modelId: [0, Validators.required],
+    patente: ['', Validators.required],
+    cantidadAsientos: [0, Validators.required],
+    modeloId: [0, Validators.required],
   });
 
   modelsList: Model[] = [];
@@ -36,7 +36,7 @@ export class BusDetailComponent implements OnInit {
       (res) => {
         if (res.body)
           this.modelsList = res.body.map((json) => {
-            const model = new Model(json.id, json.name, json.brand);
+            const model = new Model(json.id, json.nombre, json.marca);
             return model;
           });
       },
@@ -54,11 +54,11 @@ export class BusDetailComponent implements OnInit {
     });
   }
 
-  findModelBus(bus: Bus) {
-    if (bus.modelId)
-      this.modelService.findOne(bus.modelId).subscribe((res) => {
+  findModelBus(colectivo: Bus) {
+    if (colectivo.modeloId)
+      this.modelService.findOne(colectivo.modeloId).subscribe((res) => {
         if (res) 
-        bus.model = new Model(res.id, res.name, res.brand);
+        colectivo.modelo = new Model(res.id, res.nombre, res.marca);
       });
   }
 
@@ -68,17 +68,17 @@ export class BusDetailComponent implements OnInit {
         if (res) {
           this.selectedBus = new Bus(
             res.id,
-            res.plate,
-            res.seats,
+            res.patente,
+            res.cantidadAsientos,
             //@ts-ignore
-            res.modelId
+            res.modeloId
           );
           this.findModelBus(this.selectedBus);
 
           this.busForm.patchValue({
-            plate: this.selectedBus.plate,
-            seats: this.selectedBus.seats,
-            modelId: this.selectedBus.modelId,
+            patente: this.selectedBus.patente,
+            cantidadAsientos: this.selectedBus.cantidadAsientos,
+            modeloId: this.selectedBus.modeloId,
           });
         }
       },
@@ -93,11 +93,11 @@ export class BusDetailComponent implements OnInit {
   saveChanges() {
     const body: BusDTO = {
       //@ts-ignore
-      plate: this.busForm.get('plate')?.value,
+      patente: this.busForm.get('patente')?.value,
       //@ts-ignore
-      seats: this.busForm.get('seats')?.value,
+      cantidadAsientos: this.busForm.get('cantidadAsientos')?.value,
       //@ts-ignore
-      modelId: this.busForm.get('modelId')?.value,
+      modeloId: this.busForm.get('modeloId')?.value,
     };
 
     if (this.selectedBus && this.selectedBus.id) {

@@ -1,9 +1,9 @@
-.user-container {
+.person-container {
   display: flex;
   margin: 10px;
 }
 
-.user-input {
+.person-input {
   width: 100%;
   align-self: center;
 }

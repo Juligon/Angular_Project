@@ -8,7 +8,7 @@ import { Model } from '../models/model';
   providedIn: 'root',
 })
 export class ModelService {
-  resourceUrl = environment.backendUrl + 'models';
+  resourceUrl = environment.backendUrl + 'modelos';
 
   constructor(private http: HttpClient) {}
 

@@ -1,4 +1,3 @@
 {
-	"java.compile.nullAnalysis.mode": "automatic",
-	"workbench.settings.openDefaultSettings": true
+	"java.compile.nullAnalysis.mode": "automatic"
 }

@@ -1,11 +1,11 @@
 export class Model {
   id:	number;
-  name:	string;
-  brand: string;
+  nombre:	string;
+  marca: string;
 
-  constructor(id: number, name: string, brand: string) {
+  constructor(id: number, nombre: string, marca: string) {
     this.id = id;
-    this.name = name;
-    this.brand = brand;
+    this.nombre = nombre;
+    this.marca = marca;
   }
 }

@@ -15,10 +15,10 @@ import { Model } from 'src/app/models/model';
 export class BusesListComponent implements OnInit {
   displayedColumns = [
     'id',
-    'plate',
-    'seats',
-    'model',
-    'actions'
+    'patente',
+    'cantidadAsientos',
+    'modelo',
+    'acciones'
   ];
   dataSource = [new Bus(1, 'ACB123', 50, 23)];
 
@@ -43,9 +43,9 @@ export class BusesListComponent implements OnInit {
           this.busesList = res.body.map((json) => {
             const bus = new Bus(
               json.id,
-              json.plate,
-              json.seats,
-              json.modelId
+              json.patente,
+              json.cantidadAsientos,
+              json.modeloId
             );
             this.findModelBus(bus);
             return bus;
@@ -58,11 +58,11 @@ export class BusesListComponent implements OnInit {
     );
   }
 
-  findModelBus(bus: Bus) {
-    if (bus.modelId)
-    this.modelService.findOne(bus.modelId).subscribe((res) => {
+  findModelBus(colectivo: Bus) {
+    if (colectivo.modeloId)
+    this.modelService.findOne(colectivo.modeloId).subscribe((res) => {
       if (res) 
-      bus.model = new Model(res.id, res.name, res.brand);
+      colectivo.modelo = new Model(res.id, res.nombre, res.marca);
     });
   }
 

@@ -8,7 +8,7 @@ import { Trip } from '../models/trip';
   providedIn: 'root',
 })
 export class TripService {
-  resourceUrl = environment.backendUrl + 'trips';
+  resourceUrl = environment.backendUrl + 'viajes';
 
   constructor(private http: HttpClient) {}
 
@@ -69,10 +69,10 @@ export class TripService {
 
 export interface TripDTO {
   id?: number;
-  origin: string;
-  destination: string;
-  departure: Date;
-  regress: Date;
-  userId: number[];
-  busId: number;
+  lugarSalida: string;
+  lugarDestino: string;
+  fechaLlegada: Date;
+  fechaSalida: Date;
+  personaId: number[];
+  idColectivo: number;
 }

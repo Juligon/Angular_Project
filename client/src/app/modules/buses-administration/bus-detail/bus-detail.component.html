@@ -17,18 +17,18 @@
       <div style="display: flex; gap: 15px; margin-bottom: 15px">
         <mat-form-field style="width: 33%">
           <mat-label>Patente: </mat-label>
-          <input matInput type="text" formControlName="plate"/>
+          <input matInput type="text" formControlName="patente"/>
 
           <div
             *ngIf="
-              busForm.controls['plate'].invalid &&
-              (busForm.controls['plate'].dirty ||
-                busForm.controls['plate'].touched)
+              busForm.controls['patente'].invalid &&
+              (busForm.controls['patente'].dirty ||
+                busForm.controls['patente'].touched)
             "
           >
             <mat-hint
               class="hint"
-              *ngIf="busForm.controls['plate'].errors?.['required']"
+              *ngIf="busForm.controls['patente'].errors?.['required']"
             >
               Complete el campo
             </mat-hint>
@@ -37,18 +37,18 @@
 
         <mat-form-field style="width: 33%">
           <mat-label>Cantidad de asientos: </mat-label>
-          <input matInput type="text" formControlName="seats"/>
+          <input matInput type="text" formControlName="cantidadAsientos"/>
 
           <div
             *ngIf="
-              busForm.controls['seats'].invalid &&
-              (busForm.controls['seats'].dirty ||
-                busForm.controls['seats'].touched)
+              busForm.controls['cantidadAsientos'].invalid &&
+              (busForm.controls['cantidadAsientos'].dirty ||
+                busForm.controls['cantidadAsientos'].touched)
             "
           >
             <mat-hint
               class="hint"
-              *ngIf="busForm.controls['seats'].errors?.['required']"
+              *ngIf="busForm.controls['cantidadAsientos'].errors?.['required']"
             >
               Complete el campo
             </mat-hint>
@@ -57,23 +57,23 @@
 
         <mat-form-field style="width: 33%">
           <mat-label>Id Modelo: </mat-label>
-          <mat-select formControlName="modelId">
+          <mat-select formControlName="modeloId">
             <mat-option disabled> -- </mat-option>
             <mat-option *ngFor="let model of modelsList" [value]="model.id">
-              {{ model.name }} - {{ model.brand }}
+              {{ model.nombre }} - {{ model.marca }}
             </mat-option>
           </mat-select>
 
           <div
             *ngIf="
-              busForm.controls['modelId'].invalid &&
-              (busForm.controls['modelId'].dirty ||
-                busForm.controls['modelId'].touched)
+              busForm.controls['modeloId'].invalid &&
+              (busForm.controls['modeloId'].dirty ||
+                busForm.controls['modeloId'].touched)
             "
           >
             <mat-hint
               class="hint"
-              *ngIf="busForm.controls['modelId'].errors?.['required']"
+              *ngIf="busForm.controls['modeloId'].errors?.['required']"
             >
               Complete el campo
             </mat-hint>
