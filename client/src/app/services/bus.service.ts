@@ -8,7 +8,7 @@ import { Bus } from '../models/bus';
   providedIn: 'root',
 })
 export class BusService {
-  resourceUrl = environment.backendUrl + 'colectivos';
+  resourceUrl = environment.backendUrl + 'buses';
 
   constructor(private http: HttpClient) {}
 
@@ -68,7 +68,7 @@ export class BusService {
 
 export interface BusDTO {
   id?: number;
-  patente: string;
-  cantidadAsientos: string;
-  modeloId: number;
+  plate: string;
+  seats: string;
+  modelId: number;
 }
