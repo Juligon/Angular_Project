@@ -4,19 +4,19 @@ const fs = require("fs");
 const path = require("path");
 const { DB_USER, DB_PASSWORD, DB_HOST, DB_PORT, DB_NAME, DB_URL } = process.env;
 
-// const sequelize = new Sequelize(
-//  	`postgres://${DB_USER}:${DB_PASSWORD}@${DB_HOST}:${DB_PORT}/${DB_NAME}`,
-// 	{
-//  		logging: false, // set to console.log to see the raw SQL queries
-//  		native: false, // lets Sequelize know we can use pg-native for ~30% more speed
-//  	}
-// );
+const sequelize = new Sequelize(
+ 	`postgres://${DB_USER}:${DB_PASSWORD}@${DB_HOST}:${DB_PORT}/${DB_NAME}`,
+ 	{
+ 		logging: false, // set to console.log to see the raw SQL queries
+ 		native: false, // lets Sequelize know we can use pg-native for ~30% more speed
+ 	}
+);
 
-const sequelize = new Sequelize(DB_URL, {
-  logging: false, // set to console.log to see the raw SQL queries
-  native: false, // lets Sequelize know we can use pg-native for ~30% more speed
- 	//ssl: true, 
-});
+// const sequelize = new Sequelize(DB_URL, {
+//   logging: false, // set to console.log to see the raw SQL queries
+//   native: false, // lets Sequelize know we can use pg-native for ~30% more speed
+//  	//ssl: true,
+// });
 
 const basename = path.basename(__filename);
 
@@ -47,13 +47,13 @@ sequelize.models = Object.fromEntries(capsEntries);
 const { Trip, User, Bus, Model } = sequelize.models;
 
 // Aca vendrian las relaciones
-User.hasMany(Trip, { onDelete: 'CASCADE', onUpdate: 'CASCADE' });
+User.hasMany(Trip, { onDelete: "CASCADE", onUpdate: "CASCADE" });
 Trip.belongsTo(User);
 
-Bus.hasMany(Trip, { onDelete: 'CASCADE', onUpdate: 'CASCADE' });
+Bus.hasMany(Trip, { onDelete: "CASCADE", onUpdate: "CASCADE" });
 Trip.belongsTo(Bus);
 
-Model.hasMany(Bus, { onDelete: 'CASCADE', onUpdate: 'CASCADE' });
+Model.hasMany(Bus, { onDelete: "CASCADE", onUpdate: "CASCADE" });
 Bus.belongsTo(Model);
 
 module.exports = {
