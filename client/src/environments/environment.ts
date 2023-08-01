@@ -1,3 +1,3 @@
 export const environment = {
-  backendUrl: "https://tripsadmin.up.railway.app/"
+  backendUrl: "https://tripsadmin-production.up.railway.app/"
 };
