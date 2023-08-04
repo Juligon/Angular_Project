@@ -29,7 +29,7 @@ try {
 
 router.post("/", async (req, res) => {
 	try {
-		const { plate, seats, model } =
+		const { patente, cantidadAsientos, modelo } =
 			req.body;
 			
 		const bus = await Bus.create(req.body);
@@ -54,18 +54,18 @@ router.delete("/", async (req, res) => {
 });
 
 router.put("/", async (req, res) => {
-	const { id, plate, seats, model } =
+	const { id, patente, cantidadAsientos, modelo } =
 			req.body;
 
 	try {
 		const bus = await Bus.findByPk(id);
 
 		await bus.update({
-			plate, seats, model,
+			patente, cantidadAsientos, modelo,
 		});
 
 		const updatedBus = await Bus.findOne({
-			where: { plate: plate },
+			where: { patente: patente },
 		});
 
 		res.send(updatedBus);

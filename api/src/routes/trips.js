@@ -29,16 +29,11 @@ try {
 
 router.post("/", async (req, res) => {
 	try {
-		const { origin, destination, departure, regress, userId, busId } =
+		const { lugarSalida, lugarDestino, fechaLlegada, fechaSalida, personaId, colectivoId } =
 			req.body;
 			
 			const trip = await Trip.create({
-				origin,
-				destination,
-				departure,
-				regress,
-				userId,
-				busId,
+				lugarSalida, lugarDestino, fechaLlegada, fechaSalida, personaId, colectivoId,
 			});
 		res.status(201).json(trip);
 	} catch (error) {
@@ -61,18 +56,18 @@ router.delete("/", async (req, res) => {
 });
 
 router.put("/", async (req, res) => {
-	const { origin, destination, departure, regress, userId, busId, id } =
+	const { lugarSalida, lugarDestino, fechaLlegada, fechaSalida, personaId, colectivoId, id } =
 			req.body;
 
 	try {
 		const trip = await Trip.findByPk(id);
 
 		await trip.update({
-			origin, destination, departure, regress, userId, busId
+			lugarSalida, lugarDestino, fechaLlegada, fechaSalida, personaId, colectivoId
 		});
 
 		const updatedTrip = await Trip.findOne({
-			where: { destination: destination },
+			where: { lugarDestino: lugarDestino },
 		});
 
 		res.send(updatedTrip);

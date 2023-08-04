@@ -10,15 +10,15 @@ module.exports = (sequelize) => {
 				primaryKey: true,
 				type: DataTypes.INTEGER
 			},
-			plate: {
+			patente: {
 				allowNull: false,
 				type: DataTypes.STRING,
 			},
-			seats: {
+			cantidadAsientos: {
 				allowNull: false,
 				type: DataTypes.INTEGER,
 			},
-			model: {
+			modelo: {
 				allowNull: false,
 				type: DataTypes.INTEGER,
 			},

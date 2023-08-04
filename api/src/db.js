@@ -15,7 +15,7 @@ const sequelize = new Sequelize(
 // const sequelize = new Sequelize(DB_URL, {
 //   logging: false, // set to console.log to see the raw SQL queries
 //   native: false, // lets Sequelize know we can use pg-native for ~30% more speed
-//  	//ssl: true,
+//   //ssl: true,
 // });
 
 const basename = path.basename(__filename);
@@ -44,11 +44,11 @@ sequelize.models = Object.fromEntries(capsEntries);
 
 // En sequelize.models están todos los modelos importados como propiedades
 // Para relacionarlos hacemos un destructuring
-const { Trip, User, Bus, Model } = sequelize.models;
+const { Trip, Person, Bus, Model } = sequelize.models;
 
 // Aca vendrian las relaciones
-User.hasMany(Trip, { onDelete: "CASCADE", onUpdate: "CASCADE" });
-Trip.belongsTo(User);
+Person.hasMany(Trip, { onDelete: "CASCADE", onUpdate: "CASCADE" });
+Trip.belongsTo(Person);
 
 Bus.hasMany(Trip, { onDelete: "CASCADE", onUpdate: "CASCADE" });
 Trip.belongsTo(Bus);

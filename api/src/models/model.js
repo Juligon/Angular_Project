@@ -10,11 +10,11 @@ module.exports = (sequelize) => {
 				primaryKey: true,
 				type: DataTypes.INTEGER
 			},
-			name: {
+			nombre: {
 				allowNull: false,
 				type: DataTypes.STRING,
 			},
-			brand: {
+			marca: {
 				allowNull: false,
 				type: DataTypes.STRING,
 			},

@@ -14,7 +14,7 @@ router.get("/", async (req, res) => {
 
 router.post("/", async (req, res) => {
 	try {
-		const { name, brand } = req.body;
+		const { nombre, marca } = req.body;
 		const model = await Model.create(req.body);
 		res.json(model);
 	} catch (error) {
