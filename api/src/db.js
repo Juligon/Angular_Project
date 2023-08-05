@@ -44,11 +44,11 @@ sequelize.models = Object.fromEntries(capsEntries);
 
 // En sequelize.models están todos los modelos importados como propiedades
 // Para relacionarlos hacemos un destructuring
-const { Trip, Person, Bus, Model } = sequelize.models;
+const { Trip, User, Bus, Model } = sequelize.models;
 
 // Aca vendrian las relaciones
-Person.hasMany(Trip, { onDelete: "CASCADE", onUpdate: "CASCADE" });
-Trip.belongsTo(Person);
+User.hasMany(Trip, { onDelete: "CASCADE", onUpdate: "CASCADE" });
+Trip.belongsTo(User);
 
 Bus.hasMany(Trip, { onDelete: "CASCADE", onUpdate: "CASCADE" });
 Trip.belongsTo(Bus);

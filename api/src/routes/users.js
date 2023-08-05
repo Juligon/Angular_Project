@@ -1,21 +1,21 @@
 const express = require("express");
 const router = express.Router();
-const { Person } = require("../db");
+const { User } = require("../db");
 const { Op } = require("sequelize");
 
 router.get("/", async (req, res) => {
 	const { nombre } = req.query;
 	try {
-		const persons = await Person.findAll();
+		const users = await User.findAll();
 		if (nombre) {
-			const person = await persons.filter((e) =>
+			const user = await users.filter((e) =>
 				e.nombre.toLowerCase().includes(nombre.toLowerCase())
 			);
-			person.length
-				? res.json(person)
+			user.length
+				? res.json(user)
 				: res.status(404).send("Usuario no encontrado");
 		} else {
-			res.json(persons);
+			res.json(users);
 		}
 	} catch (error) {
 		console.error(error);
@@ -28,17 +28,17 @@ router.post("/", async (req, res) => {
 		const { nombre, apellido, edad } = req.body;
 		console.log("Received data:", { nombre, apellido, edad });
 
-		const person = await Person.findOne({
+		const user = await User.findOne({
 			where: { nombre: { [Op.iLike]: `%${nombre}%` } } //Op.iLike no distingue en mayúsculas y minúsculas
 		});
 
-		if (!person) {
-			const newPerson = await Person.create({
+		if (!user) {
+			const newUser = await User.create({
 				nombre: nombre,
 				apellido: apellido,
 				edad: edad,
 			});
-			res.status(201).json(newPerson);
+			res.status(201).json(newUser);
 	} else {
 		return res.status(404).send("El usuario ya existe");
 	}
@@ -50,9 +50,9 @@ router.post("/", async (req, res) => {
 
 router.delete("/", async (req, res) => {
 	const { id } = req.query;
-	const person = await Person.findByPk(id);
+	const user = await User.findByPk(id);
 	try {
-		const deletedPerson = await Person.destroy({
+		const deletedUser = await User.destroy({
 			where: { id: id },
 		});
 		res.send("done");
@@ -65,17 +65,17 @@ router.put("/", async (req, res) => {
 	const { id, nombre, apellido, edad } = req.body;
 
 	try {
-		const person = await Person.findByPk(id);
+		const user = await User.findByPk(id);
 
-		await person.update({
+		await user.update({
 			nombre, apellido, edad
 		});
 
-		const updatedPerson = await Person.findOne({
+		const updatedUser = await User.findOne({
 			where: { nombre: nombre },
 		});
 
-		res.send(updatedPerson);
+		res.send(updatedUser);
 	} catch (error) {
 		res.status(404).send(error);
 	}
