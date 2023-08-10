@@ -67,9 +67,9 @@ router.get("/", async (req, res) => {
 
 /**
  * @swagger
- * /users/{id}:
+ * /users/:id:
  *  get:
- *   summary: Return a user from the database
+ *   summary: return a user from the database
  *   tags: [User]
  *   parameters:
  *    - in: path
@@ -77,16 +77,16 @@ router.get("/", async (req, res) => {
  *      schema:
  *       type: integer
  *      required: true
- *      description: The user identifier
+ *      description: the user identifier
  *   responses:
  *    200:
- *     description: One user is returned
+ *     description: one user is returned
  *     content:
  *      application/json:
  *       schema:
  *        $ref: '#/components/schemas/User'
  *    404:
- *     description: User not found
+ *     description: user not found
  */
 router.get("/:id", async (req, res) => {
 	const { id } = req.params;
@@ -174,15 +174,8 @@ router.delete("/", async (req, res) => {
  * @swagger
  * /users:
  *  put:
- *   summary: Update a user
+ *   summary: update a user
  *   tags: [User]
- *   parameters:
- *    - in: path
- *      name: id
- *      schema:
- *       type: integer
- *      required: true
- *      description: The user identifier
  *   requestBody:
  *    required: true
  *    content:
@@ -191,9 +184,9 @@ router.delete("/", async (req, res) => {
  *       $ref: '#/components/schemas/User'
  *   responses:
  *    200:
- *     description: User updated
+ *     description: user updated
  *    404:
- *     description: User not found
+ *     description: user not found
  */
 router.put("/", async (req, res) => {
 	const { id, nombre, apellido, edad } = req.body;
