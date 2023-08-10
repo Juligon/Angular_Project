@@ -89,18 +89,17 @@ router.get("/", async (req, res) => {
  *     description: user not found
  */
 router.get("/:id", async (req, res) => {
-	const { id } = req.params;
-try {
-	const users = await User.findAll();
-	if (id) {
-		const user = await users.filter((e) => e.id.includes(id)); 
-		user.length
-			? res.json(user)
-			: res.status(404).send("Usuario no encontrado");
-	}
-} catch (error) {
-	console.log(error);
-}
+  const { id } = req.params;
+  try {
+    const user = await User.findByPk(id);
+    if (!user) {
+      return res.status(404).send("Usuario no encontrado");
+    }
+    res.json(user);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Error al obtener usuario" });
+  }
 });
 
 /**
@@ -147,27 +146,36 @@ router.post("/", async (req, res) => {
 
 /**
  * @swagger
- * /users:
+ * /users/:id:
  *  delete:
  *   summary: delete a user from the database
  *   tags: [User]
+ *   parameters:
+ *    - in: path
+ *      name: id
+ *      schema:
+ *       type: integer
+ *      required: true
+ *      description: the user identifier
  *   responses:
  *    200:
  *     description: user deleted
  *    404:
  *     description: user not found
  */
-router.delete("/", async (req, res) => {
-	const { id } = req.query;
-	const user = await User.findByPk(id);
-	try {
-		const deletedUser = await User.destroy({
-			where: { id: id },
-		});
-		res.send("done");
-	} catch (error) {
-		res.status(404).send(error);
-	}
+router.delete("/:id", async (req, res) => {
+  const { id } = req.params;
+  try {
+    const deletedUser = await User.destroy({
+      where: { id: id },
+    });
+    if (deletedUser === 0) {
+      return res.status(404).send("Usuario no encontrado");
+    }
+    res.send("done");
+  } catch (error) {
+    res.status(404).send(error);
+  }
 });
 
 /**
