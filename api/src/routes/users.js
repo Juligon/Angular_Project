@@ -69,26 +69,24 @@ router.get("/", async (req, res) => {
  * @swagger
  * /users/{id}:
  *  get:
- *   summary: return a user from the database
+ *   summary: Return a user from the database
  *   tags: [User]
  *   parameters:
  *    - in: path
  *      name: id
  *      schema:
- *       type: string
+ *       type: integer
  *      required: true
- *      description: the user identifier
+ *      description: The user identifier
  *   responses:
  *    200:
- *     description: one user is returned
+ *     description: One user is returned
  *     content:
  *      application/json:
  *       schema:
- *        type: object
- *        items:
- *         $ref: '#/components/schemas/User'
+ *        $ref: '#/components/schemas/User'
  *    404:
- *     description: user not found
+ *     description: User not found
  */
 router.get("/:id", async (req, res) => {
 	const { id } = req.params;
@@ -153,13 +151,6 @@ router.post("/", async (req, res) => {
  *  delete:
  *   summary: delete a user from the database
  *   tags: [User]
- *   parameters:
- *    - in: path
- *      name: id
- *      schema:
- *       type: string
- *      required: true
- *      description: the user identifier
  *   responses:
  *    200:
  *     description: user deleted
@@ -179,6 +170,31 @@ router.delete("/", async (req, res) => {
 	}
 });
 
+/**
+ * @swagger
+ * /users:
+ *  put:
+ *   summary: Update a user
+ *   tags: [User]
+ *   parameters:
+ *    - in: path
+ *      name: id
+ *      schema:
+ *       type: integer
+ *      required: true
+ *      description: The user identifier
+ *   requestBody:
+ *    required: true
+ *    content:
+ *     application/json:
+ *      schema:
+ *       $ref: '#/components/schemas/User'
+ *   responses:
+ *    200:
+ *     description: User updated
+ *    404:
+ *     description: User not found
+ */
 router.put("/", async (req, res) => {
 	const { id, nombre, apellido, edad } = req.body;
 
