@@ -48,9 +48,11 @@ server.use((req, res, next) => {
 });
 server.use(helmet.contentSecurityPolicy({
   directives: {
-    "font-src": "'self' *"
+    "default-src": ["'none'"],
+    "style-src-elem": ["'self'", "https://fonts.googleapis.com"]
   }
 }));
+
 
 server.use("/api", routes);
 
