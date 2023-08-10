@@ -18,7 +18,7 @@ try {
 	const buses = await Bus.findAll();
 	if (id) {
 		const bus = await buses.filter((e) => e.id.toUpperCase().includes(id.toUpperCase())); 
-		trip.length
+		bus.length
 			? res.json(bus)
 			: res.status(404).send("Colectivo no encontrado");
 	}

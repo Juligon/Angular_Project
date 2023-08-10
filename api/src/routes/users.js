@@ -3,6 +3,48 @@ const router = express.Router();
 const { User } = require("../db");
 const { Op } = require("sequelize");
 
+/**
+ * @swagger
+ * components:
+ *   schemas:
+ *     User:
+ *       type: object
+ *       properties:
+ *         nombre:
+ *           type: string
+ *           description: nombre del usuario
+ *         apellido:
+ *           type: string
+ *           description: apellido del usuario
+ *         edad:
+ *           type: integer
+ *           description: edad del usuario
+ *       required:
+ *         - nombre
+ *         - apellido
+ *         - edad
+ *       example:
+ *         nombre: John
+ *         apellido: Doe
+ *         edad: 33
+ */
+
+/**
+ * @swagger
+ * /users:
+ *  get:
+ *   summary: return all users from the database
+ *   tags: [User]
+ *   responses:
+ *    200:
+ *     description: all users from the database are returned
+ *     content:
+ *      application/json:
+ *       schema:
+ *        type: array
+ *        items:
+ *         $ref: '#/components/schemas/User'
+ */
 router.get("/", async (req, res) => {
 	const { nombre } = req.query;
 	try {
@@ -23,13 +65,70 @@ router.get("/", async (req, res) => {
 	}
 });
 
+/**
+ * @swagger
+ * /users/{id}:
+ *  get:
+ *   summary: return a user from the database
+ *   tags: [User]
+ *   parameters:
+ *    - in: path
+ *      name: id
+ *      schema:
+ *       type: string
+ *      required: true
+ *      description: the user identifier
+ *   responses:
+ *    200:
+ *     description: one user is returned
+ *     content:
+ *      application/json:
+ *       schema:
+ *        type: object
+ *        items:
+ *         $ref: '#/components/schemas/User'
+ *    404:
+ *     description: user not found
+ */
+router.get("/:id", async (req, res) => {
+	const { id } = req.params;
+try {
+	const users = await User.findAll();
+	if (id) {
+		const user = await users.filter((e) => e.id.includes(id)); 
+		user.length
+			? res.json(user)
+			: res.status(404).send("Usuario no encontrado");
+	}
+} catch (error) {
+	console.log(error);
+}
+});
+
+/**
+ * @swagger
+ * /users:
+ *  post:
+ *   summary: create a new user
+ *   tags: [User]
+ *   requestBody:
+ *    required: true
+ *    content:
+ *     application/json:
+ *      schema:
+ *       type: object
+ *       $ref: '#/components/schemas/User'
+ *   responses:
+ *    200:
+ *     description: new user created 
+ */
 router.post("/", async (req, res) => {
 	try {
 		const { nombre, apellido, edad } = req.body;
 		console.log("Received data:", { nombre, apellido, edad });
 
 		const user = await User.findOne({
-			where: { nombre: { [Op.iLike]: `%${nombre}%` } } //Op.iLike no distingue en mayúsculas y minúsculas
+			where: { nombre: { [Op.iLike]: `%${nombre}%` } }, //Op.iLike no distingue en mayúsculas y minúsculas
 		});
 
 		if (!user) {
@@ -39,15 +138,34 @@ router.post("/", async (req, res) => {
 				edad: edad,
 			});
 			res.status(201).json(newUser);
-	} else {
-		return res.status(404).send("El usuario ya existe");
-	}
+		} else {
+			return res.status(404).send("El usuario ya existe");
+		}
 	} catch (error) {
 		console.error("Error al insertar usuario:", error);
 		res.status(500).json({ error: "Error al insertar usuario" });
 	}
 });
 
+/**
+ * @swagger
+ * /users:
+ *  delete:
+ *   summary: delete a user from the database
+ *   tags: [User]
+ *   parameters:
+ *    - in: path
+ *      name: id
+ *      schema:
+ *       type: string
+ *      required: true
+ *      description: the user identifier
+ *   responses:
+ *    200:
+ *     description: user deleted
+ *    404:
+ *     description: user not found
+ */
 router.delete("/", async (req, res) => {
 	const { id } = req.query;
 	const user = await User.findByPk(id);
@@ -68,7 +186,9 @@ router.put("/", async (req, res) => {
 		const user = await User.findByPk(id);
 
 		await user.update({
-			nombre, apellido, edad
+			nombre,
+			apellido,
+			edad,
 		});
 
 		const updatedUser = await User.findOne({
