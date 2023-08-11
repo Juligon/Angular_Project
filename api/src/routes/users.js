@@ -31,7 +31,7 @@ const { Op } = require("sequelize");
 
 /**
  * @swagger
- * /users:
+ * /api/users:
  *  get:
  *   summary: return all users from the database
  *   tags: [User]
@@ -67,10 +67,9 @@ router.get("/", async (req, res) => {
 
 /**
  * @swagger
- * /users/:id:
+ * /api/users/:id:
  *  get:
- *   summary: return a user from the database
- *   tags: [User]
+ *   summary: get user by id
  *   parameters:
  *    - in: path
  *      name: id
@@ -104,7 +103,7 @@ router.get("/:id", async (req, res) => {
 
 /**
  * @swagger
- * /users:
+ * /api/users:
  *  post:
  *   summary: create a new user
  *   tags: [User]
@@ -146,7 +145,7 @@ router.post("/", async (req, res) => {
 
 /**
  * @swagger
- * /users/:id:
+ * /api/users/:id:
  *  delete:
  *   summary: delete a user from the database
  *   tags: [User]
@@ -180,7 +179,7 @@ router.delete("/:id", async (req, res) => {
 
 /**
  * @swagger
- * /users:
+ * /api/users:
  *  put:
  *   summary: update a user
  *   tags: [User]
