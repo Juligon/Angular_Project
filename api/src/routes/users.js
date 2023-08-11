@@ -35,9 +35,10 @@ const { Op } = require("sequelize");
  * /api/users:
  *  get:
  *   summary: return all users from the database
- *   tags: [User]
+ *   tags: 
+ *    - User
  *   responses:
- *    200:
+ *    '200':
  *     description: all users from the database are returned
  *     content:
  *      application/json:
@@ -75,20 +76,20 @@ router.get("/", async (req, res) => {
  *  get:
  *   summary: get user by id
  *   parameters:
- *    - in: path
- *      name: id
+ *    - name: id
+ *      in: path
+ *      description: the user identifier
+ *      required: true
  *      schema:
  *       type: integer
- *      required: true
- *      description: the user identifier
  *   responses:
- *    200:
+ *    '200':
  *     description: one user is returned
  *     content:
  *      application/json:
  *       schema:
  *        $ref: '#/components/schemas/User'
- *    404:
+ *    '404':
  *     description: user not found
  */
 
@@ -121,7 +122,7 @@ router.get("/:id", async (req, res) => {
  *       type: object
  *       $ref: '#/components/schemas/User'
  *   responses:
- *    200:
+ *    '200':
  *     description: new user created 
  */
 
@@ -156,18 +157,19 @@ router.post("/", async (req, res) => {
  * /api/users/:id:
  *  delete:
  *   summary: delete a user from the database
- *   tags: [User]
+ *   tags: 
+ *    - User
  *   parameters:
- *    - in: path
- *      name: id
- *      schema:
- *       type: integer
- *      required: true
+ *    - name: id
+ *      in: path
  *      description: the user identifier
+ *      required: true
+ *      schema:
+ *       type: integer   
  *   responses:
- *    200:
+ *    '200':
  *     description: user deleted
- *    404:
+ *    '404':
  *     description: user not found
  */
 
@@ -192,7 +194,8 @@ router.delete("/:id", async (req, res) => {
  * /api/users:
  *  put:
  *   summary: update a user
- *   tags: [User]
+ *   tags: 
+ *    - User
  *   requestBody:
  *    required: true
  *    content:
@@ -200,9 +203,9 @@ router.delete("/:id", async (req, res) => {
  *      schema:
  *       $ref: '#/components/schemas/User'
  *   responses:
- *    200:
+ *    '200':
  *     description: user updated
- *    404:
+ *    '404':
  *     description: user not found
  */
 
