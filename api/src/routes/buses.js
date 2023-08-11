@@ -82,18 +82,17 @@ router.get("/", async (req, res) => {
  */
 
 router.get("/:id", async (req, res) => {
-	const { id } = req.params;
-try {
-	const buses = await Bus.findAll();
-	if (id) {
-		const bus = await buses.filter((e) => e.id.toUpperCase().includes(id.toUpperCase())); 
-		bus.length
-			? res.json(bus)
-			: res.status(404).send("Colectivo no encontrado");
-	}
-} catch (error) {
-	console.log(error);
-}
+  const { id } = req.params;
+  try {
+    const bus = await Bus.findByPk(id);
+    if (!bus) {
+      return res.status(404).send("Colectivo no encontrado");
+    }
+    res.json(bus);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Error al obtener colectivo" });
+  }
 });
 
 /**
@@ -151,17 +150,19 @@ router.post("/", async (req, res) => {
  *     description: bus not found
  */
 
-router.delete("/", async (req, res) => {
-	const { id } = req.query;
-	const bus = await Bus.findByPk(id);
-	try {
-		const deletedBus = await Bus.destroy({
-			where: { id: id },
-		});
-		res.send("done");
-	} catch (error) {
-		res.status(404).send(error);
-	}
+router.delete("/:id", async (req, res) => {
+  const { id } = req.params;
+  try {
+    const deletedBus = await Bus.destroy({
+      where: { id: id },
+    });
+    if (deletedBus === 0) {
+      return res.status(404).send("Colectivo no encontrado");
+    }
+    res.send("done");
+  } catch (error) {
+    res.status(404).send(error);
+  }
 });
 
 /**

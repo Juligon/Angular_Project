@@ -41,6 +41,25 @@ const { Trip } = require("../db");
  *      colectivoId: 1
  */
 
+/**
+ * get all trips
+ * @swagger
+ * /api/trips:
+ *  get:
+ *   summary: return all trips from the database
+ *   tags: 
+ *    - Trip
+ *   responses:
+ *    '200':
+ *     description: all the trips from the database are returned
+ *     content:
+ *      application/json:
+ *       schema:
+ *        type: array
+ *        items:
+ *         $ref: '#/components/schemas/Trip'
+ */
+
 router.get("/", async (req, res) => {
 	try {
 		const trips = await Trip.findAll();
@@ -51,28 +70,71 @@ router.get("/", async (req, res) => {
 	}
 });
 
+/**
+ * get trip by id
+ * @swagger
+ * /api/trips/{id}:
+ *  get:
+ *   summary: get trip by id
+ *   parameters:
+ *    - name: id
+ *      in: path
+ *      description: the trip identifier
+ *      required: true
+ *      schema:
+ *       type: integer
+ *   responses:
+ *    '200':
+ *     description: one trip is returned
+ *     content:
+ *      application/json:
+ *       schema:
+ *        $ref: '#/components/schemas/Trip'
+ *    '404':
+ *     description: trip not found
+ */
+
 router.get("/:id", async (req, res) => {
-	const { id } = req.params;
-try {
-	const trips = await Trip.findAll();
-	if (id) {
-		const trip = await trips.filter((e) => e.id.toUpperCase().includes(id.toUpperCase())); 
-		trip.length
-			? res.json(trip)
-			: res.status(404).send("Viaje no encontrado");
-	}
-} catch (error) {
-	console.log(error);
-}
+  const { id } = req.params;
+  try {
+    const trip = await Trip.findByPk(id);
+    if (!trip) {
+      return res.status(404).send("Viaje no encontrado");
+    }
+    res.json(trip);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Error al obtener viaje" });
+  }
 });
+
+/**
+ * post trip
+ * @swagger
+ * /api/trips:
+ *  post:
+ *   summary: create a new trip
+ *   tags: 
+ *    - Trip
+ *   requestBody:
+ *    required: true
+ *    content:
+ *     application/json:
+ *      schema:
+ *       type: object
+ *       $ref: '#/components/schemas/Trip'
+ *   responses:
+ *    '200':
+ *     description: new trip created 
+ */
 
 router.post("/", async (req, res) => {
 	try {
-		const { lugarSalida, lugarDestino, fechaLlegada, fechaSalida, personaId, colectivoId } =
+		const { origen, destino, ida, vuelta, usuarioId, colectivoId } =
 			req.body;
 			
 			const trip = await Trip.create({
-				lugarSalida, lugarDestino, fechaLlegada, fechaSalida, personaId, colectivoId,
+				origen, destino, ida, vuelta, usuarioId, colectivoId,
 			});
 		res.status(201).json(trip);
 	} catch (error) {
@@ -81,32 +143,77 @@ router.post("/", async (req, res) => {
 	}
 });
 
-router.delete("/", async (req, res) => {
-	const { id } = req.query;
-	const trip = await Trip.findByPk(id);
-	try {
-		const deletedTrip = await Trip.destroy({
-			where: { id: id },
-		});
-		res.send("done");
-	} catch (error) {
-		res.status(404).send(error);
-	}
+/**
+ * delete trip
+ * @swagger
+ * /api/trips/{id}:
+ *  delete:
+ *   summary: delete a trip from the database
+ *   tags: 
+ *    - Trip
+ *   parameters:
+ *    - name: id
+ *      in: path
+ *      description: the trip identifier
+ *      required: true
+ *      schema:
+ *       type: integer   
+ *   responses:
+ *    '200':
+ *     description: trip deleted
+ *    '404':
+ *     description: trip not found
+ */
+
+router.delete("/:id", async (req, res) => {
+  const { id } = req.params;
+  try {
+    const deletedTrip = await Trip.destroy({
+      where: { id: id },
+    });
+    if (deletedTrip === 0) {
+      return res.status(404).send("Viaje no encontrado");
+    }
+    res.send("done");
+  } catch (error) {
+    res.status(404).send(error);
+  }
 });
 
+/**
+ * update trip
+ * @swagger
+ * /api/trips:
+ *  put:
+ *   summary: update a trip
+ *   tags: 
+ *    - User
+ *   requestBody:
+ *    required: true
+ *    content:
+ *     application/json:
+ *      schema:
+ *       $ref: '#/components/schemas/Trip'
+ *   responses:
+ *    '200':
+ *     description: trip updated
+ *    '404':
+ *     description: trip not found
+ */
+
 router.put("/", async (req, res) => {
-	const { lugarSalida, lugarDestino, fechaLlegada, fechaSalida, personaId, colectivoId, id } =
+	const { origen, destino, ida, vuelta, usuarioId, colectivoId, id } =
 			req.body;
 
 	try {
 		const trip = await Trip.findByPk(id);
 
 		await trip.update({
-			lugarSalida, lugarDestino, fechaLlegada, fechaSalida, personaId, colectivoId
+			origen, destino, ida, vuelta, usuarioId, colectivoId
 		});
 
 		const updatedTrip = await Trip.findOne({
-			where: { lugarDestino: lugarDestino },
+			where: { destino: destino },
 		});
 
 		res.send(updatedTrip);
