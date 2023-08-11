@@ -23,7 +23,7 @@ const swaggerSpec = {
 		},
 		servers: [
 			{
-				url: "https://tripsadmin-production.up.railway.app/api",
+				url: "https://tripsadmin-production.up.railway.app",
 			},
 		],
 	},
