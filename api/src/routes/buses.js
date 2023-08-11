@@ -18,14 +18,14 @@ const { Bus } = require("../db");
  *      modelo:
  *       type: integer
  *       description: modelo del bus
- *     required:
- *      - patente
- *      - asientos
- *      - modelo
- *     example:
- *      patente: ABC 123
- *      asientos: 100
- *      modelo: 1
+ *      required:
+ *       - patente
+ *       - asientos
+ *       - modelo
+ *      example:
+ *       patente: ABC 123
+ *       asientos: 100
+ *       modelo: 1
  */
 
 /**

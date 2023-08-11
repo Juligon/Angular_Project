@@ -19,14 +19,14 @@ const { Op } = require("sequelize");
  *      edad:
  *       type: integer
  *       description: edad del usuario
- *     required:
- *      - nombre
- *      - apellido
- *      - edad
- *     example:
- *      nombre: John
- *      apellido: Doe
- *      edad: 33
+ *      required:
+ *       - nombre
+ *       - apellido
+ *       - edad
+ *      example:
+ *       nombre: John
+ *       apellido: Doe
+ *       edad: 33
  */
 
 /**
@@ -35,7 +35,7 @@ const { Op } = require("sequelize");
  * /api/users:
  *  get:
  *   summary: return all users from the database
- *   tags: 
+ *   tags:
  *    - User
  *   responses:
  *    '200':
@@ -68,7 +68,6 @@ router.get("/", async (req, res) => {
 	}
 });
 
-
 /**
  * get user by id
  * @swagger
@@ -94,17 +93,17 @@ router.get("/", async (req, res) => {
  */
 
 router.get("/:id", async (req, res) => {
-  const { id } = req.params;
-  try {
-    const user = await User.findByPk(id);
-    if (!user) {
-      return res.status(404).send("Usuario no encontrado");
-    }
-    res.json(user);
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: "Error al obtener usuario" });
-  }
+	const { id } = req.params;
+	try {
+		const user = await User.findByPk(id);
+		if (!user) {
+			return res.status(404).send("Usuario no encontrado");
+		}
+		res.json(user);
+	} catch (error) {
+		console.error(error);
+		res.status(500).json({ error: "Error al obtener usuario" });
+	}
 });
 
 /**
@@ -113,7 +112,7 @@ router.get("/:id", async (req, res) => {
  * /api/users:
  *  post:
  *   summary: create a new user
- *   tags: 
+ *   tags:
  *    - User
  *   requestBody:
  *    required: true
@@ -124,7 +123,7 @@ router.get("/:id", async (req, res) => {
  *       $ref: '#/components/schemas/User'
  *   responses:
  *    '200':
- *     description: new user created 
+ *     description: new user created
  */
 
 router.post("/", async (req, res) => {
@@ -158,7 +157,7 @@ router.post("/", async (req, res) => {
  * /api/users/{id}:
  *  delete:
  *   summary: delete a user from the database
- *   tags: 
+ *   tags:
  *    - User
  *   parameters:
  *    - name: id
@@ -166,7 +165,7 @@ router.post("/", async (req, res) => {
  *      description: the user identifier
  *      required: true
  *      schema:
- *       type: integer   
+ *       type: integer
  *   responses:
  *    '200':
  *     description: user deleted
@@ -175,18 +174,18 @@ router.post("/", async (req, res) => {
  */
 
 router.delete("/:id", async (req, res) => {
-  const { id } = req.params;
-  try {
-    const deletedUser = await User.destroy({
-      where: { id: id },
-    });
-    if (deletedUser === 0) {
-      return res.status(404).send("Usuario no encontrado");
-    }
-    res.send("done");
-  } catch (error) {
-    res.status(404).send(error);
-  }
+	const { id } = req.params;
+	try {
+		const deletedUser = await User.destroy({
+			where: { id: id },
+		});
+		if (deletedUser === 0) {
+			return res.status(404).send("Usuario no encontrado");
+		}
+		res.send("done");
+	} catch (error) {
+		res.status(404).send(error);
+	}
 });
 
 /**
@@ -195,7 +194,7 @@ router.delete("/:id", async (req, res) => {
  * /api/users:
  *  put:
  *   summary: update a user
- *   tags: 
+ *   tags:
  *    - User
  *   requestBody:
  *    required: true

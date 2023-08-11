@@ -15,12 +15,12 @@ const { Model } = require("../db");
  *      marca:
  *       type: string
  *       description: marca del modelo
- *     required:
- *      - nombre
- *      - marca
- *     example:
- *      nombre: 
- *      marca: Mercedes Benz
+ *      required:
+ *       - nombre
+ *       - marca
+ *      example:
+ *       nombre: 
+ *       marca: Mercedes Benz
  */
 
 /**

@@ -27,18 +27,18 @@ const { Trip } = require("../db");
  *      colectivoId: 
  *       type: integer
  *       description: id del bus
- *     required:
- *      - origen
- *      - destino
- *      - ida
- *      - vuelta
- *     example:
- *      origen: Paraná
- *      destino: Buenos Aires
- *      ida: 07-08-2023
- *      vuelta: 15-08-2023
- *      usuarioId: [1, 2, 3, 4, 5]
- *      colectivoId: 1
+ *      required:
+ *       - origen
+ *       - destino
+ *       - ida
+ *       - vuelta
+ *      example:
+ *       origen: Paraná
+ *       destino: Buenos Aires
+ *       ida: 07-08-2023
+ *       vuelta: 15-08-2023
+ *       usuarioId: [1, 2, 3, 4, 5]
+ *       colectivoId: 1
  */
 
 /**
