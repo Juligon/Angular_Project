@@ -145,10 +145,17 @@ router.post("/", async (req, res) => {
 
 /**
  * @swagger
- * /api/users?id=id:
+ * /api/users/:id:
  *  delete:
  *   summary: delete a user from the database
  *   tags: [User]
+ *   parameters:
+ *    - in: path
+ *      name: id
+ *      schema:
+ *       type: integer
+ *      required: true
+ *      description: the user identifier
  *   responses:
  *    200:
  *     description: user deleted
@@ -156,7 +163,7 @@ router.post("/", async (req, res) => {
  *     description: user not found
  */
 router.delete("/", async (req, res) => {
-  const { id } = req.query;
+  const { id } = req.params;
   try {
     const deletedUser = await User.destroy({
       where: { id: id },
