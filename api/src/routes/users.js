@@ -72,7 +72,7 @@ router.get("/", async (req, res) => {
 /**
  * get user by id
  * @swagger
- * /api/users/:id:
+ * /api/users/{id}:
  *  get:
  *   summary: get user by id
  *   parameters:
@@ -154,7 +154,7 @@ router.post("/", async (req, res) => {
 /**
  * delete user
  * @swagger
- * /api/users/:id:
+ * /api/users/{id}:
  *  delete:
  *   summary: delete a user from the database
  *   tags: 
