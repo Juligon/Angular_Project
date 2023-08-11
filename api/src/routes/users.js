@@ -30,6 +30,7 @@ const { Op } = require("sequelize");
  */
 
 /**
+ * get all users
  * @swagger
  * /api/users:
  *  get:
@@ -45,6 +46,7 @@ const { Op } = require("sequelize");
  *        items:
  *         $ref: '#/components/schemas/User'
  */
+
 router.get("/", async (req, res) => {
 	const { nombre } = req.query;
 	try {
@@ -65,7 +67,9 @@ router.get("/", async (req, res) => {
 	}
 });
 
+
 /**
+ * get user by id
  * @swagger
  * /api/users/:id:
  *  get:
@@ -87,6 +91,7 @@ router.get("/", async (req, res) => {
  *    404:
  *     description: user not found
  */
+
 router.get("/:id", async (req, res) => {
   const { id } = req.params;
   try {
@@ -102,6 +107,7 @@ router.get("/:id", async (req, res) => {
 });
 
 /**
+ * post user
  * @swagger
  * /api/users:
  *  post:
@@ -118,6 +124,7 @@ router.get("/:id", async (req, res) => {
  *    200:
  *     description: new user created 
  */
+
 router.post("/", async (req, res) => {
 	try {
 		const { nombre, apellido, edad } = req.body;
@@ -144,6 +151,7 @@ router.post("/", async (req, res) => {
 });
 
 /**
+ * delete user
  * @swagger
  * /api/users/:id:
  *  delete:
@@ -162,6 +170,7 @@ router.post("/", async (req, res) => {
  *    404:
  *     description: user not found
  */
+
 router.delete("/:id", async (req, res) => {
   const { id } = req.params;
   try {
@@ -178,6 +187,7 @@ router.delete("/:id", async (req, res) => {
 });
 
 /**
+ * update user
  * @swagger
  * /api/users:
  *  put:
@@ -195,6 +205,7 @@ router.delete("/:id", async (req, res) => {
  *    404:
  *     description: user not found
  */
+
 router.put("/", async (req, res) => {
 	const { id, nombre, apellido, edad } = req.body;
 
