@@ -145,7 +145,7 @@ router.post("/", async (req, res) => {
 
 /**
  * @swagger
- * /api/users:
+ * /api/users?id=id:
  *  delete:
  *   summary: delete a user from the database
  *   tags: [User]
