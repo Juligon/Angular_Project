@@ -162,7 +162,7 @@ router.post("/", async (req, res) => {
  *    404:
  *     description: user not found
  */
-router.delete("/", async (req, res) => {
+router.delete("/:id", async (req, res) => {
   const { id } = req.params;
   try {
     const deletedUser = await User.destroy({
