@@ -14,7 +14,7 @@ module.exports = (sequelize) => {
 				allowNull: false,
 				type: DataTypes.STRING,
 			},
-			cantidadAsientos: {
+			asientos: {
 				allowNull: false,
 				type: DataTypes.INTEGER,
 			},

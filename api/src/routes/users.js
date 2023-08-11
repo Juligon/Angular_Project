@@ -6,27 +6,27 @@ const { Op } = require("sequelize");
 /**
  * @swagger
  * components:
- *   schemas:
- *     User:
- *       type: object
- *       properties:
- *         nombre:
- *           type: string
- *           description: nombre del usuario
- *         apellido:
- *           type: string
- *           description: apellido del usuario
- *         edad:
- *           type: integer
- *           description: edad del usuario
- *       required:
- *         - nombre
- *         - apellido
- *         - edad
- *       example:
- *         nombre: John
- *         apellido: Doe
- *         edad: 33
+ *  schemas:
+ *   User:
+ *    type: object
+ *     properties:
+ *      nombre:
+ *       type: string
+ *       description: nombre del usuario
+ *      apellido:
+ *       type: string
+ *       description: apellido del usuario
+ *      edad:
+ *       type: integer
+ *       description: edad del usuario
+ *     required:
+ *      - nombre
+ *      - apellido
+ *      - edad
+ *     example:
+ *      nombre: John
+ *      apellido: Doe
+ *      edad: 33
  */
 
 /**
@@ -113,7 +113,8 @@ router.get("/:id", async (req, res) => {
  * /api/users:
  *  post:
  *   summary: create a new user
- *   tags: [User]
+ *   tags: 
+ *    - User
  *   requestBody:
  *    required: true
  *    content:

@@ -2,6 +2,45 @@ const express = require("express");
 const router = express.Router();
 const { Trip } = require("../db");
 
+/**
+ * @swagger
+ * components:
+ *  schemas:
+ *   Trip:
+ *    type: object
+ *     properties:
+ *      origen:
+ *       type: string
+ *       description: lugar de salida
+ *      destino:
+ *       type: string
+ *       description: lugar de destino
+ *      ida:
+ *       type: string
+ *       description: fecha de salida
+ *      vuelta:
+ *       type: string
+ *       description: fecha de vuelta
+ *      usuarioId:
+ *       type: array
+ *       description: array de id de los usuarios
+ *      colectivoId: 
+ *       type: integer
+ *       description: id del bus
+ *     required:
+ *      - origen
+ *      - destino
+ *      - ida
+ *      - vuelta
+ *     example:
+ *      origen: Paraná
+ *      destino: Buenos Aires
+ *      ida: 07-08-2023
+ *      vuelta: 15-08-2023
+ *      usuarioId: [1, 2, 3, 4, 5]
+ *      colectivoId: 1
+ */
+
 router.get("/", async (req, res) => {
 	try {
 		const trips = await Trip.findAll();

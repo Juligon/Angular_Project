@@ -10,23 +10,23 @@ module.exports = (sequelize) => {
 				primaryKey: true,
 				type: DataTypes.INTEGER
 			},
-			lugarSalida: {
+			origen: {
 				allowNull: false,
 				type: DataTypes.STRING,				
 			},
-			lugarDestino: {
+			destino: {
 				allowNull: false,
 				type: DataTypes.STRING,
 			},
-			fechaLlegada: {
+			ida: {
 				allowNull: false,
 				type: DataTypes.STRING,
 			},
-			fechaSalida: {
+			vuelta: {
 				allowNull: false,
 				type: DataTypes.STRING,
 			},
-			personaId: {
+			usuarioId: {
 				type: DataTypes.ARRAY(DataTypes.INTEGER),
 			},
 			colectivoId: {
