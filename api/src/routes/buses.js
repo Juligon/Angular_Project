@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const { Bus } = require("../db"); 
+const { Bus } = require("../db");
 
 /**
  * @swagger
@@ -48,13 +48,13 @@ const { Bus } = require("../db");
 
 // Ruta para obtener todos los colectivos
 router.get("/", async (req, res) => {
-  try {
-    const buses = await Bus.findAll();
-    res.json(buses);
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: "Error al obtener colectivos" });
-  }
+	try {
+		const buses = await Bus.findAll();
+		res.json(buses);
+	} catch (error) {
+		console.error(error);
+		res.status(500).json({ error: "Error al obtener colectivos" });
+	}
 });
 
 /**
@@ -84,17 +84,17 @@ router.get("/", async (req, res) => {
 
 // Ruta para obtener un colectivo por su ID
 router.get("/:id", async (req, res) => {
-  const { id } = req.params;
-  try {
-    const bus = await Bus.findByPk(id);
-    if (!bus) {
-      return res.status(404).send("Colectivo no encontrado");
-    }
-    res.json(bus);
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: "Error al obtener colectivo" });
-  }
+	const { id } = req.params;
+	try {
+		const bus = await Bus.findByPk(id);
+		if (!bus) {
+			return res.status(404).send("Colectivo no encontrado");
+		}
+		res.json(bus);
+	} catch (error) {
+		console.error(error);
+		res.status(500).json({ error: "Error al obtener colectivo" });
+	}
 });
 
 /**
@@ -119,18 +119,20 @@ router.get("/:id", async (req, res) => {
 
 // Ruta para crear un nuevo colectivo
 router.post("/", async (req, res) => {
-  try {
-    const { patente, asientos, modelo } = req.body;
+	try {
+		const { patente, asientos, modelo } = req.body;
 
-    const bus = await Bus.create({
-      patente, asientos, modelo,
-    });
+		const bus = await Bus.create({
+			patente,
+			asientos,
+			modelo,
+		});
 
-    res.status(201).json(bus);
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: "Error al crear colectivo" });
-  }
+		res.status(201).json(bus);
+	} catch (error) {
+		console.error(error);
+		res.status(500).json({ error: "Error al crear colectivo" });
+	}
 });
 
 /**
@@ -156,28 +158,35 @@ router.post("/", async (req, res) => {
 
 // Ruta para eliminar un colectivo por su ID
 router.delete("/:id", async (req, res) => {
-  const { id } = req.params;
-  try {
-    const deletedBus = await Bus.destroy({
-      where: { id: id },
-    });
-    if (deletedBus === 0) {
-      return res.status(404).send("Colectivo no encontrado");
-    }
-    res.send("Colectivo eliminado correctamente");
-  } catch (error) {
-    console.error(error);
-    res.status(500).send("Error al eliminar colectivo");
-  }
+	const { id } = req.params;
+	try {
+		const deletedBus = await Bus.destroy({
+			where: { id: id },
+		});
+		if (deletedBus === 0) {
+			return res.status(404).send("Colectivo no encontrado");
+		}
+		res.send("Colectivo eliminado correctamente");
+	} catch (error) {
+		console.error(error);
+		res.status(500).send("Error al eliminar colectivo");
+	}
 });
 
 /**
  * @swagger
- * /api/buses:
+ * /api/buses/{id}:
  *   put:
  *     summary: Actualizar un colectivo
  *     tags:
  *       - Colectivo
+ *     parameters:
+ *       - name: id
+ *         in: path
+ *         description: Identificador del colectivo
+ *         required: true
+ *         schema:
+ *           type: integer
  *     requestBody:
  *       required: true
  *       content:
@@ -193,28 +202,31 @@ router.delete("/:id", async (req, res) => {
 
 // Ruta para actualizar un colectivo por su ID
 router.put("/:id", async (req, res) => {
-  const { id, patente, asientos, modelo } = req.body;
+	const { id } = req.params;
+	const { patente, asientos, modelo } = req.body;
 
-  try {
-    const bus = await Bus.findByPk(id);
+	try {
+		const bus = await Bus.findByPk(id);
 
-    if (!bus) {
-      return res.status(404).send("Colectivo no encontrado");
-    }
+		if (!bus) {
+			return res.status(404).send("Colectivo no encontrado");
+		}
 
-    await bus.update({
-      patente, asientos, modelo,
-    });
+		await bus.update({
+			patente,
+			asientos,
+			modelo,
+		});
 
-    const updatedBus = await Bus.findOne({
-      where: { patente: patente },
-    });
+		const updatedBus = await Bus.findOne({
+			where: { patente: patente },
+		});
 
-    res.send(updatedBus);
-  } catch (error) {
-    console.error(error);
-    res.status(500).send("Error al actualizar colectivo");
-  }
+		res.send(updatedBus);
+	} catch (error) {
+		console.error(error);
+		res.status(500).send("Error al actualizar colectivo");
+	}
 });
 
 module.exports = router;
