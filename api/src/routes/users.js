@@ -9,43 +9,48 @@ const { Op } = require("sequelize");
  *  schemas:
  *   User:
  *    type: object
- *     properties:
+ *    properties:
  *      nombre:
- *       type: string
- *       description: nombre del usuario
+ *        type: string
+ *        description: nombre del usuario
  *      apellido:
- *       type: string
- *       description: apellido del usuario
+ *        type: string
+ *        description: apellido del usuario
  *      edad:
- *       type: integer
- *       description: edad del usuario
- *      required:
- *       - nombre
- *       - apellido
- *       - edad
- *      example:
- *       nombre: John
- *       apellido: Doe
- *       edad: 33
+ *        type: integer
+ *        description: edad del usuario
+ *    required:
+ *      - nombre
+ *      - apellido
+ *      - edad
+ *    example:
+ *      nombre: John
+ *      apellido: Doe
+ *      edad: 33
  */
 
 /**
- * get all users
  * @swagger
  * /api/users:
- *  get:
- *   summary: return all users from the database
- *   tags:
- *    - User
- *   responses:
- *    '200':
- *     description: all users from the database are returned
- *     content:
- *      application/json:
- *       schema:
- *        type: array
- *        items:
- *         $ref: '#/components/schemas/User'
+ *   get:
+ *     summary: Return all users from the database
+ *     tags:
+ *       - User
+ *     parameters:
+ *       - name: nombre
+ *         in: query
+ *         description: Filter users by name
+ *         schema:
+ *           type: string
+ *     responses:
+ *       '200':
+ *         description: All users from the database are returned
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 $ref: '#/components/schemas/User'
  */
 
 router.get("/", async (req, res) => {
@@ -53,15 +58,14 @@ router.get("/", async (req, res) => {
 	try {
 		const users = await User.findAll();
 		if (nombre) {
-			const user = await users.filter((e) =>
-				e.nombre.toLowerCase().includes(nombre.toLowerCase())
+			const filteredUsers = users.filter(user =>
+				user.nombre.toLowerCase().includes(nombre.toLowerCase())
 			);
-			user.length
-				? res.json(user)
+			return filteredUsers.length
+				? res.json(filteredUsers)
 				: res.status(404).send("Usuario no encontrado");
-		} else {
-			res.json(users);
 		}
+		res.json(users);
 	} catch (error) {
 		console.error(error);
 		res.status(500).json({ error: "Error al obtener usuarios" });
@@ -69,27 +73,28 @@ router.get("/", async (req, res) => {
 });
 
 /**
- * get user by id
  * @swagger
  * /api/users/{id}:
- *  get:
- *   summary: get user by id
- *   parameters:
- *    - name: id
- *      in: path
- *      description: the user identifier
- *      required: true
- *      schema:
- *       type: integer
- *   responses:
- *    '200':
- *     description: one user is returned
- *     content:
- *      application/json:
- *       schema:
- *        $ref: '#/components/schemas/User'
- *    '404':
- *     description: user not found
+ *   get:
+ *     summary: Get user by ID
+ *     tags:
+ *       - User
+ *     parameters:
+ *       - name: id
+ *         in: path
+ *         description: The user identifier
+ *         required: true
+ *         schema:
+ *           type: integer
+ *     responses:
+ *       '200':
+ *         description: One user is returned
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/User'
+ *       '404':
+ *         description: User not found
  */
 
 router.get("/:id", async (req, res) => {
@@ -107,44 +112,43 @@ router.get("/:id", async (req, res) => {
 });
 
 /**
- * post user
  * @swagger
  * /api/users:
- *  post:
- *   summary: create a new user
- *   tags:
- *    - User
- *   requestBody:
- *    required: true
- *    content:
- *     application/json:
- *      schema:
- *       type: object
- *       $ref: '#/components/schemas/User'
- *   responses:
- *    '200':
- *     description: new user created
+ *   post:
+ *     summary: Create a new user
+ *     tags:
+ *       - User
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/User'
+ *     responses:
+ *       '201':
+ *         description: New user created
+ *       '409':
+ *         description: User already exists
  */
 
 router.post("/", async (req, res) => {
 	try {
 		const { nombre, apellido, edad } = req.body;
-		console.log("Received data:", { nombre, apellido, edad });
 
-		const user = await User.findOne({
-			where: { nombre: { [Op.iLike]: `%${nombre}%` } }, //Op.iLike no distingue en mayúsculas y minúsculas
+		const existingUser = await User.findOne({
+			where: { nombre: { [Op.iLike]: `%${nombre}%` } }
 		});
 
-		if (!user) {
-			const newUser = await User.create({
-				nombre: nombre,
-				apellido: apellido,
-				edad: edad,
-			});
-			res.status(201).json(newUser);
-		} else {
-			return res.status(404).send("El usuario ya existe");
+		if (existingUser) {
+			return res.status(409).send("El usuario ya existe");
 		}
+
+		const newUser = await User.create({
+			nombre: nombre,
+			apellido: apellido,
+			edad: edad,
+		});
+		res.status(201).json(newUser);
 	} catch (error) {
 		console.error("Error al insertar usuario:", error);
 		res.status(500).json({ error: "Error al insertar usuario" });
@@ -152,25 +156,24 @@ router.post("/", async (req, res) => {
 });
 
 /**
- * delete user
  * @swagger
  * /api/users/{id}:
- *  delete:
- *   summary: delete a user from the database
- *   tags:
- *    - User
- *   parameters:
- *    - name: id
- *      in: path
- *      description: the user identifier
- *      required: true
- *      schema:
- *       type: integer
- *   responses:
- *    '200':
- *     description: user deleted
- *    '404':
- *     description: user not found
+ *   delete:
+ *     summary: Delete a user from the database
+ *     tags:
+ *       - User
+ *     parameters:
+ *       - name: id
+ *         in: path
+ *         description: The user identifier
+ *         required: true
+ *         schema:
+ *           type: integer
+ *     responses:
+ *       '200':
+ *         description: User deleted
+ *       '404':
+ *         description: User not found
  */
 
 router.delete("/:id", async (req, res) => {
@@ -182,38 +185,50 @@ router.delete("/:id", async (req, res) => {
 		if (deletedUser === 0) {
 			return res.status(404).send("Usuario no encontrado");
 		}
-		res.send("done");
+		res.send("Usuario eliminado correctamente");
 	} catch (error) {
-		res.status(404).send(error);
+		console.error(error);
+		res.status(500).send("Error al eliminar usuario");
 	}
 });
 
 /**
- * update user
  * @swagger
- * /api/users:
- *  put:
- *   summary: update a user
- *   tags:
- *    - User
- *   requestBody:
- *    required: true
- *    content:
- *     application/json:
- *      schema:
- *       $ref: '#/components/schemas/User'
- *   responses:
- *    '200':
- *     description: user updated
- *    '404':
- *     description: user not found
+ * /api/users/{id}:
+ *   put:
+ *     summary: Update a user
+ *     tags:
+ *       - User
+ *     parameters:
+ *       - name: id
+ *         in: path
+ *         description: The user identifier
+ *         required: true
+ *         schema:
+ *           type: integer
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/User'
+ *     responses:
+ *       '200':
+ *         description: User updated
+ *       '404':
+ *         description: User not found
  */
 
-router.put("/", async (req, res) => {
-	const { id, nombre, apellido, edad } = req.body;
+router.put("/:id", async (req, res) => {
+	const { id } = req.params;
+	const { nombre, apellido, edad } = req.body;
 
 	try {
 		const user = await User.findByPk(id);
+
+		if (!user) {
+			return res.status(404).send("Usuario no encontrado");
+		}
 
 		await user.update({
 			nombre,
@@ -227,7 +242,8 @@ router.put("/", async (req, res) => {
 
 		res.send(updatedUser);
 	} catch (error) {
-		res.status(404).send(error);
+		console.error(error);
+		res.status(500).send("Error al actualizar usuario");
 	}
 });
 
