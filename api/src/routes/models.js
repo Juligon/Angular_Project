@@ -11,10 +11,10 @@ const { Model } = require("../db");
  *    properties:
  *      nombre:
  *        type: string
- *        description: nombre del modelo
+ *        description: Nombre del modelo
  *      marca:
  *        type: string
- *        description: marca del modelo
+ *        description: Marca del modelo
  *    required:
  *      - nombre
  *      - marca
@@ -27,12 +27,12 @@ const { Model } = require("../db");
  * @swagger
  * /api/models:
  *   get:
- *     summary: Return all the models from the database
+ *     summary: Obtener todos los modelos de la base de datos
  *     tags:
- *       - Model
+ *       - Modelo
  *     responses:
  *       '200':
- *         description: All the models from the database are returned
+ *         description: Todos los modelos de la base de datos son obtenidos exitosamente
  *         content:
  *           application/json:
  *             schema:
@@ -41,6 +41,7 @@ const { Model } = require("../db");
  *                 $ref: '#/components/schemas/Model'
  */
 
+// Ruta para obtener todos los modelos
 router.get("/", async (req, res) => {
   try {
     const models = await Model.findAll();
@@ -55,9 +56,9 @@ router.get("/", async (req, res) => {
  * @swagger
  * /api/models:
  *   post:
- *     summary: Create a new model of bus
+ *     summary: Crear un nuevo modelo de colectivo
  *     tags:
- *       - Model
+ *       - Modelo
  *     requestBody:
  *       required: true
  *       content:
@@ -66,9 +67,12 @@ router.get("/", async (req, res) => {
  *             $ref: '#/components/schemas/Model'
  *     responses:
  *       '201':
- *         description: New model created
+ *         description: Nuevo modelo creado
+ *       '500':
+ *         description: Error al crear modelo
  */
 
+// Ruta para crear un nuevo modelo
 router.post("/", async (req, res) => {
   try {
     const { nombre, marca } = req.body;
@@ -85,4 +89,5 @@ router.post("/", async (req, res) => {
 });
 
 module.exports = router;
+
 

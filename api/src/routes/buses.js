@@ -11,13 +11,13 @@ const { Bus } = require("../db");
  *    properties:
  *      patente:
  *        type: string
- *        description: patente del bus
+ *        description: Patente del bus
  *      asientos:
  *        type: integer
- *        description: cantidad de asientos del bus
+ *        description: Cantidad de asientos del bus
  *      modelo:
  *        type: integer
- *        description: modelo del bus
+ *        description: Modelo del bus
  *    required:
  *      - patente
  *      - asientos
@@ -32,12 +32,12 @@ const { Bus } = require("../db");
  * @swagger
  * /api/buses:
  *   get:
- *     summary: Return all the buses from the database
+ *     summary: Obtener todos los colectivos de la base de datos
  *     tags:
- *       - Bus
+ *       - Colectivo
  *     responses:
  *       '200':
- *         description: All the buses from the database are returned
+ *         description: Todos los colectivos fueron obtenidos exitosamente
  *         content:
  *           application/json:
  *             schema:
@@ -46,6 +46,7 @@ const { Bus } = require("../db");
  *                 $ref: '#/components/schemas/Bus'
  */
 
+// Ruta para obtener todos los colectivos
 router.get("/", async (req, res) => {
   try {
     const buses = await Bus.findAll();
@@ -60,27 +61,28 @@ router.get("/", async (req, res) => {
  * @swagger
  * /api/buses/{id}:
  *   get:
- *     summary: Get bus by ID
+ *     summary: Obtener colectivo por ID
  *     tags:
- *       - Bus
+ *       - Colectivo
  *     parameters:
  *       - name: id
  *         in: path
- *         description: The bus identifier
+ *         description: Identificador del colectivo
  *         required: true
  *         schema:
  *           type: integer
  *     responses:
  *       '200':
- *         description: One bus is returned
+ *         description: Colectivo obtenido exitosamente
  *         content:
  *           application/json:
  *             schema:
  *               $ref: '#/components/schemas/Bus'
  *       '404':
- *         description: Bus not found
+ *         description: Colectivo no encontrado
  */
 
+// Ruta para obtener un colectivo por su ID
 router.get("/:id", async (req, res) => {
   const { id } = req.params;
   try {
@@ -99,9 +101,9 @@ router.get("/:id", async (req, res) => {
  * @swagger
  * /api/buses:
  *   post:
- *     summary: Create a new bus
+ *     summary: Crear un nuevo colectivo
  *     tags:
- *       - Bus
+ *       - Colectivo
  *     requestBody:
  *       required: true
  *       content:
@@ -110,9 +112,12 @@ router.get("/:id", async (req, res) => {
  *             $ref: '#/components/schemas/Bus'
  *     responses:
  *       '201':
- *         description: New bus created
+ *         description: Colectivo creado exitosamente
+ *       '500':
+ *         description: Error al crear colectivo
  */
 
+// Ruta para crear un nuevo colectivo
 router.post("/", async (req, res) => {
   try {
     const { patente, asientos, modelo } = req.body;
@@ -132,23 +137,24 @@ router.post("/", async (req, res) => {
  * @swagger
  * /api/buses/{id}:
  *   delete:
- *     summary: Delete a bus from the database
+ *     summary: Eliminar un colectivo de la base de datos
  *     tags:
- *       - Bus
+ *       - Colectivo
  *     parameters:
  *       - name: id
  *         in: path
- *         description: The bus identifier
+ *         description: Identificador del colectivo
  *         required: true
  *         schema:
  *           type: integer
  *     responses:
  *       '200':
- *         description: Bus deleted
+ *         description: Colectivo eliminado exitosamente
  *       '404':
- *         description: Bus not found
+ *         description: Colectivo no encontrado
  */
 
+// Ruta para eliminar un colectivo por su ID
 router.delete("/:id", async (req, res) => {
   const { id } = req.params;
   try {
@@ -169,9 +175,9 @@ router.delete("/:id", async (req, res) => {
  * @swagger
  * /api/buses:
  *   put:
- *     summary: Update a bus
+ *     summary: Actualizar un colectivo
  *     tags:
- *       - Bus
+ *       - Colectivo
  *     requestBody:
  *       required: true
  *       content:
@@ -180,11 +186,12 @@ router.delete("/:id", async (req, res) => {
  *             $ref: '#/components/schemas/Bus'
  *     responses:
  *       '200':
- *         description: Bus updated
+ *         description: Colectivo actualizado exitosamente
  *       '404':
- *         description: Bus not found
+ *         description: Colectivo no encontrado
  */
 
+// Ruta para actualizar un colectivo por su ID
 router.put("/:id", async (req, res) => {
   const { id, patente, asientos, modelo } = req.body;
 

@@ -11,22 +11,22 @@ const { Trip } = require("../db");
  *    properties:
  *      origen:
  *        type: string
- *        description: lugar de salida
+ *        description: Lugar de salida
  *      destino:
  *        type: string
- *        description: lugar de destino
+ *        description: Lugar de destino
  *      ida:
  *        type: string
- *        description: fecha de salida
+ *        description: Fecha de salida
  *      vuelta:
  *        type: string
- *        description: fecha de vuelta
+ *        description: Fecha de vuelta
  *      usuarioId:
  *        type: array
- *        description: array de id de los usuarios
- *      colectivoId: 
+ *        description: Array de IDs de los usuarios
+ *      colectivoId:
  *        type: integer
- *        description: id del bus
+ *        description: ID del autobús
  *    required:
  *      - origen
  *      - destino
@@ -45,12 +45,12 @@ const { Trip } = require("../db");
  * @swagger
  * /api/trips:
  *   get:
- *     summary: Return all trips from the database
- *     tags: 
- *       - Trip
+ *     summary: Obtener todos los viajes de la base de datos
+ *     tags:
+ *       - Viaje
  *     responses:
  *       '200':
- *         description: All trips from the database are returned
+ *         description: Todos los viajes fueron obtenidos exitosamente
  *         content:
  *           application/json:
  *             schema:
@@ -59,6 +59,7 @@ const { Trip } = require("../db");
  *                 $ref: '#/components/schemas/Trip'
  */
 
+// Ruta para obtener todos los viajes
 router.get("/", async (req, res) => {
   try {
     const trips = await Trip.findAll();
@@ -73,27 +74,28 @@ router.get("/", async (req, res) => {
  * @swagger
  * /api/trips/{id}:
  *   get:
- *     summary: Get trip by ID
- *     tags: 
- *       - Trip
+ *     summary: Obtener viaje por ID
+ *     tags:
+ *       - Viaje
  *     parameters:
  *       - name: id
  *         in: path
- *         description: The trip identifier
+ *         description: Identificador del viaje
  *         required: true
  *         schema:
  *           type: integer
  *     responses:
  *       '200':
- *         description: One trip is returned
+ *         description: Viaje obtenido exitosamente
  *         content:
  *           application/json:
  *             schema:
  *               $ref: '#/components/schemas/Trip'
  *       '404':
- *         description: Trip not found
+ *         description: Viaje no encontrado
  */
 
+// Ruta para obtener un viaje por su ID
 router.get("/:id", async (req, res) => {
   const { id } = req.params;
   try {
@@ -112,9 +114,9 @@ router.get("/:id", async (req, res) => {
  * @swagger
  * /api/trips:
  *   post:
- *     summary: Create a new trip
- *     tags: 
- *       - Trip
+ *     summary: Crear un nuevo viaje
+ *     tags:
+ *       - Viaje
  *     requestBody:
  *       required: true
  *       content:
@@ -123,9 +125,12 @@ router.get("/:id", async (req, res) => {
  *             $ref: '#/components/schemas/Trip'
  *     responses:
  *       '201':
- *         description: New trip created 
+ *         description: Viaje creado exitosamente
+ *       '500':
+ *         description: Error al crear viaje
  */
 
+// Ruta para crear un nuevo viaje
 router.post("/", async (req, res) => {
   try {
     const { origen, destino, ida, vuelta, usuarioId, colectivoId } = req.body;
@@ -145,23 +150,24 @@ router.post("/", async (req, res) => {
  * @swagger
  * /api/trips/{id}:
  *   delete:
- *     summary: Delete a trip from the database
- *     tags: 
- *       - Trip
+ *     summary: Eliminar un viaje de la base de datos
+ *     tags:
+ *       - Viaje
  *     parameters:
  *       - name: id
  *         in: path
- *         description: The trip identifier
+ *         description: Identificador del viaje
  *         required: true
  *         schema:
- *           type: integer   
+ *           type: integer
  *     responses:
  *       '200':
- *         description: Trip deleted
+ *         description: Viaje eliminado exitosamente
  *       '404':
- *         description: Trip not found
+ *         description: Viaje no encontrado
  */
 
+// Ruta para eliminar un viaje por su ID
 router.delete("/:id", async (req, res) => {
   const { id } = req.params;
   try {
@@ -180,11 +186,18 @@ router.delete("/:id", async (req, res) => {
 
 /**
  * @swagger
- * /api/trips:
+ * /api/trips/{id}:
  *   put:
- *     summary: Update a trip
- *     tags: 
- *       - Trip
+ *     summary: Actualizar un viaje
+ *     tags:
+ *       - Viaje
+ *     parameters:
+ *       - name: id
+ *         in: path
+ *         description: Identificador del viaje
+ *         required: true
+ *         schema:
+ *           type: integer
  *     requestBody:
  *       required: true
  *       content:
@@ -193,11 +206,12 @@ router.delete("/:id", async (req, res) => {
  *             $ref: '#/components/schemas/Trip'
  *     responses:
  *       '200':
- *         description: Trip updated
+ *         description: Viaje actualizado exitosamente
  *       '404':
- *         description: Trip not found
+ *         description: Viaje no encontrado
  */
 
+// Ruta para actualizar un viaje por su ID
 router.put("/:id", async (req, res) => {
   const { id } = req.params;
   const { origen, destino, ida, vuelta, usuarioId, colectivoId } = req.body;

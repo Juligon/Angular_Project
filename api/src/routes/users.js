@@ -12,13 +12,13 @@ const { Op } = require("sequelize");
  *    properties:
  *      nombre:
  *        type: string
- *        description: nombre del usuario
+ *        description: Nombre del usuario
  *      apellido:
  *        type: string
- *        description: apellido del usuario
+ *        description: Apellido del usuario
  *      edad:
  *        type: integer
- *        description: edad del usuario
+ *        description: Edad del usuario
  *    required:
  *      - nombre
  *      - apellido
@@ -33,18 +33,18 @@ const { Op } = require("sequelize");
  * @swagger
  * /api/users:
  *   get:
- *     summary: Return all users from the database
+ *     summary: Obtener todos los usuarios de la base de datos
  *     tags:
- *       - User
+ *       - Usuario
  *     parameters:
  *       - name: nombre
  *         in: query
- *         description: Filter users by name
+ *         description: Filtrar usuarios por nombre
  *         schema:
  *           type: string
  *     responses:
  *       '200':
- *         description: All users from the database are returned
+ *         description: Todos los usuarios fueron obtenidos exitosamente
  *         content:
  *           application/json:
  *             schema:
@@ -53,6 +53,7 @@ const { Op } = require("sequelize");
  *                 $ref: '#/components/schemas/User'
  */
 
+// Ruta para obtener todos los usuarios
 router.get("/", async (req, res) => {
 	const { nombre } = req.query;
 	try {
@@ -61,9 +62,10 @@ router.get("/", async (req, res) => {
 			const filteredUsers = users.filter(user =>
 				user.nombre.toLowerCase().includes(nombre.toLowerCase())
 			);
-			return filteredUsers.length
-				? res.json(filteredUsers)
-				: res.status(404).send("Usuario no encontrado");
+			if (filteredUsers.length === 0) {
+				return res.status(404).send("Usuario no encontrado");
+			}
+			return res.json(filteredUsers);
 		}
 		res.json(users);
 	} catch (error) {
@@ -76,27 +78,28 @@ router.get("/", async (req, res) => {
  * @swagger
  * /api/users/{id}:
  *   get:
- *     summary: Get user by ID
+ *     summary: Obtener usuario por ID
  *     tags:
- *       - User
+ *       - Usuario
  *     parameters:
  *       - name: id
  *         in: path
- *         description: The user identifier
+ *         description: Identificador del usuario
  *         required: true
  *         schema:
  *           type: integer
  *     responses:
  *       '200':
- *         description: One user is returned
+ *         description: Usuario obtenido exitosamente
  *         content:
  *           application/json:
  *             schema:
  *               $ref: '#/components/schemas/User'
  *       '404':
- *         description: User not found
+ *         description: Usuario no encontrado
  */
 
+// Ruta para obtener un usuario por su ID
 router.get("/:id", async (req, res) => {
 	const { id } = req.params;
 	try {
@@ -115,9 +118,9 @@ router.get("/:id", async (req, res) => {
  * @swagger
  * /api/users:
  *   post:
- *     summary: Create a new user
+ *     summary: Crear un nuevo usuario
  *     tags:
- *       - User
+ *       - Usuario
  *     requestBody:
  *       required: true
  *       content:
@@ -126,11 +129,14 @@ router.get("/:id", async (req, res) => {
  *             $ref: '#/components/schemas/User'
  *     responses:
  *       '201':
- *         description: New user created
+ *         description: Usuario creado exitosamente
  *       '409':
- *         description: User already exists
+ *         description: El usuario ya existe
+ *       '500':
+ *         description: Error al crear usuario
  */
 
+// Ruta para crear un nuevo usuario
 router.post("/", async (req, res) => {
 	try {
 		const { nombre, apellido, edad } = req.body;
@@ -159,23 +165,24 @@ router.post("/", async (req, res) => {
  * @swagger
  * /api/users/{id}:
  *   delete:
- *     summary: Delete a user from the database
+ *     summary: Eliminar un usuario de la base de datos
  *     tags:
- *       - User
+ *       - Usuario
  *     parameters:
  *       - name: id
  *         in: path
- *         description: The user identifier
+ *         description: Identificador del usuario
  *         required: true
  *         schema:
  *           type: integer
  *     responses:
  *       '200':
- *         description: User deleted
+ *         description: Usuario eliminado exitosamente
  *       '404':
- *         description: User not found
+ *         description: Usuario no encontrado
  */
 
+// Ruta para eliminar un usuario por su ID
 router.delete("/:id", async (req, res) => {
 	const { id } = req.params;
 	try {
@@ -196,13 +203,13 @@ router.delete("/:id", async (req, res) => {
  * @swagger
  * /api/users/{id}:
  *   put:
- *     summary: Update a user
+ *     summary: Actualizar un usuario
  *     tags:
- *       - User
+ *       - Usuario
  *     parameters:
  *       - name: id
  *         in: path
- *         description: The user identifier
+ *         description: Identificador del usuario
  *         required: true
  *         schema:
  *           type: integer
@@ -214,11 +221,12 @@ router.delete("/:id", async (req, res) => {
  *             $ref: '#/components/schemas/User'
  *     responses:
  *       '200':
- *         description: User updated
+ *         description: Usuario actualizado exitosamente
  *       '404':
- *         description: User not found
+ *         description: Usuario no encontrado
  */
 
+// Ruta para actualizar un usuario por su ID
 router.put("/:id", async (req, res) => {
 	const { id } = req.params;
 	const { nombre, apellido, edad } = req.body;
@@ -248,3 +256,4 @@ router.put("/:id", async (req, res) => {
 });
 
 module.exports = router;
+
