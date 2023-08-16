@@ -54,6 +54,46 @@ router.get("/", async (req, res) => {
 
 /**
  * @swagger
+ * /api/models/{id}:
+ *   get:
+ *     summary: Obtener modelo por ID
+ *     tags:
+ *       - Modelo
+ *     parameters:
+ *       - name: id
+ *         in: path
+ *         description: Identificador del modelo
+ *         required: true
+ *         schema:
+ *           type: integer
+ *     responses:
+ *       '200':
+ *         description: Modelo obtenido exitosamente
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Model'
+ *       '404':
+ *         description: Modelo no encontrado
+ */
+
+// Ruta para obtener un modelo por su ID
+router.get("/:id", async (req, res) => {
+	const { id } = req.params;
+	try {
+		const model = await Model.findByPk(id);
+		if (!model) {
+			return res.status(404).send("Modelo no encontrado");
+		}
+		res.json(model);
+	} catch (error) {
+		console.error(error);
+		res.status(500).json({ error: "Error al obtener modelo" });
+	}
+});
+
+/**
+ * @swagger
  * /api/models:
  *   post:
  *     summary: Crear un nuevo modelo de colectivo
