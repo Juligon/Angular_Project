@@ -11,16 +11,16 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatSelectModule } from '@angular/material/select';
-import { BusesAdministrationRoutingModule } from './buses-administration-routing.module';
-import { BusesListComponent } from './buses-list/buses-list.component';
+import { BusAdministrationRoutingModule } from './bus-administration-routing.module';
+import { BusListComponent } from './bus-list/bus-list.component';
 import { BusDetailComponent } from './bus-detail/bus-detail.component';
 
 @NgModule({
-  declarations: [BusesListComponent, BusDetailComponent],
+  declarations: [BusListComponent, BusDetailComponent],
   imports: [
     CommonModule,
     ReactiveFormsModule,
-    BusesAdministrationRoutingModule,
+    BusAdministrationRoutingModule,
     MatTableModule,
     MatCardModule,
     MatButtonModule,
@@ -33,4 +33,4 @@ import { BusDetailComponent } from './bus-detail/bus-detail.component';
     MatSelectModule,
   ],
 })
-export class BusesAdministrationModule {}
+export class BusAdministrationModule {}

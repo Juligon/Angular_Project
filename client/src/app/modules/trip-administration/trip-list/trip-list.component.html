@@ -8,33 +8,33 @@
       <th mat-header-cell *matHeaderCellDef>ID</th>
       <td mat-cell *matCellDef="let element">{{ element.id }}</td>
     </ng-container>
-    <ng-container matColumnDef="origin">
+    <ng-container matColumnDef="origen">
       <th mat-header-cell *matHeaderCellDef>Origen</th>
-      <td mat-cell *matCellDef="let element">{{ element.origin }}</td>
+      <td mat-cell *matCellDef="let element">{{ element.origen }}</td>
     </ng-container>
-    <ng-container matColumnDef="destination">
+    <ng-container matColumnDef="destino">
       <th mat-header-cell *matHeaderCellDef>Destino</th>
-      <td mat-cell *matCellDef="let element">{{ element.destination }}</td>
+      <td mat-cell *matCellDef="let element">{{ element.destino }}</td>
     </ng-container>
-    <ng-container matColumnDef="departure">
+    <ng-container matColumnDef="ida">
       <th mat-header-cell *matHeaderCellDef>Ida</th>
       <td mat-cell *matCellDef="let element">
-        {{ element.departure | date : "dd/MM/YYYY - hh:mm" }}
+        {{ element.ida | date : "dd/MM/YYYY - hh:mm" }}
       </td>
     </ng-container>
-    <ng-container matColumnDef="regress">
+    <ng-container matColumnDef="vuelta">
       <th mat-header-cell *matHeaderCellDef>Vuelta</th>
       <td mat-cell *matCellDef="let element">
-        {{ element.regress | date : "dd/MM/YYYY - hh:mm" }}
+        {{ element.vuelta | date : "dd/MM/YYYY - hh:mm" }}
       </td>
     </ng-container>
-    <ng-container matColumnDef="bus">
+    <ng-container matColumnDef="colectivo">
       <th mat-header-cell *matHeaderCellDef>Colectivo</th>
       <td mat-cell *matCellDef="let element">
-        {{ element.bus?.plate }}
+        {{ element?.colectivo?.patente }}
       </td>
     </ng-container>
-    <ng-container matColumnDef="users">
+    <ng-container matColumnDef="pasajeros">
       <th mat-header-cell *matHeaderCellDef>Pasajeros</th>
       <td mat-cell *matCellDef="let element">
         <button mat-icon-button (click)="openPassengersDialog(element)">
@@ -42,7 +42,7 @@
         </button>
       </td>
     </ng-container>
-    <ng-container matColumnDef="actions">
+    <ng-container matColumnDef="acciones">
       <th mat-header-cell *matHeaderCellDef>Acciones</th>
       <td mat-cell *matCellDef="let element">
         <button mat-icon-button (click)="selectTrip(element)">

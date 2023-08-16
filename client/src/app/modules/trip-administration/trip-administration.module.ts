@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { TripsAdministrationRoutingModule } from './trips-administration-routing.module';
-import { TripsListComponent } from './trips-list/trips-list.component';
+import { TripAdministrationRoutingModule } from './trip-administration-routing.module';
+import { TripListComponent } from './trip-list/trip-list.component';
 import { TripDetailComponent } from './trip-detail/trip-detail.component';
 import { MatTableModule } from '@angular/material/table';
 import { MatCardModule } from '@angular/material/card';
@@ -17,13 +17,16 @@ import { MatSelectModule } from '@angular/material/select';
 import { PassengersDialogComponent } from './passengers-dialog/passengers-dialog.component';
 import { MatDialogModule } from '@angular/material/dialog';
 
-
 @NgModule({
-  declarations: [TripsListComponent, TripDetailComponent, PassengersDialogComponent],
+  declarations: [
+    TripListComponent,
+    TripDetailComponent,
+    PassengersDialogComponent,
+  ],
   imports: [
     CommonModule,
     ReactiveFormsModule,
-    TripsAdministrationRoutingModule,
+    TripAdministrationRoutingModule,
     MatTableModule,
     MatCardModule,
     MatButtonModule,
@@ -34,7 +37,7 @@ import { MatDialogModule } from '@angular/material/dialog';
     MatSnackBarModule,
     MatInputModule,
     MatSelectModule,
-    MatDialogModule
+    MatDialogModule,
   ],
 })
-export class TripsAdministrationModule {}
+export class TripAdministrationModule {}

@@ -20,14 +20,14 @@ export class UserDetailComponent implements OnInit {
   selectedUser: User | null = null;
 
   //validaciones
-  // nameControl = new FormControl('', [Validators.required]);
-  // lastnameControl = new FormControl('', [Validators.required]);
-  // ageControl = new FormControl('', [Validators.required]);
+  // nombreControl = new FormControl('', [Validators.required]);
+  // apellidoControl = new FormControl('', [Validators.required]);
+  // edadControl = new FormControl('', [Validators.required]);
 
   userForm: FormGroup = this.fb.group({
-    name: ['', Validators.required],
-    lastname: ['', Validators.required],
-    age: [0, [Validators.required, Validators.min(0), Validators.max(101)]],
+    nombre: ['', Validators.required],
+    apellido: ['', Validators.required],
+    edad: [0, [Validators.required, Validators.min(0), Validators.max(101)]],
   });
 
   constructor(
@@ -55,15 +55,15 @@ export class UserDetailComponent implements OnInit {
         if (res.body) {
           this.selectedUser = new User(
             res.body.id,
-            res.body.name,
-            res.body.lastname,
-            res.body.age
+            res.body.nombre,
+            res.body.apellido,
+            res.body.edad
           );
 
           this.userForm.patchValue({
-            name: this.selectedUser.name,
-            lastname: this.selectedUser.lastname,
-            age: this.selectedUser.age,
+            nombre: this.selectedUser.nombre,
+            apellido: this.selectedUser.apellido,
+            edad: this.selectedUser.edad,
           });
         }
       },
@@ -79,9 +79,9 @@ export class UserDetailComponent implements OnInit {
     const body: UserDTO = {
       // @ts-ignore
       id: null,
-      name: this.userForm.get('name')?.value,
-      lastname: this.userForm.get('lastname')?.value,
-      age: this.userForm.get('age')?.value,
+      nombre: this.userForm.get('nombre')?.value,
+      apellido: this.userForm.get('apellido')?.value,
+      edad: this.userForm.get('edad')?.value,
     };
 
     if (this.selectedUser && this.selectedUser.id) {

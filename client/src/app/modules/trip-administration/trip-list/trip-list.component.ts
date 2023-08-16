@@ -9,20 +9,20 @@ import { MatDialog } from '@angular/material/dialog';
 import { PassengersDialogComponent } from '../passengers-dialog/passengers-dialog.component';
 
 @Component({
-  selector: 'app-trips-list',
-  templateUrl: './trips-list.component.html',
-  styleUrls: ['./trips-list.component.css'],
+  selector: 'app-trip-list',
+  templateUrl: './trip-list.component.html',
+  styleUrls: ['./trip-list.component.css'],
 })
-export class TripsListComponent implements OnInit {
+export class TripListComponent implements OnInit {
   displayedColumns = [
     'id',
-    'origin',
-    'destination',
-    'departure',
-    'regress',
-    'bus',
-    'users',
-    'actions'
+    'origen',
+    'destino',
+    'ida',
+    'vuelta',
+    'colectivo',
+    'pasajeros',
+    'acciones'
   ];
 
   tripsList: Trip[] = [];
@@ -45,12 +45,12 @@ export class TripsListComponent implements OnInit {
         this.tripsList = res.body.map((res) => {
           const trip = new Trip(
             res.id,
-            res.origin,
-            res.destination,
-            res.departure,
-            res.regress,
-            res.userId,
-            res.busId
+            res.origen,
+            res.destino,
+            res.ida,
+            res.vuelta,
+            res.usuarioId,
+            res.colectivoId
           );
           this.loadBus(trip);
           return trip;
@@ -60,9 +60,8 @@ export class TripsListComponent implements OnInit {
   }
 
   loadBus(trip: Trip) {
-    //@ts-ignore
-    this.busService.findOne(trip.busId).subscribe((res) => {
-      trip.bus = res;
+    this.busService.findOne(trip.colectivoId).subscribe((res) => {
+      trip.colectivo = res;
     });
   }
 
@@ -93,19 +92,10 @@ export class TripsListComponent implements OnInit {
       width: '300px',
       height: 'fit-content',
       data: {
-        passengers: trip.userId
-      }
+        passengers: trip.usuarioId,
+      },
     });
-  
-    dialogRef.afterClosed().subscribe(result => {
-    
-    });
+
+    dialogRef.afterClosed().subscribe((result) => {});
   }
 }
-
-
-
-
-
-
-

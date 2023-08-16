@@ -13,9 +13,7 @@ export class UserService {
   constructor(private http: HttpClient) {}
 
   findAll(): Observable<HttpResponse<any[]>> {
-    return this.http
-    .get<any[]>(this.resourceUrl, { observe: 'response' })
-    .pipe(
+    return this.http.get<any[]>(this.resourceUrl, { observe: 'response' }).pipe(
       catchError((err) => {
         console.log(err.message);
         return throwError(() => 'Ocurrió un error');
@@ -45,15 +43,13 @@ export class UserService {
   }
 
   updateUser(user: UserDTO): Observable<any> {
-    return this.http
-      .put<any>(this.resourceUrl + '/' + user.id, user)
-      .pipe(
-        catchError((err) => {
-          console.log('Ocurrió un error: ');
-          console.log(err);
-          return throwError(() => 'Usuario inexistente!');
-        })
-      );
+    return this.http.put<any>(this.resourceUrl + '/' + user.id, user).pipe(
+      catchError((err) => {
+        console.log('Ocurrió un error: ');
+        console.log(err);
+        return throwError(() => 'Usuario inexistente!');
+      })
+    );
   }
 
   deleteUser(id: number): Observable<HttpResponse<any>> {
@@ -71,7 +67,7 @@ export class UserService {
 
 export interface UserDTO {
   id: number;
-  name: string;
-  lastname: string;
-  age: number;
+  nombre: string;
+  apellido: string;
+  edad: number;
 }

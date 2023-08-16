@@ -2,8 +2,8 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { UserDetailComponent } from './user-detail/user-detail.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { UsersListComponent } from './users-list/users-list.component';
-import { UsersAdministrationRoutingModule } from './users-administration-routing.module';
+import { UserListComponent } from './user-list/user-list.component';
+import { UserAdministrationRoutingModule } from './user-administration-routing.module';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -14,12 +14,12 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 
 @NgModule({
-  declarations: [UserDetailComponent, UsersListComponent],
+  declarations: [UserDetailComponent, UserListComponent],
   imports: [
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
-    UsersAdministrationRoutingModule,
+    UserAdministrationRoutingModule,
     MatButtonModule,
     MatCardModule,
     MatDatepickerModule,
@@ -29,6 +29,6 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
     MatSnackBarModule,
     MatProgressBarModule,
   ],
-  exports: [UserDetailComponent, UsersListComponent],
+  exports: [UserDetailComponent, UserListComponent],
 })
-export class UsersAdministrationModule {}
+export class UserAdministrationModule {}

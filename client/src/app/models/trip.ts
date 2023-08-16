@@ -2,29 +2,29 @@ import { Bus } from './bus';
 
 export class Trip {
   id: number;
-  origin: string;
-  destination: string;
-  departure: Date;
-  regress: Date;
-  userId?: number[];
-  busId?: number;
-  bus?: Bus;
+  origen: string;
+  destino: string;
+  ida: Date;
+  vuelta: Date;
+  usuarioId?: number[];
+  colectivoId: number;
+  colectivo?: Bus;
 
   constructor(
     id: number,
-    origin: string,
-    destination: string,
-    departure: string,
-    regress: string,
-    userId: number[],
-    busId: number
+    origen: string,
+    destino: string,
+    ida: string,
+    vuelta: string,
+    usuarioId: number[],
+    colectivoId: number
   ) {
     this.id = id;
-    this.origin = origin;
-    this.destination = destination;
-    this.departure = new Date(departure);
-    this.regress = new Date(regress);
-    this.userId = userId;
-    this.busId = busId;
+    this.origen = origen;
+    this.destino = destino;
+    this.ida = new Date(ida);
+    this.vuelta = new Date(vuelta);
+    this.usuarioId = usuarioId;
+    this.colectivoId = colectivoId;
   }
 }

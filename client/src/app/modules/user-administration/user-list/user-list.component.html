@@ -6,7 +6,7 @@
   <mat-card *ngFor="let user of usersList" style="min-width: 305px; margin: 10px">
     <mat-card-header>
       <mat-card-title>{{ user.showName() }}</mat-card-title>
-      <mat-card-subtitle>Edad: {{ user.age }}</mat-card-subtitle>
+      <mat-card-subtitle>Edad: {{ user.edad }}</mat-card-subtitle>
     </mat-card-header>
     <mat-card-actions align="end">
       <button mat-button (click)="selectUser(user)">EDITAR</button>

@@ -2,20 +2,20 @@ import { Model } from './model';
 
 export class Bus {
   id: number;
-  plate: string;
-  seats: number;
-  modelId?: number;
-  model?: Model;
+  patente: string;
+  asientos: number;
+  modeloId?: number;
+  modelo?: Model;
 
   constructor(
     id: number,
-    plate: string,
-    seats: number,
-    model: number
+    patente: string,
+    asientos: number,
+    modeloId: number
   ) {
     this.id = id;
-    this.plate = plate;
-    this.seats = seats;
-    this.modelId = model;
+    this.patente = patente;
+    this.asientos = asientos;
+    this.modeloId = modeloId;
   }
 }

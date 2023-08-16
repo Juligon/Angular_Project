@@ -18,17 +18,17 @@
         <mat-form-field class="user-input">
           <mat-label>Nombre:</mat-label>
           <!--  <input type="text" [(ngModel)]="selectedUser.nombre">-->
-          <input matInput type="text" formControlName="name" />
+          <input matInput type="text" ngDefaultControl formControlName="nombre" />
           <div
             *ngIf="
-              userForm.controls['name'].invalid &&
-              (userForm.controls['name'].dirty ||
-                userForm.controls['name'].touched)
+              userForm.controls['nombre'].invalid &&
+              (userForm.controls['nombre'].dirty ||
+                userForm.controls['nombre'].touched)
             "
           >
             <mat-hint
               class="hint"
-              *ngIf="userForm.controls['name'].errors?.['required']"
+              *ngIf="userForm.controls['nombre'].errors?.['required']"
             >
               Por favor complete el campo requerido
             </mat-hint>
@@ -37,18 +37,18 @@
 
         <mat-form-field class="user-input">
           <mat-label>Apellido:</mat-label>
-          <input matInput type="text" formControlName="lastname" />
+          <input matInput type="text" ngDefaultControl formControlName="apellido" />
 
           <div
             *ngIf="
-              userForm.controls['lastname'].invalid &&
-              (userForm.controls['lastname'].dirty ||
-                userForm.controls['lastname'].touched)
+              userForm.controls['apellido'].invalid &&
+              (userForm.controls['apellido'].dirty ||
+                userForm.controls['apellido'].touched)
             "
           >
             <mat-hint
               class="hint"
-              *ngIf="userForm.controls['lastname'].errors?.['required']"
+              *ngIf="userForm.controls['apellido'].errors?.['required']"
             >
               Por favor complete el campo requerido
             </mat-hint>
@@ -57,32 +57,32 @@
 
         <mat-form-field class="user-input">
           <mat-label>Edad:</mat-label>
-          <input matInput type="number" formControlName="age" />
+          <input matInput type="number" ngDefaultControl formControlName="edad" />
 
           <div
             *ngIf="
-              userForm.controls['age'].invalid &&
-              (userForm.controls['age'].dirty ||
-                userForm.controls['age'].touched)
+              userForm.controls['edad'].invalid &&
+              (userForm.controls['edad'].dirty ||
+                userForm.controls['edad'].touched)
             "
           >
             <mat-hint
               class="hint"
-              *ngIf="userForm.controls['age'].errors?.['required']"
+              *ngIf="userForm.controls['edad'].errors?.['required']"
             >
               Por favor complete el campo requerido
             </mat-hint>
 
             <mat-hint
               class="hint"
-              *ngIf="userForm.controls['age'].errors?.['min']"
+              *ngIf="userForm.controls['edad'].errors?.['min']"
             >
               La edad debe ser mayor o igual a 0 años
             </mat-hint>
 
             <mat-hint
               class="hint"
-              *ngIf="userForm.controls['age'].errors?.['max']"
+              *ngIf="userForm.controls['edad'].errors?.['max']"
             >
               La edad debe ser menor o igual a 101 años
             </mat-hint>
