@@ -37,7 +37,7 @@
 
         <mat-form-field style="width: 33%">
           <mat-label>Cantidad de asientos: </mat-label>
-          <input matInput type="text" ngDefaultControl formControlName="cantidadAsientos"/>
+          <input matInput type="text" ngDefaultControl formControlName="asientos"/>
 
           <div
             *ngIf="
@@ -56,11 +56,11 @@
         </mat-form-field>
 
         <mat-form-field style="width: 33%">
-          <mat-label>Id Modelo: </mat-label>
+          <mat-label>Modelo: </mat-label>
           <mat-select ngDefaultControl formControlName="modeloId">
             <mat-option disabled> -- </mat-option>
             <mat-option *ngFor="let model of modelsList" [value]="model.id">
-              {{ model.nombre }} - {{ model.marca }}
+              {{ model?.nombre }} - {{ model?.marca }}
             </mat-option>
           </mat-select>
 

@@ -52,9 +52,9 @@ export class BusService {
     );
   }
 
-  deleteBus(id: number): Observable<HttpResponse<any>> {
+  deleteBus(id: number): Observable<any> {
     return this.http
-      .delete<any>(this.resourceUrl + '/' + id, { observe: 'response' })
+      .delete<any>(this.resourceUrl + '/' + id)
       .pipe(
         catchError((err) => {
           console.log('Ocurrió un error: ');

@@ -20,8 +20,8 @@ export class TripListComponent implements OnInit {
     'destino',
     'ida',
     'vuelta',
-    'colectivo',
-    'pasajeros',
+    'usuarioId',
+    'colectivoId',
     'acciones'
   ];
 
@@ -76,7 +76,11 @@ export class TripListComponent implements OnInit {
   deleteTrip(trip: Trip) {
     this.tripService.deleteTrip(trip.id).subscribe(
       (res) => {
+      if (res.message){
+        this.matSnackBar.open(res.message, 'Cerrar');
+      }else{
         this.matSnackBar.open('Eliminado correctamente', 'Cerrar');
+      }
         this.tripsList = this.tripsList.filter((element) => element.id !== trip.id);
         this.loadTrips();
       },

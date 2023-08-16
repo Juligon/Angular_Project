@@ -28,18 +28,18 @@
         {{ element.vuelta | date : "dd/MM/YYYY - hh:mm" }}
       </td>
     </ng-container>
-    <ng-container matColumnDef="colectivo">
-      <th mat-header-cell *matHeaderCellDef>Colectivo</th>
-      <td mat-cell *matCellDef="let element">
-        {{ element?.colectivo?.patente }}
-      </td>
-    </ng-container>
-    <ng-container matColumnDef="pasajeros">
+    <ng-container matColumnDef="usuarioId">
       <th mat-header-cell *matHeaderCellDef>Pasajeros</th>
       <td mat-cell *matCellDef="let element">
         <button mat-icon-button (click)="openPassengersDialog(element)">
           <mat-icon>group</mat-icon>
         </button>
+      </td>
+    </ng-container>
+    <ng-container matColumnDef="colectivoId">
+      <th mat-header-cell *matHeaderCellDef>Colectivo</th>
+      <td mat-cell *matCellDef="let element">
+        {{ element?.colectivo?.patente }}
       </td>
     </ng-container>
     <ng-container matColumnDef="acciones">

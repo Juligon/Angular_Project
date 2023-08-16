@@ -120,8 +120,33 @@
         </mat-form-field>
 
         <mat-form-field [color]="colorControl.value!">
+          <mat-label>Pasajeros: </mat-label>
+
+          <mat-select ngDefaultControl formControlName="usuarioId" multiple [compareWith]="compareObjects" [formControl]="colorControl">
+            <mat-option *ngFor="let user of usersList" [value]="user.id">
+              {{ user.nombre }} {{ user.apellido }}
+            </mat-option>
+          </mat-select>
+
+          <div
+            *ngIf="
+              tripForm.controls['usuarioId'].invalid &&
+              (tripForm.controls['usuarioId'].dirty ||
+                tripForm.controls['usuarioId'].touched)
+            "
+          >
+            <mat-hint
+              class="hint"
+              *ngIf="tripForm.controls['usuarioId'].errors?.['required']"
+            >
+              Complete el campo
+            </mat-hint>
+          </div>
+        </mat-form-field>
+
+        <mat-form-field [color]="colorControl.value!">
           <mat-label>Colectivo: </mat-label>
-          <mat-select ngDefaultControl formControlName="colectivo" [formControl]="colorControl">
+          <mat-select ngDefaultControl formControlName="colectivoId" [formControl]="colorControl">
             <mat-option disabled> -- </mat-option>
             <mat-option *ngFor="let bus of busesList" [value]="bus.id">
               {{ bus.patente }} - {{ bus.asientos }} - {{ bus?.modelo?.marca }}
@@ -130,39 +155,14 @@
 
           <div
             *ngIf="
-              tripForm.controls['colectivo'].invalid &&
-              (tripForm.controls['colectivo'].dirty ||
-                tripForm.controls['colectivo'].touched)
+              tripForm.controls['colectivoId'].invalid &&
+              (tripForm.controls['colectivoId'].dirty ||
+                tripForm.controls['colectivoId'].touched)
             "
           >
             <mat-hint
               class="hint"
-              *ngIf="tripForm.controls['colectivo'].errors?.['required']"
-            >
-              Complete el campo
-            </mat-hint>
-          </div>
-        </mat-form-field>
-
-        <mat-form-field [color]="colorControl.value!">
-          <mat-label>Pasajeros: </mat-label>
-
-          <mat-select ngDefaultControl formControlName="pasajeros" multiple [compareWith]="compareObjects" [formControl]="colorControl">
-            <mat-option *ngFor="let user of usersList" [value]="user.id">
-              {{ user.nombre }} {{ user.apellido }}
-            </mat-option>
-          </mat-select>
-
-          <div
-            *ngIf="
-              tripForm.controls['pasajeros'].invalid &&
-              (tripForm.controls['pasajeros'].dirty ||
-                tripForm.controls['pasajeros'].touched)
-            "
-          >
-            <mat-hint
-              class="hint"
-              *ngIf="tripForm.controls['pasajeros'].errors?.['required']"
+              *ngIf="tripForm.controls['colectivoId'].errors?.['required']"
             >
               Complete el campo
             </mat-hint>

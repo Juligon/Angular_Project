@@ -17,7 +17,7 @@ export class UserListComponent implements OnInit {
   constructor(
     private userService: UserService,
     private matSnackBar: MatSnackBar,
-    private router: Router
+    private router: Router,
   ) {}
 
   // las peticiones a los servicios de hacen en el onInit
@@ -51,7 +51,11 @@ export class UserListComponent implements OnInit {
   deleteUser(user: User) {
     this.userService.deleteUser(user.id).subscribe(
       (res) => {
-        this.matSnackBar.open('Eliminado correctamente', 'Cerrar');
+        if (res.message) {
+          this.matSnackBar.open(res.message, 'Cerrar');
+        } else {
+          this.matSnackBar.open('Eliminado correctamente', 'Cerrar');
+        }
         this.loadUser();
       },
       (error) => {
@@ -60,4 +64,5 @@ export class UserListComponent implements OnInit {
       }
     );
   }
+  
 }

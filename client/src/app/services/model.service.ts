@@ -23,9 +23,9 @@ export class ModelService {
 
   findOne(id: number): Observable<Model> {
     return this.http.get<Model>(this.resourceUrl + '/' + id).pipe(
-      catchError((err) => {
-        console.log(err.message);
-        return throwError(() => 'Ocurrió un error');
+      catchError((error) => {
+        console.log(error);
+        return throwError(() => error);
       })
     );
   }

@@ -5,7 +5,7 @@ import { Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ModelService } from 'src/app/services/model.service';
 import { Model } from 'src/app/models/model';
-
+import { Observable, catchError, forkJoin, map, of } from 'rxjs';
 
 @Component({
   selector: 'app-bus-list',
@@ -13,13 +13,7 @@ import { Model } from 'src/app/models/model';
   styleUrls: ['./bus-list.component.css'],
 })
 export class BusListComponent implements OnInit {
-  displayedColumns = [
-    'id',
-    'patente',
-    'asientos',
-    'modeloId',
-    'acciones'
-  ];
+  displayedColumns = ['id', 'patente', 'asientos', 'modeloId', 'acciones'];
   dataSource = [new Bus(1, 'ACB123', 50, 23)];
 
   busesList: Bus[] = [];
@@ -39,17 +33,29 @@ export class BusListComponent implements OnInit {
   loadBuses() {
     this.busService.findAll().subscribe(
       (res) => {
-        if (res.body)
-          this.busesList = res.body.map((json) => {
+        if (res.body) {
+          const busesWithModels: Bus[] = [];
+          const observables = res.body.map((json) => {
             const bus = new Bus(
               json.id,
               json.patente,
               json.asientos,
               json.modeloId
             );
-            this.findModelBus(bus);
-            return bus;
+            return this.findModelBus(bus).pipe(
+              map((model) => {
+                if (model !== null) {
+                  bus.modelo = model;
+                }
+                return bus;
+              })
+            );
           });
+          forkJoin(observables).subscribe((buses) => {
+            this.busesList = buses;
+            console.log('Buses with Models:', this.busesList);
+          });
+        }
       },
       (error) => {
         console.log(error);
@@ -57,13 +63,23 @@ export class BusListComponent implements OnInit {
       }
     );
   }
-
-  findModelBus(bus: Bus) {
-    if (bus.modeloId)
-    this.modelService.findOne(bus.modeloId).subscribe((res) => {
-      if (res) 
-      bus.modelo = new Model(res.id, res.nombre, res.marca);
-    });
+  
+  findModelBus(bus: Bus): Observable<Model | null> {
+    if (bus.modeloId) {
+      return this.modelService.findOne(bus.modeloId).pipe(
+        map((res) => {
+          if (res) {
+            return new Model(res.id, res.nombre, res.marca);
+          }
+          return null;
+        }),
+        catchError((error) => {
+          console.error(error);
+          return of(null);
+        })
+      );
+    }
+    return of(null);
   }
 
   selectBus(bus: Bus) {
@@ -77,8 +93,15 @@ export class BusListComponent implements OnInit {
   deleteBus(bus: Bus) {
     this.busService.deleteBus(bus.id).subscribe(
       (res) => {
-        this.matSnackBar.open('Eliminado correctamente', 'Cerrar');
-        this.busesList = this.busesList.filter((element) => element.id !== bus.id);
+        if (res.message) {
+          this.matSnackBar.open(res.message, 'Cerrar');
+        } else {
+          this.matSnackBar.open('Eliminado correctamente', 'Cerrar');
+        }
+
+        this.busesList = this.busesList.filter(
+          (element) => element.id !== bus.id
+        );
         this.loadBuses();
       },
       (error) => {
@@ -87,5 +110,4 @@ export class BusListComponent implements OnInit {
       }
     );
   }
-
 }

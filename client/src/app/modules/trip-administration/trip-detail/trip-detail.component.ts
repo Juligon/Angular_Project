@@ -23,8 +23,8 @@ export class TripDetailComponent implements OnInit {
     destino: ['', Validators.required],
     ida: [new Date(), Validators.required],
     vuelta: [new Date(), Validators.required],
-    colectivo: [0, Validators.required],
-    pasajeros: [[], Validators.required],
+    usuarioId: [[], Validators.required],
+    colectivoId: [0, Validators.required],
   });
 
   busesList: Bus[] = [];
@@ -97,8 +97,8 @@ export class TripDetailComponent implements OnInit {
             destino: res.body.destino,
             ida: new Date(res.body.ida),
             vuelta: new Date(res.body.vuelta),
-            colectivo: res.body.colectivoId,
-            pasajeros: res.body.usuarioId,
+            usuarioId: res.body.usuarioId,
+            colectivoId: res.body.colectivoId,
           });
         }
       },
@@ -112,7 +112,7 @@ export class TripDetailComponent implements OnInit {
 
   saveChanges() {
     //@ts-ignore
-    const pasajeros: number[] = this.tripForm.get('pasajeros')?.value;
+    const usuarioId: number[] = this.tripForm.get('usuarioId')?.value;
 
     const body: TripDTO = {
       //@ts-ignore
@@ -123,9 +123,9 @@ export class TripDetailComponent implements OnInit {
       ida: this.tripForm.get('ida')?.value,
       //@ts-ignore
       vuelta: this.tripForm.get('vuelta')?.value,
-      usuarioId: pasajeros,
+      usuarioId: usuarioId,
       //@ts-ignore
-      colectivoId: this.tripForm.get('colectivo')?.value,
+      colectivoId: this.tripForm.get('colectivoId')?.value,
     };
 
     if (this.selectedTrip && this.selectedTrip.id) {

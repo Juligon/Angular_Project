@@ -52,16 +52,14 @@ export class UserService {
     );
   }
 
-  deleteUser(id: number): Observable<HttpResponse<any>> {
-    return this.http
-      .delete<any>(this.resourceUrl + '/' + id, { observe: 'response' })
-      .pipe(
-        catchError((err) => {
-          console.log('Ocurrió un error: ');
-          console.log(err);
-          return throwError(() => 'Usuario inexistente!');
-        })
-      );
+  deleteUser(id: number): Observable<any> {
+    return this.http.delete<any>(this.resourceUrl + '/' + id).pipe(
+      catchError((err) => {
+        console.log('Ocurrió un error: ');
+        console.log(err);
+        return throwError(() => 'Usuario inexistente!');
+      })
+    );
   }
 }
 

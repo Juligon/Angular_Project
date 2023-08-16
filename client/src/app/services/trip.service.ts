@@ -54,9 +54,9 @@ export class TripService {
     );
   }
 
-  deleteTrip(id: number): Observable<HttpResponse<any>> {
+  deleteTrip(id: number): Observable<any> {
 		return this.http
-			.delete<any>(this.resourceUrl + "/" + id, { observe: "response" })
+			.delete<any>(this.resourceUrl + "/" + id)
 			.pipe(
 				catchError((err) => {
 					console.log("Ocurrió un error: ");
