@@ -4,7 +4,7 @@ const { Router } = require("express");
 const tripsRouter = require("./trips");
 const usersRouter = require("./users");
 const busesRouter = require("./buses");
-const modelRouter = require("./models");
+const modelsRouter = require("./models");
 
 const router = Router();
 
@@ -13,6 +13,6 @@ const router = Router();
 router.use("/trips", tripsRouter);
 router.use("/users", usersRouter);
 router.use("/buses", busesRouter);
-router.use("/models", modelRouter);
+router.use("/models", modelsRouter);
 
 module.exports = router;
