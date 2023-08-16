@@ -15,17 +15,17 @@ const { Bus } = require("../db");
  *      asientos:
  *        type: integer
  *        description: Cantidad de asientos del bus
- *      modelo:
+ *      modeloId:
  *        type: integer
  *        description: Modelo del bus
  *    required:
  *      - patente
  *      - asientos
- *      - modelo
+ *      - modeloId
  *    example:
  *      patente: ABC 123
  *      asientos: 100
- *      modelo: 1
+ *      modeloId: 1
  */
 
 /**
@@ -120,12 +120,12 @@ router.get("/:id", async (req, res) => {
 // Ruta para crear un nuevo colectivo
 router.post("/", async (req, res) => {
 	try {
-		const { patente, asientos, modelo } = req.body;
+		const { patente, asientos, modeloId } = req.body;
 
 		const bus = await Bus.create({
 			patente,
 			asientos,
-			modelo,
+			modeloId,
 		});
 
 		res.status(201).json(bus);
@@ -203,7 +203,7 @@ router.delete("/:id", async (req, res) => {
 // Ruta para actualizar un colectivo por su ID
 router.put("/:id", async (req, res) => {
 	const { id } = req.params;
-	const { patente, asientos, modelo } = req.body;
+	const { patente, asientos, modeloId } = req.body;
 
 	try {
 		const bus = await Bus.findByPk(id);
@@ -215,7 +215,7 @@ router.put("/:id", async (req, res) => {
 		await bus.update({
 			patente,
 			asientos,
-			modelo,
+			modeloId,
 		});
 
 		const updatedBus = await Bus.findOne({

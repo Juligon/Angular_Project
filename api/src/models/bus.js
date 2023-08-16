@@ -18,7 +18,7 @@ module.exports = (sequelize) => {
 				allowNull: false,
 				type: DataTypes.INTEGER,
 			},
-			modelo: {
+			modeloId: {
 				allowNull: false,
 				type: DataTypes.INTEGER,
 			},
