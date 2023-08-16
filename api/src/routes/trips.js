@@ -175,14 +175,15 @@ router.delete("/:id", async (req, res) => {
       where: { id: id },
     });
     if (deletedTrip === 0) {
-      return res.status(404).send("Viaje no encontrado");
+      return res.status(404).json({ error: "Viaje no encontrado" });
     }
-    res.send("Viaje eliminado correctamente");
+    res.status(200).json({ message: "Viaje eliminado correctamente" });
   } catch (error) {
     console.error(error);
-    res.status(500).send("Error al eliminar viaje");
+    res.status(500).json({ error: "Error al eliminar viaje" });
   }
 });
+
 
 /**
  * @swagger

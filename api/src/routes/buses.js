@@ -158,20 +158,21 @@ router.post("/", async (req, res) => {
 
 // Ruta para eliminar un colectivo por su ID
 router.delete("/:id", async (req, res) => {
-	const { id } = req.params;
-	try {
-		const deletedBus = await Bus.destroy({
-			where: { id: id },
-		});
-		if (deletedBus === 0) {
-			return res.status(404).send("Colectivo no encontrado");
-		}
-		res.send("Colectivo eliminado correctamente");
-	} catch (error) {
-		console.error(error);
-		res.status(500).send("Error al eliminar colectivo");
-	}
+  const { id } = req.params;
+  try {
+    const deletedBus = await Bus.destroy({
+      where: { id: id },
+    });
+    if (deletedBus === 0) {
+      return res.status(404).json({ error: "Colectivo no encontrado" });
+    }
+    res.status(200).json({ message: "Colectivo eliminado correctamente" });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Error al eliminar colectivo" });
+  }
 });
+
 
 /**
  * @swagger

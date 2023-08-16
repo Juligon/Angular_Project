@@ -184,20 +184,21 @@ router.post("/", async (req, res) => {
 
 // Ruta para eliminar un usuario por su ID
 router.delete("/:id", async (req, res) => {
-	const { id } = req.params;
-	try {
-		const deletedUser = await User.destroy({
-			where: { id: id },
-		});
-		if (deletedUser === 0) {
-			return res.status(404).send("Usuario no encontrado");
-		}
-		res.send("Usuario eliminado correctamente");
-	} catch (error) {
-		console.error(error);
-		res.status(500).send("Error al eliminar usuario");
-	}
+  const { id } = req.params;
+  try {
+    const deletedUser = await User.destroy({
+      where: { id: id },
+    });
+    if (deletedUser === 0) {
+      return res.status(404).json({ error: "Usuario no encontrado" });
+    }
+    res.status(200).json({ message: "Usuario eliminado correctamente" });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Error al eliminar usuario" });
+  }
 });
+
 
 /**
  * @swagger
