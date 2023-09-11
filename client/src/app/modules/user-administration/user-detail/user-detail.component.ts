@@ -25,9 +25,9 @@ export class UserDetailComponent implements OnInit {
   // edadControl = new FormControl('', [Validators.required]);
 
   userForm: FormGroup = this.fb.group({
-    nombre: ['', Validators.required],
-    apellido: ['', Validators.required],
-    edad: [0, [Validators.required, Validators.min(0), Validators.max(101)]],
+    name: ['', Validators.required],
+    lastName: ['', Validators.required],
+    age: [0, [Validators.required, Validators.min(0), Validators.max(101)]],
   });
 
   constructor(
@@ -55,15 +55,15 @@ export class UserDetailComponent implements OnInit {
         if (res.body) {
           this.selectedUser = new User(
             res.body.id,
-            res.body.nombre,
-            res.body.apellido,
-            res.body.edad
+            res.body.name,
+            res.body.lastName,
+            res.body.age
           );
 
           this.userForm.patchValue({
-            nombre: this.selectedUser.nombre,
-            apellido: this.selectedUser.apellido,
-            edad: this.selectedUser.edad,
+            name: this.selectedUser.name,
+            lastName: this.selectedUser.lastName,
+            age: this.selectedUser.age,
           });
         }
       },
@@ -79,9 +79,9 @@ export class UserDetailComponent implements OnInit {
     const body: UserDTO = {
       // @ts-ignore
       id: null,
-      nombre: this.userForm.get('nombre')?.value,
-      apellido: this.userForm.get('apellido')?.value,
-      edad: this.userForm.get('edad')?.value,
+      name: this.userForm.get('name')?.value,
+      lastName: this.userForm.get('lastName')?.value,
+      age: this.userForm.get('age')?.value,
     };
 
     if (this.selectedUser && this.selectedUser.id) {

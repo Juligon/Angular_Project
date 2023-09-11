@@ -69,10 +69,10 @@ export class TripService {
 
 export interface TripDTO {
   id?: number;
-  origen: string;
-  destino: string;
-  ida: Date;
-  vuelta: Date;
-  usuarioId: number[];
-  colectivoId: number;
+  origin: string;
+  destination: string;
+  departure: Date;
+  regress: Date;
+  userId: number[];
+  busId: number;
 }

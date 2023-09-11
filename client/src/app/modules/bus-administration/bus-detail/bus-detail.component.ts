@@ -14,9 +14,9 @@ import { ActivatedRoute, Router } from '@angular/router';
 })
 export class BusDetailComponent implements OnInit {
   busForm = this.formBuilder.group({
-    patente: ['', Validators.required],
-    asientos: [0, Validators.required],
-    modeloId: [0, Validators.required],
+    plate: ['', Validators.required],
+    seats: [0, Validators.required],
+    modelId: [0, Validators.required],
   });
 
   modelsList: Model[] = [];
@@ -36,7 +36,7 @@ export class BusDetailComponent implements OnInit {
       (res) => {
         if (res.body)
           this.modelsList = res.body.map((json) => {
-            const model = new Model(json.id, json.nombre, json.marca);
+            const model = new Model(json.id, json.name, json.brand);
             return model;
           });
       },
@@ -55,10 +55,10 @@ export class BusDetailComponent implements OnInit {
   }
 
   findModelBus(bus: Bus) {
-    if (bus.modeloId)
-      this.modelService.findOne(bus.modeloId).subscribe((res) => {
+    if (bus.modelId)
+      this.modelService.findOne(bus.modelId).subscribe((res) => {
         if (res) 
-        bus.modelo = new Model(res.id, res.nombre, res.marca);
+        bus.model = new Model(res.id, res.name, res.brand);
       });
   }
 
@@ -68,17 +68,17 @@ export class BusDetailComponent implements OnInit {
         if (res) {
           this.selectedBus = new Bus(
             res.id,
-            res.patente,
-            res.asientos,
+            res.plate,
+            res.seats,
             //@ts-ignore
-            res.modeloId
+            res.modelId
           );
           this.findModelBus(this.selectedBus);
 
           this.busForm.patchValue({
-            patente: this.selectedBus.patente,
-            asientos: this.selectedBus.asientos,
-            modeloId: this.selectedBus.modeloId,
+            plate: this.selectedBus.plate,
+            seats: this.selectedBus.seats,
+            modelId: this.selectedBus.modelId,
           });
         }
       },
@@ -93,11 +93,11 @@ export class BusDetailComponent implements OnInit {
   saveChanges() {
     const body: BusDTO = {
       //@ts-ignore
-      patente: this.busForm.get('patente')?.value,
+      plate: this.busForm.get('plate')?.value,
       //@ts-ignore
-      asientos: this.busForm.get('asientos')?.value,
+      seats: this.busForm.get('seats')?.value,
       //@ts-ignore
-      modeloId: this.busForm.get('modeloId')?.value,
+      modelId: this.busForm.get('modelId')?.value,
     };
 
     if (this.selectedBus && this.selectedBus.id) {

@@ -68,7 +68,7 @@ export class BusService {
 
 export interface BusDTO {
   id?: number;
-  patente: string;
-  asientos: string;
-  modeloId: number;
+  plate: string;
+  seats: string;
+  modelId: number;
 }

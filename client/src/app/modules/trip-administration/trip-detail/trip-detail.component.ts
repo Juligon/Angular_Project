@@ -19,12 +19,12 @@ import { ThemePalette } from '@angular/material/core';
 })
 export class TripDetailComponent implements OnInit {
   tripForm = this.formBuilder.group({
-    origen: ['', Validators.required],
-    destino: ['', Validators.required],
-    ida: [new Date(), Validators.required],
-    vuelta: [new Date(), Validators.required],
-    usuarioId: [[], Validators.required],
-    colectivoId: [0, Validators.required],
+    origin: ['', Validators.required],
+    destination: ['', Validators.required],
+    departure: [new Date(), Validators.required],
+    regress: [new Date(), Validators.required],
+    userId: [[], Validators.required],
+    busId: [0, Validators.required],
   });
 
   busesList: Bus[] = [];
@@ -49,9 +49,9 @@ export class TripDetailComponent implements OnInit {
           this.busesList = res.body.map((json) => {
             const bus = new Bus(
               json.id,
-              json.patente,
-              json.asientos,
-              json.modeloId
+              json.plate,
+              json.seats,
+              json.modelId
             );
             this.findModelBus(bus);
             return bus;
@@ -66,7 +66,7 @@ export class TripDetailComponent implements OnInit {
     this.userService.findAll().subscribe((res) => {
       if (res.body)
         this.usersList = res.body.map(
-          (json) => new User(json.id, json.nombre, json.apellido, json.edad)
+          (json) => new User(json.id, json.name, json.lastName, json.age)
         );
     });
 
@@ -80,9 +80,9 @@ export class TripDetailComponent implements OnInit {
   }
 
   findModelBus(bus: Bus) {
-    if (bus.modeloId)
-      this.modelService.findOne(bus.modeloId).subscribe((res) => {
-        if (res) bus.modelo = new Model(res.id, res.nombre, res.marca);
+    if (bus.modelId)
+      this.modelService.findOne(bus.modelId).subscribe((res) => {
+        if (res) bus.model = new Model(res.id, res.name, res.brand);
       });
   }
 
@@ -93,12 +93,12 @@ export class TripDetailComponent implements OnInit {
           this.selectedTrip = res.body;
 
           this.tripForm.patchValue({
-            origen: res.body.origen,
-            destino: res.body.destino,
-            ida: new Date(res.body.ida),
-            vuelta: new Date(res.body.vuelta),
-            usuarioId: res.body.usuarioId,
-            colectivoId: res.body.colectivoId,
+            origin: res.body.origin,
+            destination: res.body.destination,
+            departure: new Date(res.body.departure),
+            regress: new Date(res.body.regress),
+            userId: res.body.userId,
+            busId: res.body.busId,
           });
         }
       },
@@ -112,20 +112,20 @@ export class TripDetailComponent implements OnInit {
 
   saveChanges() {
     //@ts-ignore
-    const usuarioId: number[] = this.tripForm.get('usuarioId')?.value;
+    const userId: number[] = this.tripForm.get('userId')?.value;
 
     const body: TripDTO = {
       //@ts-ignore
-      origen: this.tripForm.get('origen')?.value,
+      origin: this.tripForm.get('origin')?.value,
       //@ts-ignore
-      destino: this.tripForm.get('destino')?.value,
+      destination: this.tripForm.get('destination')?.value,
       //@ts-ignore
-      ida: this.tripForm.get('ida')?.value,
+      departure: this.tripForm.get('departure')?.value,
       //@ts-ignore
-      vuelta: this.tripForm.get('vuelta')?.value,
-      usuarioId: usuarioId,
+      regress: this.tripForm.get('regress')?.value,
+      userId: userId,
       //@ts-ignore
-      colectivoId: this.tripForm.get('colectivoId')?.value,
+      busId: this.tripForm.get('busId')?.value,
     };
 
     if (this.selectedTrip && this.selectedTrip.id) {

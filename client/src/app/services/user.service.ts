@@ -65,7 +65,7 @@ export class UserService {
 
 export interface UserDTO {
   id: number;
-  nombre: string;
-  apellido: string;
-  edad: number;
+  name: string;
+  lastName: string;
+  age: number;
 }

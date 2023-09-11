@@ -13,7 +13,7 @@ import { Observable, catchError, forkJoin, map, of } from 'rxjs';
   styleUrls: ['./bus-list.component.css'],
 })
 export class BusListComponent implements OnInit {
-  displayedColumns = ['id', 'patente', 'asientos', 'modeloId', 'acciones'];
+  displayedColumns = ['id', 'plate', 'seats', 'modelId', 'actions'];
   dataSource = [new Bus(1, 'ACB123', 50, 23)];
 
   busesList: Bus[] = [];
@@ -38,14 +38,14 @@ export class BusListComponent implements OnInit {
           const observables = res.body.map((json) => {
             const bus = new Bus(
               json.id,
-              json.patente,
-              json.asientos,
-              json.modeloId
+              json.plate,
+              json.seats,
+              json.modelId
             );
             return this.findModelBus(bus).pipe(
               map((model) => {
                 if (model !== null) {
-                  bus.modelo = model;
+                  bus.model = model;
                 }
                 return bus;
               })
@@ -65,11 +65,11 @@ export class BusListComponent implements OnInit {
   }
   
   findModelBus(bus: Bus): Observable<Model | null> {
-    if (bus.modeloId) {
-      return this.modelService.findOne(bus.modeloId).pipe(
+    if (bus.modelId) {
+      return this.modelService.findOne(bus.modelId).pipe(
         map((res) => {
           if (res) {
-            return new Model(res.id, res.nombre, res.marca);
+            return new Model(res.id, res.name, res.brand);
           }
           return null;
         }),

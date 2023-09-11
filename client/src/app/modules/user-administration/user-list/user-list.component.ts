@@ -31,7 +31,7 @@ export class UserListComponent implements OnInit {
       (res) => {
         if (res.body)
           this.usersList = res.body.map(
-            (json) => new User(json.id, json.nombre, json.apellido, json.edad)
+            (json) => new User(json.id, json.name, json.lastName, json.age)
           );
       },
       (error: any) => {

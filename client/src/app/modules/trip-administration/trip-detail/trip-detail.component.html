@@ -17,18 +17,18 @@
       <div style="display: flex; gap: 15px; margin-bottom: 15px">
         <mat-form-field>
           <mat-label>Origen: </mat-label>
-          <input matInput type="text" ngDefaultControl formControlName="origen" />
+          <input matInput type="text" ngDefaultControl formControlName="origin" />
 
           <div
             *ngIf="
-              tripForm.controls['origen'].invalid &&
-              (tripForm.controls['origen'].dirty ||
-                tripForm.controls['origen'].touched)
+              tripForm.controls['origin'].invalid &&
+              (tripForm.controls['origin'].dirty ||
+                tripForm.controls['origin'].touched)
             "
           >
             <mat-hint 
               class="hint"
-              *ngIf="tripForm.controls['origen'].errors?.['required']"
+              *ngIf="tripForm.controls['origin'].errors?.['required']"
             >
               Complete el campo
             </mat-hint>
@@ -37,18 +37,18 @@
 
         <mat-form-field>
           <mat-label>Destino: </mat-label>
-          <input matInput type="text" ngDefaultControl formControlName="destino" />
+          <input matInput type="text" ngDefaultControl formControlName="destination" />
 
           <div
             *ngIf="
-              tripForm.controls['destino'].invalid &&
-              (tripForm.controls['destino'].dirty ||
-                tripForm.controls['destino'].touched)
+              tripForm.controls['destination'].invalid &&
+              (tripForm.controls['destination'].dirty ||
+                tripForm.controls['destination'].touched)
             "
           >
             <mat-hint
               class="hint"
-              *ngIf="tripForm.controls['destino'].errors?.['required']"
+              *ngIf="tripForm.controls['destination'].errors?.['required']"
             >
               Complete el campo
             </mat-hint>
@@ -61,26 +61,26 @@
           <input
             matInput
             ngDefaultControl
-            formControlName="ida"
-            [matDatepicker]="pickerIda"
+            formControlName="departure"
+            [matDatepicker]="pickerDeparture"
           />
           <mat-hint>MM/DD/YYYY</mat-hint>
           <mat-datepicker-toggle
             matIconSuffix
-            [for]="pickerIda"
+            [for]="pickerDeparture"
           ></mat-datepicker-toggle>
-          <mat-datepicker #pickerIda color="primary"></mat-datepicker>
+          <mat-datepicker #pickerDeparture color="primary"></mat-datepicker>
 
           <div
             *ngIf="
-              tripForm.controls['ida'].invalid &&
-              (tripForm.controls['ida'].dirty ||
-                tripForm.controls['ida'].touched)
+              tripForm.controls['departure'].invalid &&
+              (tripForm.controls['departure'].dirty ||
+                tripForm.controls['departure'].touched)
             "
           >
             <mat-hint
               class="hint"
-              *ngIf="tripForm.controls['ida'].errors?.['required']"
+              *ngIf="tripForm.controls['departure'].errors?.['required']"
             >
               Complete el campo
             </mat-hint>
@@ -93,26 +93,26 @@
           <input
             matInput
             ngDefaultControl
-            formControlName="vuelta"
-            [matDatepicker]="pickerVuelta"
+            formControlName="regress"
+            [matDatepicker]="pickerRegress"
           />
           <mat-hint>MM/DD/YYYY</mat-hint>
           <mat-datepicker-toggle
             matIconSuffix
-            [for]="pickerVuelta"
+            [for]="pickerRegress"
           ></mat-datepicker-toggle>
-          <mat-datepicker #pickerVuelta color="primary"></mat-datepicker>
+          <mat-datepicker #pickerRegress color="primary"></mat-datepicker>
 
           <div
             *ngIf="
-              tripForm.controls['vuelta'].invalid &&
-              (tripForm.controls['vuelta'].dirty ||
-                tripForm.controls['vuelta'].touched)
+              tripForm.controls['regress'].invalid &&
+              (tripForm.controls['regress'].dirty ||
+                tripForm.controls['regress'].touched)
             "
           >
             <mat-hint
               class="hint"
-              *ngIf="tripForm.controls['vuelta'].errors?.['required']"
+              *ngIf="tripForm.controls['regress'].errors?.['required']"
             >
               Complete el campo
             </mat-hint>
@@ -122,22 +122,22 @@
         <mat-form-field [color]="colorControl.value!">
           <mat-label>Pasajeros: </mat-label>
 
-          <mat-select ngDefaultControl formControlName="usuarioId" multiple [compareWith]="compareObjects" [formControl]="colorControl">
+          <mat-select ngDefaultControl formControlName="userId" multiple [compareWith]="compareObjects" [formControl]="colorControl">
             <mat-option *ngFor="let user of usersList" [value]="user.id">
-              {{ user.nombre }} {{ user.apellido }}
+              {{ user.name }} {{ user.lastName }}
             </mat-option>
           </mat-select>
 
           <div
             *ngIf="
-              tripForm.controls['usuarioId'].invalid &&
-              (tripForm.controls['usuarioId'].dirty ||
-                tripForm.controls['usuarioId'].touched)
+              tripForm.controls['userId'].invalid &&
+              (tripForm.controls['userId'].dirty ||
+                tripForm.controls['userId'].touched)
             "
           >
             <mat-hint
               class="hint"
-              *ngIf="tripForm.controls['usuarioId'].errors?.['required']"
+              *ngIf="tripForm.controls['userId'].errors?.['required']"
             >
               Complete el campo
             </mat-hint>
@@ -146,23 +146,23 @@
 
         <mat-form-field [color]="colorControl.value!">
           <mat-label>Colectivo: </mat-label>
-          <mat-select ngDefaultControl formControlName="colectivoId" [formControl]="colorControl">
+          <mat-select ngDefaultControl formControlName="busId" [formControl]="colorControl">
             <mat-option disabled> -- </mat-option>
             <mat-option *ngFor="let bus of busesList" [value]="bus.id">
-              {{ bus.patente }} - {{ bus.asientos }} - {{ bus?.modelo?.marca }}
+              {{ bus.plate }} - {{ bus.seats }} - {{ bus?.model?.brand }}
             </mat-option>
           </mat-select>
 
           <div
             *ngIf="
-              tripForm.controls['colectivoId'].invalid &&
-              (tripForm.controls['colectivoId'].dirty ||
-                tripForm.controls['colectivoId'].touched)
+              tripForm.controls['busId'].invalid &&
+              (tripForm.controls['busId'].dirty ||
+                tripForm.controls['busId'].touched)
             "
           >
             <mat-hint
               class="hint"
-              *ngIf="tripForm.controls['colectivoId'].errors?.['required']"
+              *ngIf="tripForm.controls['busId'].errors?.['required']"
             >
               Complete el campo
             </mat-hint>
