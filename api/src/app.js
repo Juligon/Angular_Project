@@ -3,7 +3,6 @@ const cors = require("cors");
 const routes = require("./routes/index.js");
 const morgan = require("morgan");
 const path = require("path");
-const helmet = require("helmet");
 
 const server = express();
 
@@ -46,12 +45,6 @@ server.use((req, res, next) => {
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, DELETE');
  	next();
 });
-server.use(helmet.contentSecurityPolicy({
-  directives: {
-    "default-src": ["'none'"],
-    "style-src-elem": ["'self'", "https://fonts.googleapis.com"]
-  }
-}));
 
 
 server.use("/api", routes);

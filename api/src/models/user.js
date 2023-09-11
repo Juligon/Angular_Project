@@ -10,15 +10,15 @@ module.exports = (sequelize) => {
 				primaryKey: true,
 				type: DataTypes.INTEGER
 			},
-			nombre: {
+			name: {
 				allowNull: false,
 				type: DataTypes.STRING,
 			},
-			apellido: {
+			lastName: {
 				allowNull: false,
 				type: DataTypes.STRING,
 			},
-			edad: {
+			age: {
 				allowNull: false,
 				type: DataTypes.INTEGER,
 			},

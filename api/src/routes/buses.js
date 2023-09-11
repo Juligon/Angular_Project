@@ -9,35 +9,35 @@ const { Bus } = require("../db");
  *   Bus:
  *    type: object
  *    properties:
- *      patente:
+ *      plate:
  *        type: string
- *        description: Patente del bus
- *      asientos:
+ *        description: Bus license plate
+ *      seats:
  *        type: integer
- *        description: Cantidad de asientos del bus
- *      modeloId:
+ *        description: Number of seats in the bus
+ *      modelId:
  *        type: integer
- *        description: Modelo del bus
+ *        description: Bus model
  *    required:
- *      - patente
- *      - asientos
- *      - modeloId
+ *      - plate
+ *      - seats
+ *      - modelId
  *    example:
- *      patente: ABC 123
- *      asientos: 100
- *      modeloId: 1
+ *      plate: ABC 123
+ *      seats: 100
+ *      modelId: 1
  */
 
 /**
  * @swagger
  * /api/buses:
  *   get:
- *     summary: Obtener todos los colectivos de la base de datos
+ *     summary: Get all buses from the database
  *     tags:
- *       - Colectivo
+ *       - Bus
  *     responses:
  *       '200':
- *         description: Todos los colectivos fueron obtenidos exitosamente
+ *         description: All buses were obtained successfully
  *         content:
  *           application/json:
  *             schema:
@@ -61,25 +61,25 @@ router.get("/", async (req, res) => {
  * @swagger
  * /api/buses/{id}:
  *   get:
- *     summary: Obtener colectivo por ID
+ *     summary: Get bus by ID
  *     tags:
- *       - Colectivo
+ *       - Bus
  *     parameters:
  *       - name: id
  *         in: path
- *         description: Identificador del colectivo
+ *         description: Bus identifier
  *         required: true
  *         schema:
  *           type: integer
  *     responses:
  *       '200':
- *         description: Colectivo obtenido exitosamente
+ *         description: Bus obtained successfully
  *         content:
  *           application/json:
  *             schema:
  *               $ref: '#/components/schemas/Bus'
  *       '404':
- *         description: Colectivo no encontrado
+ *         description: Bus not found
  */
 
 // Ruta para obtener un colectivo por su ID
@@ -101,9 +101,9 @@ router.get("/:id", async (req, res) => {
  * @swagger
  * /api/buses:
  *   post:
- *     summary: Crear un nuevo colectivo
+ *     summary: Create a new bus
  *     tags:
- *       - Colectivo
+ *       - Bus
  *     requestBody:
  *       required: true
  *       content:
@@ -112,20 +112,20 @@ router.get("/:id", async (req, res) => {
  *             $ref: '#/components/schemas/Bus'
  *     responses:
  *       '201':
- *         description: Colectivo creado exitosamente
+ *         description: Bus created successfully
  *       '500':
- *         description: Error al crear colectivo
+ *         description: Error creating bus
  */
 
 // Ruta para crear un nuevo colectivo
 router.post("/", async (req, res) => {
 	try {
-		const { patente, asientos, modeloId } = req.body;
+		const { plate, seats, modelId } = req.body;
 
 		const bus = await Bus.create({
-			patente,
-			asientos,
-			modeloId,
+			plate,
+			seats,
+			modelId,
 		});
 
 		res.status(201).json(bus);
@@ -139,52 +139,51 @@ router.post("/", async (req, res) => {
  * @swagger
  * /api/buses/{id}:
  *   delete:
- *     summary: Eliminar un colectivo de la base de datos
+ *     summary: Delete a bus from the database
  *     tags:
- *       - Colectivo
+ *       - Bus
  *     parameters:
  *       - name: id
  *         in: path
- *         description: Identificador del colectivo
+ *         description: Bus identifier
  *         required: true
  *         schema:
  *           type: integer
  *     responses:
  *       '200':
- *         description: Colectivo eliminado exitosamente
+ *         description: Bus deleted successfully
  *       '404':
- *         description: Colectivo no encontrado
+ *         description: Bus not found
  */
 
 // Ruta para eliminar un colectivo por su ID
 router.delete("/:id", async (req, res) => {
-  const { id } = req.params;
-  try {
-    const deletedBus = await Bus.destroy({
-      where: { id: id },
-    });
-    if (deletedBus === 0) {
-      return res.status(404).json({ error: "Colectivo no encontrado" });
-    }
-    res.status(200).json({ message: "Colectivo eliminado correctamente" });
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: "Error al eliminar colectivo" });
-  }
+	const { id } = req.params;
+	try {
+		const deletedBus = await Bus.destroy({
+			where: { id: id },
+		});
+		if (deletedBus === 0) {
+			return res.status(404).json({ error: "Colectivo no encontrado" });
+		}
+		res.status(200).json({ message: "Colectivo eliminado correctamente" });
+	} catch (error) {
+		console.error(error);
+		res.status(500).json({ error: "Error al eliminar colectivo" });
+	}
 });
-
 
 /**
  * @swagger
  * /api/buses/{id}:
  *   put:
- *     summary: Actualizar un colectivo
+ *     summary: Update a bus
  *     tags:
- *       - Colectivo
+ *       - Bus
  *     parameters:
  *       - name: id
  *         in: path
- *         description: Identificador del colectivo
+ *         description: Bus identifier
  *         required: true
  *         schema:
  *           type: integer
@@ -196,15 +195,15 @@ router.delete("/:id", async (req, res) => {
  *             $ref: '#/components/schemas/Bus'
  *     responses:
  *       '200':
- *         description: Colectivo actualizado exitosamente
+ *         description: Bus updated successfully
  *       '404':
- *         description: Colectivo no encontrado
+ *         description: Bus not found
  */
 
 // Ruta para actualizar un colectivo por su ID
 router.put("/:id", async (req, res) => {
 	const { id } = req.params;
-	const { patente, asientos, modeloId } = req.body;
+	const { plate, seats, modelId } = req.body;
 
 	try {
 		const bus = await Bus.findByPk(id);
@@ -214,13 +213,13 @@ router.put("/:id", async (req, res) => {
 		}
 
 		await bus.update({
-			patente,
-			asientos,
-			modeloId,
+			plate,
+			seats,
+			modelId,
 		});
 
 		const updatedBus = await Bus.findOne({
-			where: { patente: patente },
+			where: { plate: plate },
 		});
 
 		res.send(updatedBus);

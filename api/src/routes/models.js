@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const { Model } = require("../db"); 
+const { Model } = require("../db");
 
 /**
  * @swagger
@@ -9,30 +9,30 @@ const { Model } = require("../db");
  *   Model:
  *    type: object
  *    properties:
- *      nombre:
+ *      name:
  *        type: string
- *        description: Nombre del modelo
- *      marca:
+ *        description: Model name
+ *      brand:
  *        type: string
- *        description: Marca del modelo
+ *        description: Model brand
  *    required:
- *      - nombre
- *      - marca
+ *      - name
+ *      - brand
  *    example:
- *      nombre: CHASIS O 500 UA
- *      marca: Mercedes Benz
+ *      name: CHASIS O 500 UA
+ *      brand: Mercedes Benz
  */
 
 /**
  * @swagger
  * /api/models:
  *   get:
- *     summary: Obtener todos los modelos de la base de datos
+ *     summary: Get all models from the database
  *     tags:
- *       - Modelo
+ *       - Model
  *     responses:
  *       '200':
- *         description: Todos los modelos de la base de datos son obtenidos exitosamente
+ *         description: All models from the database were obtained successfully
  *         content:
  *           application/json:
  *             schema:
@@ -43,38 +43,38 @@ const { Model } = require("../db");
 
 // Ruta para obtener todos los modelos
 router.get("/", async (req, res) => {
-  try {
-    const models = await Model.findAll();
-    res.json(models);
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: "Error al obtener modelos" });
-  }
+	try {
+		const models = await Model.findAll();
+		res.json(models);
+	} catch (error) {
+		console.error(error);
+		res.status(500).json({ error: "Error al obtener modelos" });
+	}
 });
 
 /**
  * @swagger
  * /api/models/{id}:
  *   get:
- *     summary: Obtener modelo por ID
+ *     summary: Get model by ID
  *     tags:
- *       - Modelo
+ *       - Model
  *     parameters:
  *       - name: id
  *         in: path
- *         description: Identificador del modelo
+ *         description: Model identifier
  *         required: true
  *         schema:
  *           type: integer
  *     responses:
  *       '200':
- *         description: Modelo obtenido exitosamente
+ *         description: Model obtained successfully
  *         content:
  *           application/json:
  *             schema:
  *               $ref: '#/components/schemas/Model'
  *       '404':
- *         description: Modelo no encontrado
+ *         description: Model not found
  */
 
 // Ruta para obtener un modelo por su ID
@@ -96,9 +96,9 @@ router.get("/:id", async (req, res) => {
  * @swagger
  * /api/models:
  *   post:
- *     summary: Crear un nuevo modelo de colectivo
+ *     summary: Create a new bus model
  *     tags:
- *       - Modelo
+ *       - Model
  *     requestBody:
  *       required: true
  *       content:
@@ -107,27 +107,26 @@ router.get("/:id", async (req, res) => {
  *             $ref: '#/components/schemas/Model'
  *     responses:
  *       '201':
- *         description: Nuevo modelo creado
+ *         description: New model created
  *       '500':
- *         description: Error al crear modelo
+ *         description: Error creating model
  */
 
 // Ruta para crear un nuevo modelo
 router.post("/", async (req, res) => {
-  try {
-    const { nombre, marca } = req.body;
+	try {
+		const { name, brand } = req.body;
 
-    const model = await Model.create({
-      nombre, marca,
-    });
+		const model = await Model.create({
+			name,
+			brand,
+		});
 
-    res.status(201).json(model);
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: "Error al crear modelo" });
-  }
+		res.status(201).json(model);
+	} catch (error) {
+		console.error(error);
+		res.status(500).json({ error: "Error al crear modelo" });
+	}
 });
 
 module.exports = router;
-
-

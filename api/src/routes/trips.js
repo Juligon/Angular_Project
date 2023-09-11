@@ -9,48 +9,48 @@ const { Trip } = require("../db");
  *   Trip:
  *    type: object
  *    properties:
- *      origen:
+ *      origin:
  *        type: string
- *        description: Lugar de salida
- *      destino:
+ *        description: Departure location
+ *      destination:
  *        type: string
- *        description: Lugar de destino
- *      ida:
+ *        description: Destination location
+ *      departure:
  *        type: string
- *        description: Fecha de salida
- *      vuelta:
+ *        description: Departure date
+ *      regress:
  *        type: string
- *        description: Fecha de vuelta
- *      usuarioId:
+ *        description: Return date
+ *      userId:
  *        type: array
- *        description: Array de IDs de los usuarios
- *      colectivoId:
+ *        description: Array of user IDs
+ *      busId:
  *        type: integer
- *        description: ID del autobús
+ *        description: Bus ID
  *    required:
- *      - origen
- *      - destino
- *      - ida
- *      - vuelta
+ *      - origin
+ *      - destination
+ *      - departure
+ *      - regress
  *    example:
- *      origen: Paraná
- *      destino: Buenos Aires
- *      ida: 07-08-2023
- *      vuelta: 15-08-2023
- *      usuarioId: [1, 2, 3, 4, 5]
- *      colectivoId: 1
+ *      origin: Paraná
+ *      destination: Buenos Aires
+ *      departure: 07-08-2023
+ *      regress: 15-08-2023
+ *      userId: [1, 2, 3, 4, 5]
+ *      busId: 1
  */
 
 /**
  * @swagger
  * /api/trips:
  *   get:
- *     summary: Obtener todos los viajes de la base de datos
+ *     summary: Get all trips from the database
  *     tags:
- *       - Viaje
+ *       - Trip
  *     responses:
  *       '200':
- *         description: Todos los viajes fueron obtenidos exitosamente
+ *         description: All trips were obtained successfully
  *         content:
  *           application/json:
  *             schema:
@@ -74,25 +74,25 @@ router.get("/", async (req, res) => {
  * @swagger
  * /api/trips/{id}:
  *   get:
- *     summary: Obtener viaje por ID
+ *     summary: Get trip by ID
  *     tags:
- *       - Viaje
+ *       - Trip
  *     parameters:
  *       - name: id
  *         in: path
- *         description: Identificador del viaje
+ *         description: Trip identifier
  *         required: true
  *         schema:
  *           type: integer
  *     responses:
  *       '200':
- *         description: Viaje obtenido exitosamente
+ *         description: Trip obtained successfully
  *         content:
  *           application/json:
  *             schema:
  *               $ref: '#/components/schemas/Trip'
  *       '404':
- *         description: Viaje no encontrado
+ *         description: Trip not found
  */
 
 // Ruta para obtener un viaje por su ID
@@ -114,9 +114,9 @@ router.get("/:id", async (req, res) => {
  * @swagger
  * /api/trips:
  *   post:
- *     summary: Crear un nuevo viaje
+ *     summary: Create a new trip
  *     tags:
- *       - Viaje
+ *       - Trip
  *     requestBody:
  *       required: true
  *       content:
@@ -125,18 +125,18 @@ router.get("/:id", async (req, res) => {
  *             $ref: '#/components/schemas/Trip'
  *     responses:
  *       '201':
- *         description: Viaje creado exitosamente
+ *         description: New trip created
  *       '500':
- *         description: Error al crear viaje
+ *         description: Error creating trip
  */
 
 // Ruta para crear un nuevo viaje
 router.post("/", async (req, res) => {
   try {
-    const { origen, destino, ida, vuelta, usuarioId, colectivoId } = req.body;
+    const { origin, destination, departure, regress, userId, busId } = req.body;
 
     const trip = await Trip.create({
-      origen, destino, ida, vuelta, usuarioId, colectivoId,
+      origin, destination, departure, regress, userId, busId
     });
 
     res.status(201).json(trip);
@@ -150,21 +150,21 @@ router.post("/", async (req, res) => {
  * @swagger
  * /api/trips/{id}:
  *   delete:
- *     summary: Eliminar un viaje de la base de datos
+ *     summary: Delete a trip from the database
  *     tags:
- *       - Viaje
+ *       - Trip
  *     parameters:
  *       - name: id
  *         in: path
- *         description: Identificador del viaje
+ *         description: Trip identifier
  *         required: true
  *         schema:
  *           type: integer
  *     responses:
  *       '200':
- *         description: Viaje eliminado exitosamente
+ *         description: Trip deleted successfully
  *       '404':
- *         description: Viaje no encontrado
+ *         description: Trip not found
  */
 
 // Ruta para eliminar un viaje por su ID
@@ -189,13 +189,13 @@ router.delete("/:id", async (req, res) => {
  * @swagger
  * /api/trips/{id}:
  *   put:
- *     summary: Actualizar un viaje
+ *     summary: Update a trip
  *     tags:
- *       - Viaje
+ *       - Trip
  *     parameters:
  *       - name: id
  *         in: path
- *         description: Identificador del viaje
+ *         description: Trip identifier
  *         required: true
  *         schema:
  *           type: integer
@@ -207,15 +207,15 @@ router.delete("/:id", async (req, res) => {
  *             $ref: '#/components/schemas/Trip'
  *     responses:
  *       '200':
- *         description: Viaje actualizado exitosamente
+ *         description: Trip updated successfully
  *       '404':
- *         description: Viaje no encontrado
+ *         description: Trip not found
  */
 
 // Ruta para actualizar un viaje por su ID
 router.put("/:id", async (req, res) => {
   const { id } = req.params;
-  const { origen, destino, ida, vuelta, usuarioId, colectivoId } = req.body;
+  const { origin, destination, departure, regress, userId, busId } = req.body;
 
   try {
     const trip = await Trip.findByPk(id);
@@ -225,11 +225,11 @@ router.put("/:id", async (req, res) => {
     }
 
     await trip.update({
-      origen, destino, ida, vuelta, usuarioId, colectivoId
+      origin, destination, departure, regress, userId, busId
     });
 
     const updatedTrip = await Trip.findOne({
-      where: { destino: destino },
+      where: { destination: destination },
     });
 
     res.send(updatedTrip);

@@ -10,41 +10,41 @@ const { Op } = require("sequelize");
  *   User:
  *    type: object
  *    properties:
- *      nombre:
+ *      name:
  *        type: string
- *        description: Nombre del usuario
- *      apellido:
+ *        description: User's name
+ *      last name:
  *        type: string
- *        description: Apellido del usuario
+ *        description: User's last name
  *      edad:
  *        type: integer
- *        description: Edad del usuario
+ *        description: User's age
  *    required:
- *      - nombre
- *      - apellido
- *      - edad
+ *      - name
+ *      - last name
+ *      - age
  *    example:
- *      nombre: John
- *      apellido: Doe
- *      edad: 33
+ *      name: John
+ *      last name: Doe
+ *      age: 33
  */
 
 /**
  * @swagger
  * /api/users:
  *   get:
- *     summary: Obtener todos los usuarios de la base de datos
+ *     summary: Get all users from the database
  *     tags:
- *       - Usuario
+ *       - User
  *     parameters:
  *       - name: nombre
  *         in: query
- *         description: Filtrar usuarios por nombre
+ *         description: Filter users by name
  *         schema:
  *           type: string
  *     responses:
  *       '200':
- *         description: Todos los usuarios fueron obtenidos exitosamente
+ *         description: All users were obtained successfully
  *         content:
  *           application/json:
  *             schema:
@@ -55,12 +55,12 @@ const { Op } = require("sequelize");
 
 // Ruta para obtener todos los usuarios
 router.get("/", async (req, res) => {
-	const { nombre } = req.query;
+	const { name } = req.query;
 	try {
 		const users = await User.findAll();
-		if (nombre) {
-			const filteredUsers = users.filter(user =>
-				user.nombre.toLowerCase().includes(nombre.toLowerCase())
+		if (name) {
+			const filteredUsers = users.filter((user) =>
+				user.name.toLowerCase().includes(name.toLowerCase())
 			);
 			if (filteredUsers.length === 0) {
 				return res.status(404).send("Usuario no encontrado");
@@ -78,25 +78,25 @@ router.get("/", async (req, res) => {
  * @swagger
  * /api/users/{id}:
  *   get:
- *     summary: Obtener usuario por ID
+ *     summary: Get user by ID
  *     tags:
- *       - Usuario
+ *       - User
  *     parameters:
  *       - name: id
  *         in: path
- *         description: Identificador del usuario
+ *         description: User identifier
  *         required: true
  *         schema:
  *           type: integer
  *     responses:
  *       '200':
- *         description: Usuario obtenido exitosamente
+ *         description: User obtained successfully
  *         content:
  *           application/json:
  *             schema:
  *               $ref: '#/components/schemas/User'
  *       '404':
- *         description: Usuario no encontrado
+ *         description: User not found
  */
 
 // Ruta para obtener un usuario por su ID
@@ -118,9 +118,9 @@ router.get("/:id", async (req, res) => {
  * @swagger
  * /api/users:
  *   post:
- *     summary: Crear un nuevo usuario
+ *     summary: Create a new user
  *     tags:
- *       - Usuario
+ *       - User
  *     requestBody:
  *       required: true
  *       content:
@@ -129,20 +129,20 @@ router.get("/:id", async (req, res) => {
  *             $ref: '#/components/schemas/User'
  *     responses:
  *       '201':
- *         description: Usuario creado exitosamente
+ *         description: User created successfully
  *       '409':
- *         description: El usuario ya existe
+ *         description: The user already exists
  *       '500':
- *         description: Error al crear usuario
+ *         description: Error creating user
  */
 
 // Ruta para crear un nuevo usuario
 router.post("/", async (req, res) => {
 	try {
-		const { nombre, apellido, edad } = req.body;
+		const { name, lastName, age } = req.body;
 
 		const existingUser = await User.findOne({
-			where: { nombre: { [Op.iLike]: `%${nombre}%` } }
+			where: { name: { [Op.iLike]: `%${name}%` } },
 		});
 
 		if (existingUser) {
@@ -150,9 +150,9 @@ router.post("/", async (req, res) => {
 		}
 
 		const newUser = await User.create({
-			nombre: nombre,
-			apellido: apellido,
-			edad: edad,
+			name,
+			lastName,
+			age,
 		});
 		res.status(201).json(newUser);
 	} catch (error) {
@@ -165,52 +165,51 @@ router.post("/", async (req, res) => {
  * @swagger
  * /api/users/{id}:
  *   delete:
- *     summary: Eliminar un usuario de la base de datos
+ *     summary: Delete a user from the database
  *     tags:
- *       - Usuario
+ *       - User
  *     parameters:
  *       - name: id
  *         in: path
- *         description: Identificador del usuario
+ *         description: User identifier
  *         required: true
  *         schema:
  *           type: integer
  *     responses:
  *       '200':
- *         description: Usuario eliminado exitosamente
+ *         description: User deleted successfully
  *       '404':
- *         description: Usuario no encontrado
+ *         description: User not found
  */
 
 // Ruta para eliminar un usuario por su ID
 router.delete("/:id", async (req, res) => {
-  const { id } = req.params;
-  try {
-    const deletedUser = await User.destroy({
-      where: { id: id },
-    });
-    if (deletedUser === 0) {
-      return res.status(404).json({ error: "Usuario no encontrado" });
-    }
-    res.status(200).json({ message: "Usuario eliminado correctamente" });
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: "Error al eliminar usuario" });
-  }
+	const { id } = req.params;
+	try {
+		const deletedUser = await User.destroy({
+			where: { id: id },
+		});
+		if (deletedUser === 0) {
+			return res.status(404).json({ error: "Usuario no encontrado" });
+		}
+		res.status(200).json({ message: "Usuario eliminado correctamente" });
+	} catch (error) {
+		console.error(error);
+		res.status(500).json({ error: "Error al eliminar usuario" });
+	}
 });
-
 
 /**
  * @swagger
  * /api/users/{id}:
  *   put:
- *     summary: Actualizar un usuario
+ *     summary: Update a user
  *     tags:
- *       - Usuario
+ *       - User
  *     parameters:
  *       - name: id
  *         in: path
- *         description: Identificador del usuario
+ *         description: User identifier
  *         required: true
  *         schema:
  *           type: integer
@@ -222,15 +221,15 @@ router.delete("/:id", async (req, res) => {
  *             $ref: '#/components/schemas/User'
  *     responses:
  *       '200':
- *         description: Usuario actualizado exitosamente
+ *         description: User updated successfully
  *       '404':
- *         description: Usuario no encontrado
+ *         description: User not found
  */
 
 // Ruta para actualizar un usuario por su ID
 router.put("/:id", async (req, res) => {
 	const { id } = req.params;
-	const { nombre, apellido, edad } = req.body;
+	const { name, lastName, age } = req.body;
 
 	try {
 		const user = await User.findByPk(id);
@@ -240,13 +239,13 @@ router.put("/:id", async (req, res) => {
 		}
 
 		await user.update({
-			nombre,
-			apellido,
-			edad,
+			name,
+			lastName,
+			age,
 		});
 
 		const updatedUser = await User.findOne({
-			where: { nombre: nombre },
+			where: { name: name },
 		});
 
 		res.send(updatedUser);
@@ -257,4 +256,3 @@ router.put("/:id", async (req, res) => {
 });
 
 module.exports = router;
-
