@@ -54,7 +54,7 @@ const { Op } = require("sequelize");
  */
 
 // Ruta para obtener todos los usuarios
-router.get("/", async (req, res) => {
+router.get("/", async (req, res, next) => {
 	const { name } = req.query;
 	try {
 		const users = await User.findAll();
@@ -63,14 +63,13 @@ router.get("/", async (req, res) => {
 				user.name.toLowerCase().includes(name.toLowerCase())
 			);
 			if (filteredUsers.length === 0) {
-				return res.status(404).send("Usuario no encontrado");
+				return res.status(404).send("Not found");
 			}
-			return res.json(filteredUsers);
+			return res.status(201).json(filteredUsers);
 		}
-		res.json(users);
+		res.status(201).json(users);
 	} catch (error) {
-		console.error(error);
-		res.status(500).json({ error: "Error al obtener usuarios" });
+		next(error);
 	}
 });
 
@@ -100,17 +99,16 @@ router.get("/", async (req, res) => {
  */
 
 // Ruta para obtener un usuario por su ID
-router.get("/:id", async (req, res) => {
+router.get("/:id", async (req, res, next) => {
 	const { id } = req.params;
 	try {
 		const user = await User.findByPk(id);
 		if (!user) {
-			return res.status(404).send("Usuario no encontrado");
+			return res.status(404).send("Not found");
 		}
-		res.json(user);
+		res.status(201).json(user);
 	} catch (error) {
-		console.error(error);
-		res.status(500).json({ error: "Error al obtener usuario" });
+		next(error);
 	}
 });
 
@@ -137,7 +135,7 @@ router.get("/:id", async (req, res) => {
  */
 
 // Ruta para crear un nuevo usuario
-router.post("/", async (req, res) => {
+router.post("/", async (req, res, next) => {
 	try {
 		const { name, lastName, age } = req.body;
 
@@ -146,7 +144,7 @@ router.post("/", async (req, res) => {
 		});
 
 		if (existingUser) {
-			return res.status(409).send("El usuario ya existe");
+			return res.status(409).send("Something went wrong");
 		}
 
 		const newUser = await User.create({
@@ -156,8 +154,7 @@ router.post("/", async (req, res) => {
 		});
 		res.status(201).json(newUser);
 	} catch (error) {
-		console.error("Error al insertar usuario:", error);
-		res.status(500).json({ error: "Error al insertar usuario" });
+		next(error);
 	}
 });
 
@@ -183,19 +180,18 @@ router.post("/", async (req, res) => {
  */
 
 // Ruta para eliminar un usuario por su ID
-router.delete("/:id", async (req, res) => {
+router.delete("/:id", async (req, res, next) => {
 	const { id } = req.params;
 	try {
 		const deletedUser = await User.destroy({
 			where: { id: id },
 		});
 		if (deletedUser === 0) {
-			return res.status(404).json({ error: "Usuario no encontrado" });
+			return res.status(404).json({ error: "Not found" });
 		}
-		res.status(200).json({ message: "Usuario eliminado correctamente" });
+		res.status(200).json({ message: "Succesfully deleted" });
 	} catch (error) {
-		console.error(error);
-		res.status(500).json({ error: "Error al eliminar usuario" });
+		next(error);
 	}
 });
 
@@ -227,7 +223,7 @@ router.delete("/:id", async (req, res) => {
  */
 
 // Ruta para actualizar un usuario por su ID
-router.put("/:id", async (req, res) => {
+router.put("/:id", async (req, res, next) => {
 	const { id } = req.params;
 	const { name, lastName, age } = req.body;
 
@@ -235,7 +231,7 @@ router.put("/:id", async (req, res) => {
 		const user = await User.findByPk(id);
 
 		if (!user) {
-			return res.status(404).send("Usuario no encontrado");
+			return res.status(404).send("Not found");
 		}
 
 		await user.update({
@@ -250,8 +246,7 @@ router.put("/:id", async (req, res) => {
 
 		res.send(updatedUser);
 	} catch (error) {
-		console.error(error);
-		res.status(500).send("Error al actualizar usuario");
+		next(error);
 	}
 });
 

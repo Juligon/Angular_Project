@@ -42,13 +42,12 @@ const { Model } = require("../db");
  */
 
 // Ruta para obtener todos los modelos
-router.get("/", async (req, res) => {
+router.get("/", async (req, res, next) => {
 	try {
 		const models = await Model.findAll();
 		res.json(models);
 	} catch (error) {
-		console.error(error);
-		res.status(500).json({ error: "Error al obtener modelos" });
+		next(error);
 	}
 });
 
@@ -78,17 +77,16 @@ router.get("/", async (req, res) => {
  */
 
 // Ruta para obtener un modelo por su ID
-router.get("/:id", async (req, res) => {
+router.get("/:id", async (req, res, next) => {
 	const { id } = req.params;
 	try {
 		const model = await Model.findByPk(id);
 		if (!model) {
-			return res.status(404).send("Modelo no encontrado");
+			return res.status(404).send("Not found");
 		}
-		res.json(model);
+		res.status(201).json(model);
 	} catch (error) {
-		console.error(error);
-		res.status(500).json({ error: "Error al obtener modelo" });
+		next(error);
 	}
 });
 
@@ -113,7 +111,7 @@ router.get("/:id", async (req, res) => {
  */
 
 // Ruta para crear un nuevo modelo
-router.post("/", async (req, res) => {
+router.post("/", async (req, res, next) => {
 	try {
 		const { name, brand } = req.body;
 
@@ -124,8 +122,7 @@ router.post("/", async (req, res) => {
 
 		res.status(201).json(model);
 	} catch (error) {
-		console.error(error);
-		res.status(500).json({ error: "Error al crear modelo" });
+		next(error);
 	}
 });
 

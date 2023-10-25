@@ -47,13 +47,12 @@ const { Bus } = require("../db");
  */
 
 // Ruta para obtener todos los colectivos
-router.get("/", async (req, res) => {
+router.get("/", async (req, res, next) => {
 	try {
 		const buses = await Bus.findAll();
 		res.json(buses);
 	} catch (error) {
-		console.error(error);
-		res.status(500).json({ error: "Error al obtener colectivos" });
+		next(error);
 	}
 });
 
@@ -83,17 +82,16 @@ router.get("/", async (req, res) => {
  */
 
 // Ruta para obtener un colectivo por su ID
-router.get("/:id", async (req, res) => {
+router.get("/:id", async (req, res, next) => {
 	const { id } = req.params;
 	try {
 		const bus = await Bus.findByPk(id);
 		if (!bus) {
-			return res.status(404).send("Colectivo no encontrado");
+			return res.status(404).send("Not found");
 		}
-		res.json(bus);
+		res.status(201).json(bus);
 	} catch (error) {
-		console.error(error);
-		res.status(500).json({ error: "Error al obtener colectivo" });
+		next(error);
 	}
 });
 
@@ -118,7 +116,7 @@ router.get("/:id", async (req, res) => {
  */
 
 // Ruta para crear un nuevo colectivo
-router.post("/", async (req, res) => {
+router.post("/", async (req, res, next) => {
 	try {
 		const { plate, seats, modelId } = req.body;
 
@@ -130,8 +128,7 @@ router.post("/", async (req, res) => {
 
 		res.status(201).json(bus);
 	} catch (error) {
-		console.error(error);
-		res.status(500).json({ error: "Error al crear colectivo" });
+		next(error);
 	}
 });
 
@@ -157,19 +154,18 @@ router.post("/", async (req, res) => {
  */
 
 // Ruta para eliminar un colectivo por su ID
-router.delete("/:id", async (req, res) => {
+router.delete("/:id", async (req, res, next) => {
 	const { id } = req.params;
 	try {
 		const deletedBus = await Bus.destroy({
 			where: { id: id },
 		});
 		if (deletedBus === 0) {
-			return res.status(404).json({ error: "Colectivo no encontrado" });
+			return res.status(404).json({ error: "Not found" });
 		}
-		res.status(200).json({ message: "Colectivo eliminado correctamente" });
+		res.status(200).json({ message: "Succesfully deleted" });
 	} catch (error) {
-		console.error(error);
-		res.status(500).json({ error: "Error al eliminar colectivo" });
+		next(error);
 	}
 });
 
@@ -201,7 +197,7 @@ router.delete("/:id", async (req, res) => {
  */
 
 // Ruta para actualizar un colectivo por su ID
-router.put("/:id", async (req, res) => {
+router.put("/:id", async (req, res, next) => {
 	const { id } = req.params;
 	const { plate, seats, modelId } = req.body;
 
@@ -209,7 +205,7 @@ router.put("/:id", async (req, res) => {
 		const bus = await Bus.findByPk(id);
 
 		if (!bus) {
-			return res.status(404).send("Colectivo no encontrado");
+			return res.status(404).send("Not found");
 		}
 
 		await bus.update({
@@ -224,8 +220,7 @@ router.put("/:id", async (req, res) => {
 
 		res.send(updatedBus);
 	} catch (error) {
-		console.error(error);
-		res.status(500).send("Error al actualizar colectivo");
+		next(error);
 	}
 });
 

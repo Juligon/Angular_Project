@@ -60,13 +60,12 @@ const { Trip } = require("../db");
  */
 
 // Ruta para obtener todos los viajes
-router.get("/", async (req, res) => {
+router.get("/", async (req, res, next) => {
   try {
     const trips = await Trip.findAll();
-    res.json(trips);
+    res.status(201).json(trips);
   } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: "Error al obtener los viajes" });
+    next(error);
   }
 });
 
@@ -96,17 +95,16 @@ router.get("/", async (req, res) => {
  */
 
 // Ruta para obtener un viaje por su ID
-router.get("/:id", async (req, res) => {
+router.get("/:id", async (req, res, next) => {
   const { id } = req.params;
   try {
     const trip = await Trip.findByPk(id);
     if (!trip) {
-      return res.status(404).send("Viaje no encontrado");
+      return res.status(404).send("Not found");
     }
-    res.json(trip);
+    res.status(201).json(trip);
   } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: "Error al obtener viaje" });
+    next(error);
   }
 });
 
@@ -131,7 +129,7 @@ router.get("/:id", async (req, res) => {
  */
 
 // Ruta para crear un nuevo viaje
-router.post("/", async (req, res) => {
+router.post("/", async (req, res, next) => {
   try {
     const { origin, destination, departure, regress, userId, busId } = req.body;
 
@@ -141,8 +139,7 @@ router.post("/", async (req, res) => {
 
     res.status(201).json(trip);
   } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: "Error al crear viaje" });
+    next(error);
   }
 });
 
@@ -168,19 +165,18 @@ router.post("/", async (req, res) => {
  */
 
 // Ruta para eliminar un viaje por su ID
-router.delete("/:id", async (req, res) => {
+router.delete("/:id", async (req, res, next) => {
   const { id } = req.params;
   try {
     const deletedTrip = await Trip.destroy({
       where: { id: id },
     });
     if (deletedTrip === 0) {
-      return res.status(404).json({ error: "Viaje no encontrado" });
+      return res.status(404).json({ error: "Not found" });
     }
-    res.status(200).json({ message: "Viaje eliminado correctamente" });
+    res.status(200).json({ message: "Succesfully deleted" });
   } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: "Error al eliminar viaje" });
+    next(error);
   }
 });
 
@@ -213,7 +209,7 @@ router.delete("/:id", async (req, res) => {
  */
 
 // Ruta para actualizar un viaje por su ID
-router.put("/:id", async (req, res) => {
+router.put("/:id", async (req, res, next) => {
   const { id } = req.params;
   const { origin, destination, departure, regress, userId, busId } = req.body;
 
@@ -221,7 +217,7 @@ router.put("/:id", async (req, res) => {
     const trip = await Trip.findByPk(id);
 
     if (!trip) {
-      return res.status(404).send("Viaje no encontrado");
+      return res.status(404).send("Not found");
     }
 
     await trip.update({
@@ -234,8 +230,7 @@ router.put("/:id", async (req, res) => {
 
     res.send(updatedTrip);
   } catch (error) {
-    console.error(error);
-    res.status(500).send("Error al actualizar viaje");
+    next(error);
   }
 });
 
